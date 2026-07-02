@@ -4,7 +4,7 @@ const envSchema = z.object({
   DATABASE_URL: z.string().min(1, "DATABASE_URL is missing"),
   NVIDIA_API_KEY: z.string().min(1, "NVIDIA_API_KEY is missing"),
   AUTH_SECRET: z.string().min(1, "AUTH_SECRET is missing"),
-  NEXTAUTH_URL: z.string().min(1, "NEXTAUTH_URL is missing"),
+  NEXTAUTH_URL: z.string().optional(), // Optional on Vercel
   // Optional but recommended for production
   DIRECT_URL: z.string().optional(),
   GOOGLE_CLIENT_ID: z.string().optional(),

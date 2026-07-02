@@ -4,7 +4,12 @@ import React, { useState } from "react";
 import { useCart } from "@/context/CartContext";
 import { X, Minus, Plus, ShoppingBag } from "lucide-react";
 import Image from "next/image";
-import { CheckoutModal } from "./CheckoutModal";
+import dynamic from "next/dynamic";
+
+const CheckoutModal = dynamic(() => import("./CheckoutModal").then(mod => mod.CheckoutModal), { 
+  ssr: false, 
+  loading: () => <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 text-white">Loading checkout...</div> 
+});
 
 export const CartSidebar = () => {
   const { cart, removeFromCart, updateQuantity, cartTotal, isCartOpen, setIsCartOpen } = useCart();

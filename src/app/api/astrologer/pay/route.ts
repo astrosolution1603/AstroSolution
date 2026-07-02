@@ -26,6 +26,10 @@ export async function POST(req: Request) {
       return NextResponse.json({ error: "Setup fee already paid" }, { status: 400 });
     }
 
+    if (process.env.NODE_ENV === "production") {
+      return NextResponse.json({ error: "Simulated payments are disabled in production. Please use a valid payment gateway." }, { status: 403 });
+    }
+
     // Simulate payment processing...
     
     // 1. Update application payment status

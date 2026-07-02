@@ -38,7 +38,7 @@ export default async function OrdersPage() {
 
       <div className="bg-card rounded-2xl border border-white/5 shadow-sm overflow-hidden">
         <div className="overflow-x-auto">
-          <table className="w-full text-left border-collapse">
+          <table className="w-full min-w-[900px] text-left border-collapse">
             <thead>
               <tr className="bg-muted/30 border-b border-white/10 text-sm">
                 <th className="p-4 font-semibold text-muted-foreground">Order ID & Date</th>

@@ -11,6 +11,8 @@ export default function RegisterForm() {
   const [step, setStep] = useState(1);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState("");
+  const [otpSent, setOtpSent] = useState(false);
+  const [otp, setOtp] = useState("");
   
   const [formData, setFormData] = useState({
     name: "",
@@ -30,31 +32,49 @@ export default function RegisterForm() {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
-  const fillRandomData = () => {
-    setFormData({
-      name: "Demo User " + Math.floor(Math.random() * 1000),
-      phone: "9" + Math.floor(100000000 + Math.random() * 900000000).toString(),
-      dateOfBirth: "1990-01-01",
-      timeOfBirth: "12:00",
-      placeOfBirth: "New Delhi",
-      gender: "Male",
-      maritalStatus: "Single",
-      occupation: "Tester",
-      languagePreference: "english",
-      reasonForJoining: "",
-      acceptTerms: true
-    });
+
+
+  const handleSendOtp = async () => {
+    if (!formData.name || !formData.phone) {
+      return setError("Please fill all required fields first");
+    }
+    if (formData.phone.length < 10) {
+      return setError("Please enter a valid mobile number");
+    }
+
+    setIsLoading(true);
+    setError("");
+    try {
+      const res = await fetch("/api/auth/send-otp", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ phone: formData.phone })
+      });
+      const data = await res.json();
+      
+      if (res.ok) {
+        setOtpSent(true);
+        alert(data.message || "OTP Sent!");
+      } else {
+        setError(data.error || "Failed to send OTP");
+      }
+    } catch (e) {
+      setError("An error occurred while sending OTP.");
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   const handleNext = () => {
     setError("");
     if (step === 1) {
-      if (!formData.name || !formData.phone) {
-        return setError("Please fill all required fields");
+      if (!otpSent) {
+        return handleSendOtp();
       }
-      if (formData.phone.length < 10) {
-        return setError("Please enter a valid mobile number");
+      if (!otp || otp.length !== 4) {
+        return setError("Please enter the 4-digit OTP sent to your phone");
       }
+      // OTP is theoretically verified in the final step by NextAuth, but we proceed for now
     }
     if (step === 2) {
       if (!formData.dateOfBirth || !formData.placeOfBirth) {
@@ -95,7 +115,7 @@ export default function RegisterForm() {
       // Auto sign-in
       const signInRes = await signIn("credentials", {
         phone: formData.phone,
-        otp: "1234",
+        otp: otp,
         redirect: false,
       });
 
@@ -135,11 +155,7 @@ export default function RegisterForm() {
         </div>
       )}
 
-      <div className="mb-6 flex justify-end relative z-10">
-        <Button type="button" onClick={fillRandomData} variant="outline" className="text-xs bg-foreground/5 hover:bg-foreground/10 border-foreground/10 text-foreground rounded-full h-9 px-4 backdrop-blur-sm transition-all active:scale-95">
-          🎲 Fill Demo Data
-        </Button>
-      </div>
+
 
       <form onSubmit={handleSubmit} className="space-y-5 relative z-10">
         {step === 1 && (
@@ -161,13 +177,36 @@ export default function RegisterForm() {
                 type="tel" 
                 value={formData.phone} 
                 onChange={handleChange} 
-                className="bg-foreground/5 border-foreground/10 text-foreground placeholder:text-muted-foreground/50 rounded-[16px] py-6 h-14 shadow-inner" 
+                disabled={otpSent}
+                className="bg-foreground/5 border-foreground/10 text-foreground placeholder:text-muted-foreground/50 rounded-[16px] py-6 h-14 shadow-inner disabled:opacity-50" 
                 placeholder="9876543210"
               />
             </div>
-            <Button type="button" onClick={handleNext} className="w-full bg-amber-500 hover:bg-amber-400 text-black font-bold rounded-[20px] h-14 mt-4 shadow-lg shadow-amber-500/20 active:scale-95 transition-all">
-              Next Step
-            </Button>
+            
+            {otpSent && (
+              <div className="animate-in fade-in slide-in-from-top-2 duration-300">
+                <label className="block text-sm font-semibold text-muted-foreground mb-2">Enter OTP *</label>
+                <Input 
+                  type="text" 
+                  value={otp} 
+                  onChange={(e) => setOtp(e.target.value)} 
+                  required
+                  className="bg-foreground/5 border-foreground/10 text-foreground placeholder:text-muted-foreground/50 rounded-[16px] py-6 h-14 shadow-inner" 
+                  placeholder="4-digit OTP"
+                  maxLength={4}
+                />
+              </div>
+            )}
+
+            {!otpSent ? (
+              <Button type="button" onClick={handleNext} disabled={isLoading} className="w-full bg-amber-500 hover:bg-amber-400 text-black font-bold rounded-[20px] h-14 mt-4 shadow-lg shadow-amber-500/20 active:scale-95 transition-all">
+                {isLoading ? "Sending..." : "Send OTP"}
+              </Button>
+            ) : (
+              <Button type="button" onClick={handleNext} className="w-full bg-amber-500 hover:bg-amber-400 text-black font-bold rounded-[20px] h-14 mt-4 shadow-lg shadow-amber-500/20 active:scale-95 transition-all">
+                Verify & Continue
+              </Button>
+            )}
           </div>
         )}
 
@@ -311,7 +350,7 @@ export default function RegisterForm() {
                 />
               </div>
               <span className="text-sm text-muted-foreground group-hover:text-foreground/90 leading-tight">
-                I accept the terms of service and acknowledge that astrology is for guidance purposes only.
+                I agree to the <a href="/terms" target="_blank" className="text-amber-500 hover:underline">Terms of Service (EULA)</a> and <a href="/privacy" target="_blank" className="text-amber-500 hover:underline">Privacy Policy</a>, and I acknowledge that astrology is for guidance purposes only.
               </span>
             </label>
 

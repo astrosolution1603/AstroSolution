@@ -18,7 +18,7 @@ async function main() {
       process.stdout.write(chunk.choices[0]?.delta?.content || "");
     }
     console.log("\nSuccess!");
-  } catch (error) {
+  } catch (error: any) {
     console.error("Error:", error.message);
   }
 }

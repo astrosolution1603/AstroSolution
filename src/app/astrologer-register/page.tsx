@@ -14,6 +14,7 @@ export default function AstrologerRegistrationPage() {
   const [phone, setPhone] = useState("");
   const [otp, setOtp] = useState("1234");
   const [authStep, setAuthStep] = useState<1 | 2>(1); // 1: Register, 2: OTP
+  const [acceptTerms, setAcceptTerms] = useState(false);
   
   // Application State
   const [experience, setExperience] = useState("");
@@ -71,6 +72,12 @@ export default function AstrologerRegistrationPage() {
   const handleRegister = async (e: React.FormEvent) => {
     e.preventDefault();
     setError("");
+
+    if (!acceptTerms) {
+      setError("You must accept the Terms of Service to apply.");
+      return;
+    }
+
     setLoading(true);
     
     try {
@@ -246,6 +253,19 @@ export default function AstrologerRegistrationPage() {
                       placeholder="9991896001"
                     />
                   </div>
+                  <label className="flex items-start gap-3 cursor-pointer group mt-4 mb-2">
+                    <div className="mt-1">
+                      <input 
+                        type="checkbox" 
+                        checked={acceptTerms}
+                        onChange={(e) => setAcceptTerms(e.target.checked)}
+                        className="w-5 h-5 rounded border-slate-200 dark:border-white/10 bg-slate-50 dark:bg-white/5 text-amber-500 focus:ring-amber-500 transition-all"
+                      />
+                    </div>
+                    <span className="text-sm text-slate-600 dark:text-white/70 leading-tight">
+                      I agree to the <a href="/terms" target="_blank" className="text-amber-500 hover:underline">Terms of Service (EULA)</a> and <a href="/privacy" target="_blank" className="text-amber-500 hover:underline">Privacy Policy</a>, and agree to abide by the zero-tolerance policy for objectionable behavior.
+                    </span>
+                  </label>
                   <button
                     type="submit"
                     disabled={loading}
@@ -369,20 +389,23 @@ export default function AstrologerRegistrationPage() {
               <div className="w-full p-6 bg-slate-50 dark:bg-slate-900 rounded-2xl mb-8 border border-slate-200 dark:border-white/10 flex justify-between items-center">
                 <div className="text-left">
                   <p className="text-sm text-slate-500 dark:text-white/50 font-medium uppercase tracking-wider">One-time Fee</p>
-                  <p className="text-2xl font-bold text-slate-900 dark:text-white">₹999</p>
+                  <p className="text-2xl font-bold text-slate-900 dark:text-white">₹1499</p>
                 </div>
                 <div className="text-amber-500 font-bold">Lifetime Access</div>
               </div>
 
               {error && <div className="w-full mb-6 p-4 bg-red-100 dark:bg-red-500/20 text-red-700 dark:text-red-400 rounded-xl text-sm">{error}</div>}
 
-              <button
-                onClick={handlePayment}
-                disabled={loading}
-                className="w-full py-4 bg-green-500 hover:bg-green-600 text-white font-bold rounded-xl transition-colors shadow-lg shadow-green-500/30 flex items-center justify-center gap-2 disabled:opacity-50"
-              >
-                {loading ? "Processing..." : "Pay ₹999 & Activate Account"}
-              </button>
+              <div className="w-full flex flex-col items-center">
+                <button
+                  onClick={handlePayment}
+                  disabled={loading}
+                  className="w-full py-4 bg-green-500 hover:bg-green-600 text-white font-bold rounded-xl transition-colors shadow-lg shadow-green-500/30 flex items-center justify-center gap-2 disabled:opacity-50"
+                >
+                  {loading ? "Processing..." : "Pay ₹1499 & Activate Account"}
+                </button>
+                <span className="text-[10px] text-slate-400 mt-2 font-medium">Powered by Google Play Billing / App Store</span>
+              </div>
             </div>
           ) : null}
 

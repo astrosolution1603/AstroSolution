@@ -138,20 +138,23 @@ export default function PoojaPage() {
               ))}
             </div>
             
-            <Button 
-              onClick={() => handleBook(pooja)}
-              disabled={!!bookingStatus[pooja.id]}
-              className={`w-full py-6 text-base font-bold transition-all ${
-                bookingStatus[pooja.id] === "success"
-                  ? "bg-green-500 hover:bg-green-600 text-white border-none"
-                  : pooja.popular 
-                    ? "bg-amber-500 hover:bg-amber-400 text-black" 
-                    : "bg-slate-100 hover:bg-slate-200 text-slate-800 border-slate-300 dark:bg-white/10 dark:hover:bg-white/20 dark:text-white border dark:border-white/20"
-              }`}
-            >
-              {bookingStatus[pooja.id] === "processing" ? "Processing..." : 
-               bookingStatus[pooja.id] === "success" ? "✓ Booking Requested" : "Book Now"}
-            </Button>
+            <div className="flex flex-col items-center">
+              <Button 
+                onClick={() => handleBook(pooja)}
+                disabled={!!bookingStatus[pooja.id]}
+                className={`w-full py-6 text-base font-bold transition-all ${
+                  bookingStatus[pooja.id] === "success"
+                    ? "bg-green-500 hover:bg-green-600 text-white border-none"
+                    : pooja.popular 
+                      ? "bg-amber-500 hover:bg-amber-400 text-black" 
+                      : "bg-slate-100 hover:bg-slate-200 text-slate-800 border-slate-300 dark:bg-white/10 dark:hover:bg-white/20 dark:text-white border dark:border-white/20"
+                }`}
+              >
+                {bookingStatus[pooja.id] === "processing" ? "Processing..." : 
+                 bookingStatus[pooja.id] === "success" ? "✓ Booking Requested" : "Book Now"}
+              </Button>
+              <span className="text-[10px] text-slate-400 mt-2 font-medium text-center">Payment processing for digital streaming is securely handled via Google Play Billing</span>
+            </div>
           </div>
         ))}
       </div>

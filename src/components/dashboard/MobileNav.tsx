@@ -7,6 +7,7 @@ import { cn } from "@/lib/utils";
 import { signOut, useSession } from "next-auth/react";
 import { ThemeToggle } from "@/components/ThemeToggle";
 import { Logo } from "@/components/ui/Logo";
+import { NotificationBell } from "@/components/ui/NotificationBell";
 
 const BOTTOM_TABS = [
   { icon: "💬", label: "Chat", href: "/chat" },
@@ -38,7 +39,8 @@ export default function MobileNav() {
           </button>
           <Logo className="scale-75 origin-left -ml-2" />
         </div>
-        <div className="flex items-center gap-3">
+        <div className="flex items-center gap-2">
+          <NotificationBell />
           <ThemeToggle />
           <div className="w-8 h-8 bg-gradient-to-br from-indigo-500 to-purple-500 rounded-full flex items-center justify-center text-white font-bold text-sm">
             {session?.user?.name?.charAt(0) || "U"}

@@ -1,6 +1,8 @@
 import { auth } from "@/lib/auth";
 import { prisma } from "@/lib/prisma";
 import { buildAstroSystemPrompt } from "@/lib/astro-prompt";
+import { containsProfanity } from "@/lib/profanity-filter";
+import { sendPushNotification } from "@/lib/push";
 import OpenAI from "openai";
 
 export async function POST(req: Request) {
@@ -21,6 +23,27 @@ export async function POST(req: Request) {
     const lastMsg = messages[messages.length - 1];
     if (!lastMsg?.content || lastMsg.content.length > 4000) {
       return new Response("Message too long", { status: 400 });
+    }
+
+    // Abuse Filter: Profanity check
+    if (containsProfanity(lastMsg.content)) {
+      return new Response("Your message contains inappropriate language. Please maintain a respectful tone.", { status: 422 });
+    }
+
+    // Rate Limiting: Max 40 AI messages per hour per user
+    const oneHourAgo = new Date(Date.now() - 60 * 60 * 1000);
+    const recentSessions = await prisma.chatSession.findMany({
+      where: { userId: session.user.id },
+      select: {
+        _count: {
+          select: { messages: { where: { role: 'user', createdAt: { gt: oneHourAgo } } } }
+        }
+      }
+    });
+    const messageCount = recentSessions.reduce((sum, s) => sum + s._count.messages, 0);
+    
+    if (messageCount >= 40) {
+      return new Response("Rate limit exceeded. You have reached the maximum allowed AI messages for this hour.", { status: 429 });
     }
 
     const systemPromptPromise = buildAstroSystemPrompt(session.user.id, language, astrologerId, messages.length);
@@ -51,6 +74,30 @@ export async function POST(req: Request) {
         // If chat is explicitly claimed by an astrologer, NEVER use AI.
         // If it's just a general chat but a human replied recently, wait for human.
         if (chatSession?.astrologerUserId || timeSinceHumanReply < TWO_MINUTES) {
+          
+          // Send Push Notification to Astrologer if they claimed it
+          if (chatSession?.astrologerUserId) {
+            sendPushNotification(
+              chatSession.astrologerUserId,
+              `New Message in ${chatSession.title}`,
+              lastMessage.content,
+              `/astrologer/chat?session=${sessionId}`
+            ).catch(console.error);
+            
+            // Check if In-App Notifications are enabled
+            const settings = await prisma.platformSettings.findUnique({ where: { id: "global" } });
+            if (settings?.inAppNotificationsEnabled) {
+              await prisma.inAppNotification.create({
+                data: {
+                  userId: chatSession.astrologerUserId,
+                  title: `New Message from ${session.user.name || "Client"}`,
+                  message: lastMessage.content,
+                  link: `/astrologer/chat?session=${sessionId}`
+                }
+              });
+            }
+          }
+
           return new Response(
             new ReadableStream({ start(c) { c.enqueue(new TextEncoder().encode('')); c.close(); } }),
             { headers: { "Content-Type": "text/plain; charset=utf-8", "X-Vercel-AI-Data-Stream": "v1", "Cache-Control": "no-cache" } }

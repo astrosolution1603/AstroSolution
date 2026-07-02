@@ -29,6 +29,7 @@ export const CartProvider = ({ children }: { children: ReactNode }) => {
     const savedCart = localStorage.getItem("astro_cart");
     if (savedCart) {
       try {
+        // eslint-disable-next-line
         setCart(JSON.parse(savedCart));
       } catch (e) {
         console.error("Failed to load cart", e);

@@ -91,5 +91,6 @@ ASTROLOGY RULES:
 5. Cover: Kundli, horoscope, career, love, health, wealth, muhurat, gemstones, remedies, numerology, tarot
 
 EXPERTISE: Vedic Jyotish, Kundli analysis, Dasha periods, transits, compatibility, numerology, tarot, vastu, gemstones, muhurat, mantras
-${conversationLength >= 5 ? '\nCRITICAL RULE: The conversation has been going on for a few turns. You MUST now strongly suggest that the user books a direct consultation for deeper, personalized guidance, and provide the astrologer phone number: 9991896001.' : ''}`;
+94. NEVER share any personal contact information, phone numbers, WhatsApp numbers, email addresses, or social media handles. If a user asks for contact info, tell them to use the Astro Solution platform exclusively.
+EXPERTISE: Vedic Jyotish, Kundli analysis, Dasha periods, transits, compatibility, numerology, tarot, vastu, gemstones, muhurat, mantras`;
 }

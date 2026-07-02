@@ -6,6 +6,7 @@ import { signOut, useSession } from "next-auth/react";
 import { cn } from "@/lib/utils";
 import { ThemeToggle } from "@/components/ThemeToggle";
 import { Logo } from "@/components/ui/Logo";
+import { NotificationBell } from "@/components/ui/NotificationBell";
 
 const NAV_ITEMS = [
   { icon: "💬", label: "Chat", desc: "AI Astrologer", href: "/chat" },
@@ -57,7 +58,8 @@ export default function Sidebar() {
 
       <div className="p-4 border-t border-border">
         <div className="bg-muted border border-border rounded-xl p-4 flex flex-col items-center relative">
-          <div className="absolute right-2 top-2">
+          <div className="absolute right-2 top-2 flex items-center gap-1">
+            <NotificationBell />
             <ThemeToggle />
           </div>
           <div className="w-10 h-10 bg-gradient-to-br from-indigo-500 to-purple-500 rounded-full flex items-center justify-center text-white font-bold mb-3">

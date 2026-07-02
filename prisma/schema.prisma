@@ -3,8 +3,9 @@ generator client {
 }
 
 datasource db {
-  provider = "sqlite"
-  url      = env("DATABASE_URL")
+  provider  = "postgresql"
+  url       = env("DATABASE_URL")
+  directUrl = env("DIRECT_URL")
 }
 
 model User {
@@ -36,9 +37,12 @@ model User {
   sessions           Session[]
   poojaBookings      PoojaBooking[]
   wallet             Wallet?
+  userWallet         UserWallet?
   transactions       Transaction[]
   orders             Order[]
   application        AstrologerApplication?
+  notificationSubscriptions NotificationSubscription[]
+  inAppNotifications InAppNotification[]
   
   // Astrologer Profile Fields
   astrologerRating     Float?    @default(5.0)
@@ -83,6 +87,7 @@ model PoojaBooking {
   poojaTitle  String
   price       Int
   status      String   @default("PENDING") // PENDING, CONFIRMED, COMPLETED, CANCELLED
+  videoUrl    String?
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
   user        User     @relation(fields: [userId], references: [id], onDelete: Cascade)
@@ -178,6 +183,15 @@ model Wallet {
   user             User     @relation(fields: [astrologerId], references: [id], onDelete: Cascade)
 }
 
+model UserWallet {
+  id        String   @id @default(cuid())
+  userId    String   @unique
+  balance   Int      @default(0)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
 model Transaction {
   id            String   @id @default(cuid())
   userId        String?  // Can be null if paid by guest, though we assume auth users
@@ -192,9 +206,20 @@ model Transaction {
 }
 
 model PlatformSettings {
-  id        String   @id @default("global")
-  themeName String   @default("cosmic") // cosmic, emerald, ruby, ocean
-  updatedAt DateTime @updatedAt
+  id                 String   @id @default("global")
+  themeName          String   @default("cosmic") // cosmic, emerald, ruby, ocean
+  fast2smsKey        String?
+  otpMessageTemplate String   @default("Your Astro Solution OTP is {#OTP#}. Do not share this.")
+  inAppNotificationsEnabled Boolean @default(true)
+  updatedAt          DateTime @updatedAt
+}
+
+model OtpCache {
+  id        String   @id @default(cuid())
+  phone     String   @unique
+  otp       String
+  expiresAt DateTime
+  createdAt DateTime @default(now())
 }
 
 model Order {
@@ -228,6 +253,32 @@ model PaymentSettings {
   upiId         String?  // e.g. merchant@paytm
   merchantName  String?  // e.g. Astro Solution
   razorpayKey   String?
-  razorpaySecret String?
-  updatedAt     DateTime @updatedAt
+  razorpaySecret   String?
+  razorpayMode     String   @default("TEST") // TEST or LIVE
+  paytmMerchantId  String?
+  paytmMerchantKey String?
+  paytmMode        String   @default("TEST") // TEST or LIVE
+  revenueCatApiKey String?
+  updatedAt        DateTime @updatedAt
+}
+
+model NotificationSubscription {
+  id        String   @id @default(cuid())
+  userId    String
+  endpoint  String
+  p256dh    String
+  auth      String
+  createdAt DateTime @default(now())
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+model InAppNotification {
+  id        String   @id @default(cuid())
+  userId    String
+  title     String
+  message   String
+  link      String?
+  isRead    Boolean  @default(false)
+  createdAt DateTime @default(now())
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
 }

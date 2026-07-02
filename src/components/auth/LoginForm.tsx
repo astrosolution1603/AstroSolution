@@ -6,15 +6,48 @@ import { useRouter } from "next/navigation";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 
-export default function LoginForm() {
+export default function LoginForm({ expectedRole = "USER" }: { expectedRole?: "USER" | "ASTROLOGER" }) {
   const router = useRouter();
   const [phone, setPhone] = useState("");
   const [otp, setOtp] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState("");
 
+  const [otpSent, setOtpSent] = useState(false);
+
+  const handleSendOtp = async () => {
+    if (!phone) {
+      setError("Please enter your mobile number first.");
+      return;
+    }
+    
+    setIsLoading(true);
+    setError("");
+    try {
+      const res = await fetch("/api/auth/send-otp", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ phone })
+      });
+      const data = await res.json();
+      
+      if (res.ok) {
+        setOtpSent(true);
+        alert(data.message || "OTP Sent!");
+      } else {
+        setError(data.error || "Failed to send OTP");
+      }
+    } catch (e) {
+      setError("An error occurred while sending OTP.");
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    if (!otpSent) return;
+
     setIsLoading(true);
     setError("");
 
@@ -22,6 +55,7 @@ export default function LoginForm() {
       const res = await signIn("credentials", {
         phone,
         otp,
+        expectedRole,
         redirect: false,
       });
 
@@ -59,7 +93,9 @@ export default function LoginForm() {
       {/* Decorative cosmic blur inside the card */}
       <div className="absolute top-0 right-0 w-32 h-32 bg-amber-500/20 blur-[50px] rounded-full pointer-events-none"></div>
 
-      <h2 className="text-2xl font-black text-foreground mb-6 relative z-10">Sign In</h2>
+      <h2 className="text-2xl font-black text-foreground mb-6 relative z-10">
+        {expectedRole === "ASTROLOGER" ? "Astrologer Sign In" : "Sign In"}
+      </h2>
       
       {error && (
         <div className="bg-red-500/10 border border-red-500/20 text-red-400 p-4 rounded-[16px] text-sm mb-6 relative z-10 font-medium">
@@ -75,28 +111,45 @@ export default function LoginForm() {
             value={phone} 
             onChange={(e) => setPhone(e.target.value)} 
             required
-            className="bg-foreground/5 border-foreground/10 text-foreground placeholder:text-muted-foreground/50 rounded-[16px] py-6 h-14 shadow-inner" 
+            disabled={otpSent}
+            className="bg-foreground/5 border-foreground/10 text-foreground placeholder:text-muted-foreground/50 rounded-[16px] py-6 h-14 shadow-inner disabled:opacity-50" 
             placeholder="9876543210"
           />
         </div>
-        <div>
-          <label className="block text-sm font-semibold text-muted-foreground mb-2">OTP (Test: 1234)</label>
-          <Input 
-            type="text" 
-            value={otp} 
-            onChange={(e) => setOtp(e.target.value)} 
-            required
-            className="bg-foreground/5 border-foreground/10 text-foreground placeholder:text-muted-foreground/50 rounded-[16px] py-6 h-14 shadow-inner" 
-            placeholder="Enter OTP"
-          />
-        </div>
-        <Button 
-          type="submit" 
-          disabled={isLoading} 
-          className="w-full bg-amber-500 hover:bg-amber-400 text-black font-bold rounded-[20px] h-14 mt-4 shadow-lg shadow-amber-500/20 active:scale-95 transition-all"
-        >
-          {isLoading ? "Signing in..." : "Sign In"}
-        </Button>
+        
+        {otpSent && (
+          <div className="animate-in fade-in slide-in-from-top-2 duration-300">
+            <label className="block text-sm font-semibold text-muted-foreground mb-2">Enter OTP</label>
+            <Input 
+              type="text" 
+              value={otp} 
+              onChange={(e) => setOtp(e.target.value)} 
+              required
+              className="bg-foreground/5 border-foreground/10 text-foreground placeholder:text-muted-foreground/50 rounded-[16px] py-6 h-14 shadow-inner" 
+              placeholder="4-digit OTP"
+              maxLength={4}
+            />
+          </div>
+        )}
+
+        {!otpSent ? (
+          <Button 
+            type="button" 
+            onClick={handleSendOtp}
+            disabled={isLoading || !phone} 
+            className="w-full bg-amber-500 hover:bg-amber-400 text-black font-bold rounded-[20px] h-14 mt-4 shadow-lg shadow-amber-500/20 active:scale-95 transition-all"
+          >
+            {isLoading ? "Sending..." : "Send OTP"}
+          </Button>
+        ) : (
+          <Button 
+            type="submit" 
+            disabled={isLoading || !otp} 
+            className="w-full bg-amber-500 hover:bg-amber-400 text-black font-bold rounded-[20px] h-14 mt-4 shadow-lg shadow-amber-500/20 active:scale-95 transition-all"
+          >
+            {isLoading ? "Signing in..." : "Sign In"}
+          </Button>
+        )}
       </form>
 
       <div className="mt-8 flex items-center relative z-10">

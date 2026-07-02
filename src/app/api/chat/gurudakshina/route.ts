@@ -36,8 +36,19 @@ export async function POST(req: Request) {
   const platformCut = amount - astrologerCut;
 
   try {
-    // Perform transaction, update wallet, and send chat message in a single Prisma transaction
+    // Perform transaction, update wallets, and send chat message in a single Prisma transaction
     await prisma.$transaction(async (tx) => {
+      // 0. Check User Wallet Balance
+      const userWallet = await tx.userWallet.findUnique({ where: { userId: session.user.id } });
+      if (!userWallet || userWallet.balance < amount) {
+        throw new Error("INSUFFICIENT_FUNDS");
+      }
+
+      // Deduct from user
+      await tx.userWallet.update({
+        where: { userId: session.user.id },
+        data: { balance: { decrement: amount } }
+      });
       // 1. Create Transaction record
       await tx.transaction.create({
         data: {
@@ -79,7 +90,10 @@ export async function POST(req: Request) {
     });
 
     return Response.json({ success: true });
-  } catch {
+  } catch (err: any) {
+    if (err.message === "INSUFFICIENT_FUNDS") {
+      return new Response("Insufficient wallet balance", { status: 402 });
+    }
     return new Response("Internal Server Error", { status: 500 });
   }
 }

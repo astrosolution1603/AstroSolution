@@ -33,12 +33,17 @@ export async function POST(req: Request) {
       return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
     }
 
-    const { activeMethod, upiId, merchantName, razorpayKey, razorpaySecret } = await req.json();
+    const { 
+      activeMethod, upiId, merchantName, 
+      razorpayKey, razorpaySecret, razorpayMode, 
+      paytmMerchantId, paytmMerchantKey, paytmMode, 
+      revenueCatApiKey 
+    } = await req.json();
 
     const settings = await prisma.paymentSettings.upsert({
       where: { id: "global" },
-      update: { activeMethod, upiId, merchantName, razorpayKey, razorpaySecret },
-      create: { id: "global", activeMethod, upiId, merchantName, razorpayKey, razorpaySecret }
+      update: { activeMethod, upiId, merchantName, razorpayKey, razorpaySecret, razorpayMode, paytmMerchantId, paytmMerchantKey, paytmMode, revenueCatApiKey },
+      create: { id: "global", activeMethod, upiId, merchantName, razorpayKey, razorpaySecret, razorpayMode, paytmMerchantId, paytmMerchantKey, paytmMode, revenueCatApiKey }
     });
 
     return NextResponse.json({ success: true, settings });

@@ -39,6 +39,10 @@ export async function POST(req: Request) {
     const settings = await prisma.paymentSettings.findUnique({ where: { id: "global" } });
     const activeMethod = settings?.activeMethod || "SIMULATED";
 
+    if (activeMethod === "SIMULATED" && process.env.NODE_ENV === "production") {
+      return NextResponse.json({ error: "Simulated payments are disabled in production. Please configure Razorpay or Paytm in the Master Panel." }, { status: 403 });
+    }
+
     let paymentStatus = "COMPLETED";
     if (activeMethod === "MANUAL_UPI_QR") {
       paymentStatus = "PENDING";

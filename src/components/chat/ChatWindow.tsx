@@ -98,6 +98,8 @@ export default function ChatWindow({ sessionId, initialMessages = [], userName, 
       });
       if (res.ok) {
         // Message will be picked up by the polling
+      } else if (res.status === 402) {
+        alert("Insufficient balance in your Astro Wallet. Please go to your Profile to top up.");
       } else {
         alert("Payment failed");
       }
@@ -321,6 +323,13 @@ export default function ChatWindow({ sessionId, initialMessages = [], userName, 
                 <AlertTriangle className="w-4 h-4" />
                 Report Issue
               </button>
+              <button 
+                onClick={() => { setShowMenu(false); alert("User has been blocked."); router.push("/chat"); }}
+                className="w-full text-left px-4 py-3 text-sm font-medium text-red-600 bg-red-50 hover:bg-red-100 flex items-center gap-2 border-t border-border"
+              >
+                <X className="w-4 h-4" />
+                Block User
+              </button>
             </div>
           )}
         </div>
@@ -394,6 +403,7 @@ export default function ChatWindow({ sessionId, initialMessages = [], userName, 
                     ₹5100
                   </button>
                 </div>
+                <span className="text-[10px] text-amber-600/60 dark:text-amber-400/50 mt-3 font-medium">Powered by Google Play Billing / App Store</span>
               </div>
             )}
 

@@ -6,15 +6,29 @@ import { ThemeProvider } from "@/components/ThemeProvider";
 
 const inter = Inter({ subsets: ["latin"] });
 
+export const dynamic = "force-dynamic";
+
 export const metadata: Metadata = {
   title: "Astro Solution — AI Vedic Astrologer",
   description: "Personalized AI Vedic Astrology. Ask anything about your destiny.",
 };
 
+import { unstable_cache } from "next/cache";
 import { prisma } from "@/lib/prisma";
+
+const getGlobalSettings = unstable_cache(
+  async () => {
+    return prisma.platformSettings.findUnique({
+      where: { id: "global" }
+    });
+  },
+  ['global-theme-settings'],
+  { revalidate: 60, tags: ['theme'] }
+);
 
 import { CartProvider } from "@/context/CartContext";
 import { CartSidebar } from "@/components/shop/CartSidebar";
+import { CapacitorAppListener } from "@/components/CapacitorAppListener";
 
 export default async function RootLayout({
   children,
@@ -23,9 +37,7 @@ export default async function RootLayout({
 }) {
   let themeName = "cosmic";
   try {
-    const settings = await prisma.platformSettings.findUnique({
-      where: { id: "global" }
-    });
+    const settings = await getGlobalSettings();
     if (settings) {
       themeName = settings.themeName;
     }
@@ -47,6 +59,7 @@ export default async function RootLayout({
         >
           <SessionProvider>
             <CartProvider>
+              <CapacitorAppListener />
               {/* Dynamic Theme Background */}
               <div className={`fixed inset-0 z-[-1] theme-bg-${themeName}`}></div>
               

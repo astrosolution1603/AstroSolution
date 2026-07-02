@@ -18,7 +18,12 @@ export const CheckoutModal = ({ onClose }: { onClose: () => void }) => {
     state: ""
   });
   
-  const [settings, setSettings] = useState<any>(null);
+  interface PaymentSettings {
+    activeMethod: string;
+    upiId?: string;
+    merchantName?: string;
+  }
+  const [settings, setSettings] = useState<PaymentSettings | null>(null);
   const [utrNumber, setUtrNumber] = useState("");
   const [loading, setLoading] = useState(true);
 

@@ -1,7 +1,6 @@
 import Link from "next/link";
+import Image from "next/image";
 import { Star, Sparkles, UserPlus, LogIn, ArrowRight } from "lucide-react";
-import DemoThemeSwitcher from "@/components/demo/DemoThemeSwitcher";
-
 import { Logo } from "@/components/ui/Logo";
 
 export default function DemoHomePage() {
@@ -12,10 +11,12 @@ export default function DemoHomePage() {
         {/* Global Background Layer - Lord Ganesha */}
         <div className="fixed top-0 left-0 w-full h-[120vh] overflow-hidden pointer-events-none z-0 bg-black">
           <div className="absolute inset-0 z-10 opacity-50 mix-blend-screen">
-            <img 
+            <Image 
               src="/lord_ganesha_bg.png" 
               alt="Lord Ganesha Background" 
-              className="w-full h-full object-cover object-center"
+              fill
+              priority
+              className="object-cover object-center"
             />
           </div>
       </div>
@@ -77,12 +78,48 @@ export default function DemoHomePage() {
           </div>
         </div>
       </section>
-
-
-
-
-
-      {/* Join as Astrologer Section - iOS Style Card */}
+      
+      {/* Features Section */}
+      <section id="features" className="px-6 py-24 relative z-10">
+        <div className="container mx-auto max-w-6xl text-center">
+          <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white/10 text-white text-xs font-bold uppercase tracking-widest mb-6">
+            Cosmic Offerings
+          </div>
+          <h2 className="text-3xl md:text-5xl font-black mb-16">
+            Everything you need for your <br className="hidden md:block" />
+            <span className="bg-gradient-to-r from-amber-400 to-amber-600 text-transparent bg-clip-text">Spiritual Journey</span>
+          </h2>
+          
+          <div className="grid md:grid-cols-3 gap-8 text-left">
+            {/* Feature 1 */}
+            <div className="bg-white/5 border border-white/10 rounded-[32px] p-8 backdrop-blur-md hover:bg-white/10 transition-colors shadow-2xl">
+              <div className="w-14 h-14 bg-amber-500 rounded-2xl flex items-center justify-center text-black mb-6 shadow-lg">
+                <Sparkles className="w-7 h-7" />
+              </div>
+              <h3 className="text-2xl font-bold mb-3">Live Astrology Chat</h3>
+              <p className="text-white/70 leading-relaxed font-medium">Connect instantly with verified Vedic astrologers for personalized guidance on career, love, and life.</p>
+            </div>
+            
+            {/* Feature 2 */}
+            <div className="bg-white/5 border border-white/10 rounded-[32px] p-8 backdrop-blur-md hover:bg-white/10 transition-colors shadow-2xl">
+              <div className="w-14 h-14 bg-amber-500 rounded-2xl flex items-center justify-center text-black mb-6 shadow-lg">
+                <Star className="w-7 h-7" />
+              </div>
+              <h3 className="text-2xl font-bold mb-3">Authentic Gemstones</h3>
+              <p className="text-white/70 leading-relaxed font-medium">Shop for certified, lab-tested precious gemstones to balance your planetary energies and doshas.</p>
+            </div>
+            
+            {/* Feature 3 */}
+            <div className="bg-white/5 border border-white/10 rounded-[32px] p-8 backdrop-blur-md hover:bg-white/10 transition-colors shadow-2xl">
+              <div className="w-14 h-14 bg-amber-500 rounded-2xl flex items-center justify-center text-black mb-6 shadow-lg">
+                <UserPlus className="w-7 h-7" />
+              </div>
+              <h3 className="text-2xl font-bold mb-3">Online Pujas</h3>
+              <p className="text-white/70 leading-relaxed font-medium">Book authentic Vedic rituals and pujas performed by experienced pandits on your behalf.</p>
+            </div>
+          </div>
+        </div>
+      </section>      {/* Join as Astrologer Section - iOS Style Card */}
       <section id="astrologer" className="px-4 py-12 md:py-24 relative z-10">
         <div className="container mx-auto">
           {/* Squirrely iOS Card */}
@@ -114,7 +151,7 @@ export default function DemoHomePage() {
                     <ArrowRight className="w-5 h-5" />
                   </Link>
                   <Link 
-                    href="/login" 
+                    href="/astrologer-login" 
                     className="inline-flex w-full sm:w-auto items-center justify-center gap-2 px-8 py-4 md:py-5 bg-slate-100 hover:bg-slate-200 text-black font-bold rounded-[24px] transition-all active:scale-95 shadow-xl"
                   >
                     <LogIn className="w-5 h-5" />
@@ -165,7 +202,19 @@ export default function DemoHomePage() {
 
       <div className="pb-32 md:pb-12"></div>
 
-      <DemoThemeSwitcher />
+      <div className="pb-32 md:pb-12"></div>
+      {/* Footer */}
+      <footer className="relative z-10 border-t border-white/10 bg-black py-8 md:py-12 mt-12">
+        <div className="container mx-auto px-6 text-center text-white/50 text-sm">
+          <div className="flex flex-col md:flex-row items-center justify-center gap-4 md:gap-8 mb-6">
+            <Link href="/privacy" className="hover:text-white transition-colors">Privacy Policy</Link>
+            <Link href="/terms" className="hover:text-white transition-colors">Terms of Service (EULA)</Link>
+            <a href="mailto:support@astrosolution.com" className="hover:text-white transition-colors">Contact Support</a>
+          </div>
+          <p>&copy; {new Date().getFullYear()} Astro Solution. All rights reserved.</p>
+          <p className="mt-2 text-xs text-white/30">Astrological guidance is for spiritual and entertainment purposes only.</p>
+        </div>
+      </footer>
     </div>
     </div>
   );

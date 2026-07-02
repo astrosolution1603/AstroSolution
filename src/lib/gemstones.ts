@@ -216,7 +216,7 @@ export const gemstones: Gemstone[] = [
     price: 5704,
     image: "https://astrotalk.store/cdn/shop/files/Turquoise_1_b2b11089-4a88-4b22-98da-d3971331e512_large.webp?v=1771406253",
     planetOrSign: "Astrology Gem",
-    description: "Good Health"
+    description: "Spiritual Wellness"
   },
   {
     id: "agate",

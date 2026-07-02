@@ -30,9 +30,13 @@ export async function GET(req: Request) {
     where: { id: session.user.id },
     select: { role: true },
   });
-  const isAstrologer = currentUser?.role === "ASTROLOGER" || currentUser?.role === "ADMIN";
+  const isAstrologer = currentUser?.role === "ASTROLOGER";
+  const isAdmin = currentUser?.role === "ADMIN";
+  const isUnassigned = !chatSession.astrologerUserId;
 
-  if (!isOwner && !isAssignedAstrologer && !isAstrologer) {
+  // Allow astrologer to read if it's assigned to them, OR if it's currently unassigned (waiting room).
+  // Do NOT allow Astrologer A to read Astrologer B's active chats.
+  if (!isOwner && !isAssignedAstrologer && !(isAstrologer && isUnassigned) && !isAdmin) {
     return new Response("Forbidden", { status: 403 });
   }
 

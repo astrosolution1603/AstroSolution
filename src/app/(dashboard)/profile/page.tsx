@@ -1,6 +1,8 @@
 import { auth } from "@/lib/auth";
 import { prisma } from "@/lib/prisma";
 import { Button } from "@/components/ui/button";
+import { DeleteAccountButton } from "@/components/profile/DeleteAccountButton";
+import { WalletSection } from "@/components/profile/WalletSection";
 
 export default async function ProfilePage() {
   const session = await auth();
@@ -14,6 +16,8 @@ export default async function ProfilePage() {
         <h1 className="text-3xl font-bold text-slate-900 dark:text-white mb-2">Profile</h1>
         <p className="text-slate-600 dark:text-white/60">Manage your personal and birth details.</p>
       </div>
+
+      <WalletSection />
 
       <div className="bg-white dark:bg-white/5 border border-slate-200 dark:border-white/10 rounded-2xl p-6 md:p-8 shadow-sm dark:shadow-none">
         <div className="flex items-start justify-between mb-8">
@@ -70,10 +74,11 @@ export default async function ProfilePage() {
           </div>
         </div>
 
-        <div className="mt-8 pt-6 border-t border-slate-200 dark:border-white/10">
+        <div className="mt-8 pt-6 border-t border-slate-200 dark:border-white/10 flex flex-col sm:flex-row justify-between items-center gap-4">
           <Button variant="outline" className="bg-transparent border-slate-300 dark:border-white/20 text-slate-700 dark:text-white hover:bg-slate-100 dark:hover:bg-white/10 w-full sm:w-auto">
             Edit Profile Details
           </Button>
+          <DeleteAccountButton />
         </div>
       </div>
     </div>

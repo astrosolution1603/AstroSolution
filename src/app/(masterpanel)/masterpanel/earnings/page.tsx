@@ -133,7 +133,7 @@ export default async function MasterPanelEarningsPage() {
                       </td>
                       <td className="px-6 py-4">
                         {wallet.availableBalance > 0 ? (
-                          <MarkPaidButton walletId={wallet.id} amount={wallet.availableBalance} astrologerName={wallet.user.name} />
+                          <MarkPaidButton astrologerId={wallet.astrologerId} disabled={false} />
                         ) : (
                           <span className="text-xs text-slate-400 font-bold uppercase tracking-wider">Settled</span>
                         )}

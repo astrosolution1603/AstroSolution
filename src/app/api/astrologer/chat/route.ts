@@ -1,5 +1,6 @@
 import { auth } from "@/lib/auth";
 import { prisma } from "@/lib/prisma";
+import { containsProfanity } from "@/lib/profanity-filter";
 
 // Phone number detection regex - blocks 10+ digit sequences
 const PHONE_REGEX = /(\+?[\d\s\-().]{10,}|\b\d{10}\b)/g;
@@ -31,6 +32,13 @@ export async function POST(req: Request) {
     }, { status: 422 });
   }
 
+  // Abuse Filter: Profanity check
+  if (containsProfanity(content)) {
+    return Response.json({
+      error: "Your message contains inappropriate language. Please maintain a professional tone.",
+    }, { status: 422 });
+  }
+
   const chatSession = await prisma.chatSession.findUnique({ where: { id: sessionId } });
   if (!chatSession) return new Response("Session not found", { status: 404 });
 
@@ -59,6 +67,19 @@ export async function POST(req: Request) {
       astrologerUserId: session.user.id,
     },
   });
+
+  // Trigger In-App Notification to User
+  const settings = await prisma.platformSettings.findUnique({ where: { id: "global" } });
+  if (settings?.inAppNotificationsEnabled) {
+    await prisma.inAppNotification.create({
+      data: {
+        userId: chatSession.userId,
+        title: `Astrologer ${astrologerUser.name} Replied`,
+        message: content.trim(),
+        link: `/chat?session=${sessionId}`
+      }
+    });
+  }
 
   return Response.json(message, { status: 201 });
 }

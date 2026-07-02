@@ -5,6 +5,7 @@ import { signOut } from "next-auth/react";
 import { formatDistanceToNow } from "date-fns";
 import { Send, LogOut, MessageCircle, AlertCircle, Zap } from "lucide-react";
 import { Logo } from "@/components/ui/Logo";
+import { NotificationBell } from "@/components/ui/NotificationBell";
 
 interface Message {
   id: string;
@@ -131,10 +132,13 @@ export default function AstrologerDashboard({ astrologerName, astrologerId }: { 
         <div className="p-5 border-b border-foreground/10">
           <div className="flex items-center justify-between">
             <Logo />
-            <button onClick={async () => await signOut({ callbackUrl: '/' })} className="flex items-center gap-1.5 text-xs font-bold text-red-500 hover:text-red-400 bg-red-500/10 hover:bg-red-500/20 px-3 py-1.5 rounded-lg transition-colors">
-              <LogOut className="w-4 h-4" />
-              Sign Out
-            </button>
+            <div className="flex items-center gap-3">
+              <NotificationBell />
+              <button onClick={async () => await signOut({ callbackUrl: '/' })} className="flex items-center gap-1.5 text-xs font-bold text-red-500 hover:text-red-400 bg-red-500/10 hover:bg-red-500/20 px-3 py-1.5 rounded-lg transition-colors">
+                <LogOut className="w-4 h-4" />
+                Sign Out
+              </button>
+            </div>
           </div>
           <div className="mt-3 px-3 py-2 bg-amber-500/10 border border-amber-500/30 rounded-xl">
             <div className="text-xs text-amber-400 font-medium">{astrologerName}</div>

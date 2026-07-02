@@ -1,0 +1,549 @@
+@import "tailwindcss";
+
+@custom-variant dark (&:is(.dark *));
+
+@theme {
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+
+  --color-destructive: var(--destructive);
+  --color-destructive-foreground: var(--destructive-foreground);
+
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+
+  --radius-lg: var(--radius);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-sm: calc(var(--radius) - 4px);
+
+  --animate-accordion-down: accordion-down 0.2s ease-out;
+  --animate-accordion-up: accordion-up 0.2s ease-out;
+
+  @keyframes accordion-down {
+    from { height: 0; }
+    to { height: var(--radix-accordion-content-height); }
+  }
+  @keyframes accordion-up {
+    from { height: var(--radix-accordion-content-height); }
+    to { height: 0; }
+  }
+}
+
+@utility container {
+  margin-inline: auto;
+  padding-inline: 2rem;
+  @media (width >= --theme(--breakpoint-sm)) {
+    max-width: none;
+  }
+  @media (width >= 1400px) {
+    max-width: 1400px;
+  }
+}
+
+@layer base {
+  *,
+  ::after,
+  ::before,
+  ::backdrop,
+  ::file-selector-button {
+    border-color: var(--color-gray-200, currentColor);
+  }
+
+  body {
+    font-family: Arial, Helvetica, sans-serif;
+    @apply text-foreground;
+    background-color: transparent;
+  }
+}
+
+@layer base {
+  /* ================== COSMIC (DEFAULT) ================== */
+  :root, [data-theme="cosmic"] {
+    --background: hsl(40, 33%, 98%); 
+    --foreground: hsl(240, 10%, 12%); 
+    --card: hsl(0, 0%, 100%);
+    --card-foreground: hsl(240, 10%, 12%);
+    --popover: hsl(0, 0%, 100%);
+    --popover-foreground: hsl(240, 10%, 12%);
+    --primary: hsl(240, 10%, 12%);
+    --primary-foreground: hsl(40, 33%, 98%);
+    --secondary: hsl(38, 40%, 94%); 
+    --secondary-foreground: hsl(240, 10%, 20%);
+    --muted: hsl(38, 30%, 95%);
+    --muted-foreground: hsl(240, 5%, 40%);
+    --accent: hsl(38, 92%, 50%); 
+    --accent-foreground: hsl(240, 10%, 10%);
+    --destructive: hsl(0, 72%, 51%);
+    --destructive-foreground: hsl(40, 33%, 98%);
+    --border: hsl(38, 20%, 88%);
+    --input: hsl(38, 20%, 88%);
+    --ring: hsl(38, 92%, 50%);
+    --radius: 0.75rem;
+  }
+  .dark, [data-theme="cosmic"].dark {
+    --background: hsl(245, 45%, 7%); 
+    --foreground: hsl(40, 20%, 96%);
+    --card: hsl(245, 35%, 10%);
+    --card-foreground: hsl(40, 20%, 96%);
+    --popover: hsl(245, 35%, 10%);
+    --popover-foreground: hsl(40, 20%, 96%);
+    --primary: hsl(40, 20%, 96%);
+    --primary-foreground: hsl(245, 45%, 10%);
+    --secondary: hsl(245, 25%, 16%);
+    --secondary-foreground: hsl(40, 20%, 96%);
+    --muted: hsl(245, 25%, 16%);
+    --muted-foreground: hsl(240, 10%, 65%);
+    --accent: hsl(38, 92%, 55%); 
+    --accent-foreground: hsl(245, 45%, 8%);
+    --destructive: hsl(0, 62%, 45%);
+    --destructive-foreground: hsl(40, 20%, 96%);
+    --border: hsl(245, 25%, 18%);
+    --input: hsl(245, 25%, 18%);
+    --ring: hsl(38, 92%, 55%);
+  }
+
+  /* ================== MYSTIC ================== */
+  [data-theme="mystic"] {
+    --background: hsl(140, 20%, 98%);
+    --foreground: hsl(160, 30%, 15%);
+    --card: hsl(0, 0%, 100% / 0.7); /* glassmorphism */
+    --card-foreground: hsl(160, 30%, 15%);
+    --popover: hsl(0, 0%, 100% / 0.8);
+    --popover-foreground: hsl(160, 30%, 15%);
+    --primary: hsl(160, 60%, 35%);
+    --primary-foreground: hsl(0, 0%, 100%);
+    --secondary: hsl(140, 20%, 90% / 0.5);
+    --secondary-foreground: hsl(160, 60%, 25%);
+    --muted: hsl(140, 15%, 94% / 0.5);
+    --muted-foreground: hsl(160, 10%, 45%);
+    --accent: hsl(40, 90%, 50%);
+    --accent-foreground: hsl(160, 60%, 15%);
+    --border: hsl(140, 15%, 85% / 0.5);
+    --input: hsl(140, 15%, 85% / 0.5);
+    --ring: hsl(160, 60%, 45%);
+    --radius: 1.25rem;
+  }
+  [data-theme="mystic"].dark {
+    --background: hsl(160, 30%, 8%);
+    --foreground: hsl(140, 20%, 95%);
+    --card: hsl(160, 25%, 12% / 0.5);
+    --card-foreground: hsl(140, 20%, 95%);
+    --popover: hsl(160, 25%, 12% / 0.8);
+    --popover-foreground: hsl(140, 20%, 95%);
+    --primary: hsl(160, 60%, 45%);
+    --primary-foreground: hsl(0, 0%, 100%);
+    --secondary: hsl(160, 20%, 18% / 0.5);
+    --secondary-foreground: hsl(140, 20%, 90%);
+    --muted: hsl(160, 20%, 15% / 0.5);
+    --muted-foreground: hsl(160, 10%, 65%);
+    --accent: hsl(40, 90%, 55%);
+    --accent-foreground: hsl(160, 30%, 10%);
+    --border: hsl(160, 20%, 20% / 0.5);
+    --input: hsl(160, 20%, 20% / 0.5);
+    --ring: hsl(160, 60%, 45%);
+  }
+
+  /* ================== ROYAL ================== */
+  [data-theme="royal"] {
+    --background: hsl(0, 0%, 98%);
+    --foreground: hsl(350, 30%, 15%);
+    --card: hsl(0, 0%, 100%);
+    --card-foreground: hsl(350, 30%, 15%);
+    --popover: hsl(0, 0%, 100%);
+    --popover-foreground: hsl(350, 30%, 15%);
+    --primary: hsl(350, 70%, 40%);
+    --primary-foreground: hsl(0, 0%, 100%);
+    --secondary: hsl(40, 80%, 90%);
+    --secondary-foreground: hsl(350, 70%, 30%);
+    --muted: hsl(350, 15%, 94%);
+    --muted-foreground: hsl(350, 10%, 45%);
+    --accent: hsl(45, 90%, 45%);
+    --accent-foreground: hsl(350, 30%, 15%);
+    --border: hsl(45, 50%, 80%);
+    --input: hsl(350, 15%, 85%);
+    --ring: hsl(45, 90%, 45%);
+    --radius: 0rem;
+  }
+  [data-theme="royal"].dark {
+    --background: hsl(350, 30%, 8%);
+    --foreground: hsl(40, 80%, 95%);
+    --card: hsl(350, 25%, 12%);
+    --card-foreground: hsl(40, 80%, 95%);
+    --popover: hsl(350, 25%, 12%);
+    --popover-foreground: hsl(40, 80%, 95%);
+    --primary: hsl(350, 70%, 50%);
+    --primary-foreground: hsl(0, 0%, 100%);
+    --secondary: hsl(40, 30%, 15%);
+    --secondary-foreground: hsl(40, 80%, 90%);
+    --muted: hsl(350, 20%, 15%);
+    --muted-foreground: hsl(350, 10%, 65%);
+    --accent: hsl(45, 90%, 50%);
+    --accent-foreground: hsl(350, 30%, 8%);
+    --border: hsl(45, 30%, 25%);
+    --input: hsl(350, 20%, 20%);
+    --ring: hsl(45, 90%, 50%);
+  }
+
+  /* ================== OCEAN ================== */
+  [data-theme="ocean"] {
+    --background: hsl(210, 20%, 98%);
+    --foreground: hsl(210, 30%, 15%);
+    --card: hsl(0, 0%, 100%);
+    --card-foreground: hsl(210, 30%, 15%);
+    --popover: hsl(0, 0%, 100%);
+    --popover-foreground: hsl(210, 30%, 15%);
+    --primary: hsl(210, 70%, 40%);
+    --primary-foreground: hsl(0, 0%, 100%);
+    --secondary: hsl(210, 20%, 90%);
+    --secondary-foreground: hsl(210, 70%, 30%);
+    --muted: hsl(210, 15%, 94%);
+    --muted-foreground: hsl(210, 10%, 45%);
+    --accent: hsl(190, 80%, 45%);
+    --accent-foreground: hsl(0, 0%, 100%);
+    --border: hsl(210, 15%, 85%);
+    --input: hsl(210, 15%, 85%);
+    --ring: hsl(190, 80%, 45%);
+    --radius: 1.5rem;
+  }
+  [data-theme="ocean"].dark {
+    --background: hsl(210, 30%, 8%);
+    --foreground: hsl(210, 20%, 95%);
+    --card: hsl(210, 25%, 12%);
+    --card-foreground: hsl(210, 20%, 95%);
+    --popover: hsl(210, 25%, 12%);
+    --popover-foreground: hsl(210, 20%, 95%);
+    --primary: hsl(210, 70%, 50%);
+    --primary-foreground: hsl(0, 0%, 100%);
+    --secondary: hsl(210, 20%, 18%);
+    --secondary-foreground: hsl(210, 20%, 90%);
+    --muted: hsl(210, 20%, 15%);
+    --muted-foreground: hsl(210, 10%, 65%);
+    --accent: hsl(190, 80%, 50%);
+    --accent-foreground: hsl(210, 30%, 8%);
+    --border: hsl(210, 20%, 20%);
+    --input: hsl(210, 20%, 20%);
+    --ring: hsl(190, 80%, 50%);
+  }
+
+  /* ================== VEDIC ================== */
+  [data-theme="vedic"] {
+    --background: hsl(35, 100%, 98%);
+    --foreground: hsl(20, 40%, 15%);
+    --card: hsl(0, 0%, 100%);
+    --card-foreground: hsl(20, 40%, 15%);
+    --popover: hsl(0, 0%, 100%);
+    --popover-foreground: hsl(20, 40%, 15%);
+    --primary: hsl(25, 95%, 55%);
+    --primary-foreground: hsl(0, 0%, 100%);
+    --secondary: hsl(45, 100%, 90%);
+    --secondary-foreground: hsl(25, 90%, 30%);
+    --muted: hsl(35, 30%, 95%);
+    --muted-foreground: hsl(20, 20%, 45%);
+    --accent: hsl(45, 95%, 50%);
+    --accent-foreground: hsl(20, 40%, 15%);
+    --border: hsl(35, 30%, 85%);
+    --input: hsl(35, 30%, 85%);
+    --ring: hsl(25, 95%, 55%);
+    --radius: 0.5rem;
+  }
+  [data-theme="vedic"].dark {
+    --background: hsl(20, 40%, 8%);
+    --foreground: hsl(35, 100%, 95%);
+    --card: hsl(20, 35%, 12%);
+    --card-foreground: hsl(35, 100%, 95%);
+    --popover: hsl(20, 35%, 12%);
+    --popover-foreground: hsl(35, 100%, 95%);
+    --primary: hsl(25, 95%, 60%);
+    --primary-foreground: hsl(20, 40%, 8%);
+    --secondary: hsl(20, 30%, 18%);
+    --secondary-foreground: hsl(45, 100%, 90%);
+    --muted: hsl(20, 30%, 15%);
+    --muted-foreground: hsl(20, 20%, 65%);
+    --accent: hsl(45, 95%, 55%);
+    --accent-foreground: hsl(20, 40%, 8%);
+    --border: hsl(20, 30%, 20%);
+    --input: hsl(20, 30%, 20%);
+    --ring: hsl(25, 95%, 60%);
+  }
+
+  /* ================== MIDNIGHT ================== */
+  /* Midnight is ALWAYS dark, pure AMOLED black */
+  [data-theme="midnight"], [data-theme="midnight"].dark {
+    --background: hsl(0, 0%, 0%);
+    --foreground: hsl(0, 0%, 95%);
+    --card: hsl(0, 0%, 4%);
+    --card-foreground: hsl(0, 0%, 95%);
+    --popover: hsl(0, 0%, 4%);
+    --popover-foreground: hsl(0, 0%, 95%);
+    --primary: hsl(190, 100%, 50%); /* neon cyan */
+    --primary-foreground: hsl(0, 0%, 0%);
+    --secondary: hsl(0, 0%, 8%);
+    --secondary-foreground: hsl(190, 100%, 50%);
+    --muted: hsl(0, 0%, 8%);
+    --muted-foreground: hsl(0, 0%, 60%);
+    --accent: hsl(280, 100%, 60%); /* neon purple */
+    --accent-foreground: hsl(0, 0%, 100%);
+    --border: hsl(0, 0%, 12%);
+    --input: hsl(0, 0%, 12%);
+    --ring: hsl(190, 100%, 50%);
+    --radius: 0.25rem;
+  }
+
+  /* ================== SNOWFALL ================== */
+  /* Snowfall is ALWAYS light, pure clean white */
+  [data-theme="snowfall"], [data-theme="snowfall"].dark {
+    --background: hsl(0, 0%, 100%);
+    --foreground: hsl(220, 30%, 15%);
+    --card: hsl(0, 0%, 99%);
+    --card-foreground: hsl(220, 30%, 15%);
+    --popover: hsl(0, 0%, 100%);
+    --popover-foreground: hsl(220, 30%, 15%);
+    --primary: hsl(200, 80%, 45%);
+    --primary-foreground: hsl(0, 0%, 100%);
+    --secondary: hsl(200, 40%, 95%);
+    --secondary-foreground: hsl(200, 80%, 30%);
+    --muted: hsl(220, 20%, 96%);
+    --muted-foreground: hsl(220, 10%, 45%);
+    --accent: hsl(280, 50%, 60%);
+    --accent-foreground: hsl(0, 0%, 100%);
+    --border: hsl(220, 20%, 90%);
+    --input: hsl(220, 20%, 90%);
+    --ring: hsl(200, 80%, 45%);
+    --radius: 1rem;
+  }
+}
+
+/* ====================================================
+   DYNAMIC THEME BACKGROUNDS & IMAGES
+   ==================================================== */
+
+
+
+/* Cosmic Background */
+@keyframes cosmicTwinkle {
+  0%, 100% { opacity: 0.2; transform: scale(0.8); }
+  50% { opacity: 1; transform: scale(1.2); }
+}
+.theme-bg-cosmic {
+  background-color: #050510;
+  background-image: 
+    radial-gradient(2px 2px at 20px 30px, #ffffff, rgba(0,0,0,0)),
+    radial-gradient(2px 2px at 40px 70px, #ffffff, rgba(0,0,0,0)),
+    radial-gradient(2px 2px at 50px 160px, #ffffff, rgba(0,0,0,0)),
+    radial-gradient(2px 2px at 90px 40px, #ffffff, rgba(0,0,0,0)),
+    radial-gradient(2px 2px at 130px 80px, #ffffff, rgba(0,0,0,0)),
+    radial-gradient(2px 2px at 160px 120px, #ffffff, rgba(0,0,0,0));
+  background-repeat: repeat;
+  background-size: 200px 200px;
+  animation: cosmicTwinkle 4s ease-in-out infinite;
+  opacity: 1;
+}
+.light .theme-bg-cosmic {
+  background-color: #f8fafc;
+  background-image: 
+    radial-gradient(2px 2px at 20px 30px, #0f172a, rgba(0,0,0,0)),
+    radial-gradient(2px 2px at 40px 70px, #0f172a, rgba(0,0,0,0)),
+    radial-gradient(2px 2px at 50px 160px, #0f172a, rgba(0,0,0,0));
+  opacity: 0.3;
+}
+
+/* Mystic Background (Animated Emerald Mesh) */
+@keyframes mysticMesh {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+.theme-bg-mystic {
+  background: linear-gradient(-45deg, #0d2a1f, #1a4f3a, #063a24, #0f291e);
+  background-size: 400% 400%;
+  animation: mysticMesh 15s ease infinite;
+}
+.light .theme-bg-mystic {
+  background: linear-gradient(-45deg, #e0f2e9, #c4e8d2, #a7dcb9, #e0f2e9);
+  background-size: 400% 400%;
+  animation: mysticMesh 15s ease infinite;
+}
+
+/* Royal Background (Deep Radial Gradient) */
+.theme-bg-royal {
+  background: radial-gradient(circle at center, #3a0d17 0%, #1a0509 100%);
+}
+.light .theme-bg-royal {
+  background: radial-gradient(circle at center, #ffffff 0%, #fae6e8 100%);
+}
+
+/* Ocean Background (Gentle Waves) */
+@keyframes oceanWave {
+  0% { background-position: 0 0; }
+  100% { background-position: 100vw 0; }
+}
+.theme-bg-ocean {
+  background: linear-gradient(to right, #0a192f, #112240, #0a192f);
+  background-size: 200% 100%;
+  animation: oceanWave 20s linear infinite;
+}
+.light .theme-bg-ocean {
+  background: linear-gradient(to right, #e0f7fa, #b2ebf2, #e0f7fa);
+  background-size: 200% 100%;
+  animation: oceanWave 20s linear infinite;
+}
+
+/* Vedic Background (Warm Sunrise) */
+.theme-bg-vedic {
+  background: radial-gradient(circle at 50% 0%, #2e1005 0%, #120602 100%);
+  position: relative;
+}
+.theme-bg-vedic::after {
+  content: "";
+  position: absolute;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background: radial-gradient(circle at 50% -20%, rgba(249,115,22,0.15) 0%, transparent 70%);
+}
+.light .theme-bg-vedic {
+  background: radial-gradient(circle at 50% 0%, #fff7ed 0%, #ffedd5 100%);
+  position: relative;
+}
+.light .theme-bg-vedic::after {
+  content: "";
+  position: absolute;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background: radial-gradient(circle at 50% -20%, rgba(249,115,22,0.1) 0%, transparent 70%);
+}
+
+/* Midnight Background (AMOLED) */
+.theme-bg-midnight {
+  background-color: #000000;
+  background-image: radial-gradient(circle at top right, rgba(6,182,212,0.05) 0%, transparent 40%),
+                    radial-gradient(circle at bottom left, rgba(168,85,247,0.05) 0%, transparent 40%);
+}
+
+/* Snowfall Background (Pure White/Pastel) */
+.theme-bg-snowfall {
+  background-color: #ffffff;
+  background-image: linear-gradient(135deg, #ffffff 0%, #f0f9ff 100%);
+}
+
+
+/* ====================================================
+   UTILITY ANIMATIONS
+   ==================================================== */
+@keyframes float {
+  0% { transform: translateY(0px); }
+  50% { transform: translateY(-20px); }
+  100% { transform: translateY(0px); }
+}
+
+.animate-float {
+  animation: float 6s ease-in-out infinite;
+}
+
+@keyframes bounce-slow {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-5px); }
+}
+
+.animate-bounce-slow {
+  animation: bounce-slow 1s infinite;
+}
+
+/* ====================================================
+   LIQUID DESIGN UX ANIMATIONS
+   ==================================================== */
+
+@keyframes liquid-card {
+  0%, 100% { border-radius: 40px 60px 40px 60px / 60px 40px 60px 40px; }
+  33% { border-radius: 60px 40px 50px 40px / 40px 60px 40px 60px; }
+  66% { border-radius: 50px 60px 40px 50px / 50px 40px 60px 40px; }
+}
+
+@keyframes liquid-btn {
+  0%, 100% { border-radius: 20px 30px 20px 30px / 30px 20px 30px 20px; }
+  33% { border-radius: 30px 20px 25px 20px / 20px 30px 20px 30px; }
+  66% { border-radius: 25px 30px 20px 25px / 25px 20px 30px 20px; }
+}
+
+.liquid-card {
+  animation: liquid-card 6s ease-in-out infinite;
+  transition: all 0.5s ease;
+}
+
+.liquid-btn {
+  animation: liquid-btn 4s ease-in-out infinite;
+  transition: all 0.5s ease;
+}
+.liquid-btn:hover {
+  animation-duration: 2s;
+  transform: scale(1.05);
+}
+
+/* Scrollbar styling */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgba(128, 128, 128, 0.2);
+  border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(128, 128, 128, 0.4);
+}
+
+/* Input focus styles */
+input:focus, textarea:focus, select:focus {
+  outline: none;
+  border-color: var(--ring) !important;
+  box-shadow: 0 0 0 1px var(--ring) !important;
+}
+
+/* ===== BROWSER COMPATIBILITY VENDOR PREFIXES ===== */
+html {
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+}
+
+* {
+  -webkit-user-select: inherit;
+  user-select: inherit;
+}
+
+.backdrop-blur-sm,
+.backdrop-blur,
+.backdrop-blur-md,
+.backdrop-blur-lg,
+.backdrop-blur-xl,
+.backdrop-blur-2xl,
+.backdrop-blur-3xl,
+[class*="backdrop-blur"] {
+  -webkit-backdrop-filter: blur(var(--tw-backdrop-blur, 0)) saturate(var(--tw-backdrop-saturate, 1));
+  backdrop-filter: blur(var(--tw-backdrop-blur, 0)) saturate(var(--tw-backdrop-saturate, 1));
+}
+
+[class*="mask-"] {
+  -webkit-mask-image: var(--tw-mask-image);
+  mask-image: var(--tw-mask-image);
+}

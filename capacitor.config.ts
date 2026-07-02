@@ -5,7 +5,7 @@ const config: CapacitorConfig = {
   appName: 'AstroSolution',
   webDir: 'public',
   server: {
-    url: 'https://lavish-bucket-vastness.ngrok-free.dev',
+    url: 'https://astro-solution.vercel.app',
     cleartext: true
   }
 };

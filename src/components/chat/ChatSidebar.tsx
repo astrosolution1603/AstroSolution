@@ -48,7 +48,7 @@ export default function ChatSidebar({ sessions, activeSessionId, onSelectAstro, 
       
       {/* Mobile Top Header (Gradient) */}
       <div className="md:hidden w-full bg-gradient-to-b from-[#FFA785] to-[#FFDBCC]/40 pt-4 pb-20 px-4 flex justify-between items-center shrink-0">
-        <Logo />
+        <h1 className="text-xl font-black text-slate-900">Astrologers</h1>
       </div>
 
 

@@ -82,6 +82,12 @@ export function WalletSection() {
 
       <div className="flex flex-col items-end gap-2">
         <div className="flex flex-wrap justify-end gap-2 max-w-sm">
+          <Button onClick={() => handleTopUp(51)} disabled={isToppingUp} variant="outline" className="border-amber-500/30 hover:bg-amber-500/10 text-amber-600 dark:text-amber-400 font-bold px-3">
+            <Plus className="w-3 h-3 mr-1" /> ₹51
+          </Button>
+          <Button onClick={() => handleTopUp(101)} disabled={isToppingUp} variant="outline" className="border-amber-500/30 hover:bg-amber-500/10 text-amber-600 dark:text-amber-400 font-bold px-3">
+            <Plus className="w-3 h-3 mr-1" /> ₹101
+          </Button>
           <Button onClick={() => handleTopUp(500)} disabled={isToppingUp} variant="outline" className="border-amber-500/30 hover:bg-amber-500/10 text-amber-600 dark:text-amber-400 font-bold">
             <Plus className="w-3 h-3 mr-1" /> ₹500
           </Button>

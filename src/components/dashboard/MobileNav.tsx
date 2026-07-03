@@ -8,6 +8,7 @@ import { signOut, useSession } from "next-auth/react";
 import { ThemeToggle } from "@/components/ThemeToggle";
 import { Logo } from "@/components/ui/Logo";
 import { NotificationBell } from "@/components/ui/NotificationBell";
+import { WalletMini } from "@/components/ui/WalletMini";
 
 const BOTTOM_TABS = [
   { icon: "💬", label: "Chat", href: "/chat" },
@@ -45,6 +46,7 @@ export default function MobileNav() {
           <div className="hidden sm:block"><Logo size="md" /></div>
         </div>
         <div className="flex items-center gap-2">
+          <WalletMini />
           <NotificationBell />
           <ThemeToggle />
         </div>

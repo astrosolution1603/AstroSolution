@@ -7,6 +7,7 @@ import { cn } from "@/lib/utils";
 import { ThemeToggle } from "@/components/ThemeToggle";
 import { Logo } from "@/components/ui/Logo";
 import { NotificationBell } from "@/components/ui/NotificationBell";
+import { WalletMini } from "@/components/ui/WalletMini";
 
 const NAV_ITEMS = [
   { icon: "💬", label: "Chat", desc: "AI Astrologer", href: "/chat" },
@@ -57,6 +58,9 @@ export default function Sidebar() {
       </div>
 
       <div className="p-4 border-t border-border">
+        <div className="flex justify-center mb-4">
+          <WalletMini />
+        </div>
         <div className="bg-muted border border-border rounded-xl p-4 flex flex-col items-center relative">
           <div className="absolute right-2 top-2 flex items-center gap-1">
             <NotificationBell />

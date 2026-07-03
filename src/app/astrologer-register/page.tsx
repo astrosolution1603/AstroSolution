@@ -81,17 +81,18 @@ export default function AstrologerRegistrationPage() {
     setLoading(true);
     
     try {
-      const res = await fetch("/api/astrologer/register", {
+      const res = await fetch("/api/auth/send-otp", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ name, phone }),
+        body: JSON.stringify({ phone, isRegistering: true }),
       });
+      
+      const data = await res.json();
       
       if (res.ok) {
         setAuthStep(2);
       } else {
-        const errorText = await res.text();
-        setError(errorText || "Registration failed");
+        setError(data.error || "Failed to send OTP");
       }
     } catch (err) {
       setError("An error occurred. Please try again.");
@@ -115,6 +116,17 @@ export default function AstrologerRegistrationPage() {
       if (res?.error) {
         setError("Invalid OTP");
       } else {
+        // Now that they are signed in, if they are a NEW user, we should update their name
+        // (because send-otp doesn't save the name, and the normal register route wasn't called)
+        try {
+          await fetch("/api/user/update-name", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ name })
+          });
+        } catch(e) {
+          console.error("Failed to update name", e);
+        }
         // Session will change, useEffect will trigger fetchApplicationStatus
       }
     } catch (err) {

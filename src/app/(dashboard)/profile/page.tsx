@@ -1,9 +1,7 @@
 import { auth } from "@/lib/auth";
 import { prisma } from "@/lib/prisma";
-import { Button } from "@/components/ui/button";
 import { DeleteAccountButton } from "@/components/profile/DeleteAccountButton";
 import { WalletSection } from "@/components/profile/WalletSection";
-import { ProSubscriptionSection } from "@/components/profile/ProSubscriptionSection";
 
 export default async function ProfilePage() {
   const session = await auth();
@@ -19,7 +17,6 @@ export default async function ProfilePage() {
       </div>
 
       <WalletSection />
-      <ProSubscriptionSection />
 
       <div className="bg-white dark:bg-white/5 border border-slate-200 dark:border-white/10 rounded-2xl p-6 md:p-8 shadow-sm dark:shadow-none">
         <div className="flex items-start justify-between mb-8">

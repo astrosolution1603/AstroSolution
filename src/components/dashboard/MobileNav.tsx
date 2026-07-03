@@ -45,8 +45,8 @@ export default function MobileNav() {
           <div className="hidden sm:block"><Logo size="md" /></div>
         </div>
         <div className="flex items-center gap-2">
-          <div className="hidden sm:block"><NotificationBell /></div>
-          <div className="hidden sm:block"><ThemeToggle /></div>
+          <NotificationBell />
+          <ThemeToggle />
           <div className="w-8 h-8 bg-gradient-to-br from-indigo-500 to-purple-500 rounded-full flex items-center justify-center text-white font-bold text-sm">
             {session?.user?.name?.charAt(0) || "U"}
           </div>
@@ -57,12 +57,8 @@ export default function MobileNav() {
         <div className="fixed inset-0 z-50 flex">
           <div className="fixed inset-0 bg-black/60 backdrop-blur-sm" onClick={() => setIsOpen(false)} />
           <div className="relative w-64 bg-white dark:bg-slate-950 h-full border-r border-slate-200 dark:border-white/10 flex flex-col transform transition-transform">
-            <div className="p-4 flex justify-between items-center">
-              <div className="flex items-center gap-2 sm:hidden">
-                <NotificationBell />
-                <ThemeToggle />
-              </div>
-              <button aria-label="Close navigation menu" onClick={() => setIsOpen(false)} className="text-slate-500 dark:text-white/60 hover:text-slate-800 dark:hover:text-white ml-auto">
+            <div className="p-4 flex justify-end">
+              <button aria-label="Close navigation menu" onClick={() => setIsOpen(false)} className="text-slate-500 dark:text-white/60 hover:text-slate-800 dark:hover:text-white">
                 <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" /></svg>
               </button>
             </div>

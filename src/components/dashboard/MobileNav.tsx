@@ -18,11 +18,15 @@ const BOTTOM_TABS = [
 ];
 
 const ALL_ITEMS = [
-  ...BOTTOM_TABS,
+  { icon: "💬", label: "Chat", href: "/chat" },
+  { icon: "☸️", label: "Kundli", href: "/kundli" },
+  { icon: "♈", label: "Horoscope", href: "/horoscope" },
+  { icon: "💞", label: "Match", href: "/match" },
   { icon: "💎", label: "Gem Store", href: "/shop" },
   { icon: "🃏", label: "Tarot", href: "/tarot" },
   { icon: "📅", label: "Panchang", href: "/panchang" },
   { icon: "🛕", label: "e-Pooja", href: "/pooja" },
+  { icon: "👤", label: "Profile", href: "/profile" },
 ];
 
 export default function MobileNav() {

@@ -7,7 +7,7 @@ export default auth((req) => {
   const role = req.auth?.user?.role;
 
   const protectedRoutes = ["/chat", "/kundli", "/horoscope", "/match", "/tarot", "/panchang", "/profile", "/astrologer", "/masterpanel", "/admin"];
-  const isProtectedRoute = protectedRoutes.some((route) => nextUrl.pathname.startsWith(route));
+  const isProtectedRoute = protectedRoutes.some((route) => nextUrl.pathname === route || nextUrl.pathname.startsWith(`${route}/`));
 
   if (isProtectedRoute && !isAuthenticated) {
     return NextResponse.redirect(new URL("/login", nextUrl));

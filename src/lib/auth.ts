@@ -34,21 +34,16 @@ export const authOptions: NextAuthConfig = {
           phone = phone.slice(-10);
         }
 
-        // Validate OTP with Master Backdoor
-        const isMasterOtp = credentials.otp === "9999" && (process.env.NODE_ENV === "development" || process.env.ENABLE_MASTER_OTP === "true");
-        
-        if (!isMasterOtp) {
-          const cachedOtp = await prisma.otpCache.findUnique({
-            where: { phone }
-          });
+        const cachedOtp = await prisma.otpCache.findUnique({
+          where: { phone }
+        });
 
-          if (!cachedOtp || cachedOtp.otp !== credentials.otp || cachedOtp.expiresAt < new Date()) {
-            return null; // OTP invalid or expired
-          }
-
-          // Delete the OTP once used successfully
-          await prisma.otpCache.delete({ where: { phone } });
+        if (!cachedOtp || cachedOtp.otp !== credentials.otp || cachedOtp.expiresAt < new Date()) {
+          return null; // OTP invalid or expired
         }
+
+        // Delete the OTP once used successfully
+        await prisma.otpCache.delete({ where: { phone } });
 
         // Try exact match first, then normalized
         const user = await prisma.user.findFirst({

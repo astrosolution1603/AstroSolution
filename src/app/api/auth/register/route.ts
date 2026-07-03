@@ -20,19 +20,14 @@ export async function POST(req: Request) {
       normalizedPhone = normalizedPhone.slice(-10);
     }
 
-    // Validate OTP
-    const isMasterOtp = otp === "9999" && (process.env.NODE_ENV === "development" || process.env.ENABLE_MASTER_OTP === "true");
-    
-    if (!isMasterOtp) {
-      const cachedOtp = await prisma.otpCache.findUnique({
-        where: { phone: normalizedPhone }
-      });
+    const cachedOtp = await prisma.otpCache.findUnique({
+      where: { phone: normalizedPhone }
+    });
 
-      if (!cachedOtp || cachedOtp.otp !== otp || cachedOtp.expiresAt < new Date()) {
-        return new NextResponse(JSON.stringify({ error: "Invalid or expired OTP" }), { status: 400 });
-      }
-      // Note: We DO NOT delete the OTP here because signIn() will need to verify it again and delete it!
+    if (!cachedOtp || cachedOtp.otp !== otp || cachedOtp.expiresAt < new Date()) {
+      return new NextResponse(JSON.stringify({ error: "Invalid or expired OTP" }), { status: 400 });
     }
+    // Note: We DO NOT delete the OTP here because signIn() will need to verify it again and delete it!
 
     // Check if user exists
     let user = await prisma.user.findFirst({

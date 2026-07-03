@@ -348,6 +348,17 @@ export default function RegisterForm() {
               </div>
             </div>
 
+            <div>
+              <label className="block text-[13px] font-semibold text-slate-500 mb-2">Primary Focus for Consultation</label>
+              <textarea 
+                name="reasonForJoining" 
+                value={formData.reasonForJoining} 
+                onChange={handleChange}
+                className="w-full bg-slate-100/50 border border-transparent focus:border-amber-500 focus:bg-white focus:ring-4 focus:ring-amber-500/10 text-slate-900 placeholder:text-slate-400 rounded-[16px] py-4 px-5 min-h-[100px] font-medium outline-none transition-all resize-y" 
+                placeholder="I am seeking guidance for my career and personal growth..."
+              />
+            </div>
+
             <label className="flex items-start gap-3 cursor-pointer group mt-6">
               <div className="mt-1">
                 <input 

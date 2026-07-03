@@ -58,7 +58,7 @@ export async function POST(req: NextRequest) {
 
     if (!settings || !settings.fast2smsKey) {
       if (process.env.NODE_ENV === "development") {
-        console.warn("Fast2SMS API Key is not configured. Skipping SMS dispatch. Use Master OTP 9999 to login.");
+        console.warn("Fast2SMS API Key is not configured. Skipping SMS dispatch.");
         console.log(`Generated OTP for ${phone}: ${otp}`);
       } else {
         console.error("CRITICAL: Fast2SMS API Key is not configured in production. SMS dispatch failed.");
@@ -88,7 +88,7 @@ export async function POST(req: NextRequest) {
       if (!smsData.return) {
         console.error("Fast2SMS Error:", smsData);
         if (process.env.NODE_ENV === "development") {
-          console.warn("Fast2SMS failed to send. Proceeding anyway. Use 9999 to login.");
+          console.warn("Fast2SMS failed to send. Proceeding anyway.");
         } else {
           return NextResponse.json({ error: "Failed to send SMS OTP. Please try again later." }, { status: 500 });
         }

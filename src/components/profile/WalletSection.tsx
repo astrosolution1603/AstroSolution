@@ -81,15 +81,24 @@ export function WalletSection() {
       </div>
 
       <div className="flex flex-col items-end gap-2">
-        <div className="flex gap-2">
+        <div className="flex flex-wrap justify-end gap-2 max-w-sm">
           <Button onClick={() => handleTopUp(500)} disabled={isToppingUp} variant="outline" className="border-amber-500/30 hover:bg-amber-500/10 text-amber-600 dark:text-amber-400 font-bold">
-            <Plus className="w-4 h-4 mr-1" /> ₹500
+            <Plus className="w-3 h-3 mr-1" /> ₹500
           </Button>
           <Button onClick={() => handleTopUp(1000)} disabled={isToppingUp} className="bg-amber-500 hover:bg-amber-600 text-black font-bold">
-            <Plus className="w-4 h-4 mr-1" /> ₹1000
+            <Plus className="w-3 h-3 mr-1" /> ₹1,000
           </Button>
-          <Button onClick={() => handleTopUp(5100)} disabled={isToppingUp} className="bg-gradient-to-r from-amber-600 to-orange-600 hover:from-amber-500 hover:to-orange-500 text-white font-bold shadow-lg shadow-orange-500/20">
-            <Plus className="w-4 h-4 mr-1" /> ₹5100
+          <Button onClick={() => handleTopUp(5100)} disabled={isToppingUp} className="bg-gradient-to-r from-amber-600 to-orange-600 hover:from-amber-500 hover:to-orange-500 text-white font-bold shadow-sm">
+            <Plus className="w-3 h-3 mr-1" /> ₹5,100
+          </Button>
+          <Button onClick={() => handleTopUp(11000)} disabled={isToppingUp} className="bg-gradient-to-r from-orange-600 to-red-600 hover:from-orange-500 hover:to-red-500 text-white font-bold shadow-sm">
+            <Plus className="w-3 h-3 mr-1" /> ₹11,000
+          </Button>
+          <Button onClick={() => handleTopUp(21000)} disabled={isToppingUp} className="bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-500 hover:to-purple-500 text-white font-bold shadow-sm">
+            <Plus className="w-3 h-3 mr-1" /> ₹21,000
+          </Button>
+          <Button onClick={() => handleTopUp(51000)} disabled={isToppingUp} className="bg-gradient-to-r from-fuchsia-600 to-pink-600 hover:from-fuchsia-500 hover:to-pink-500 text-white font-bold shadow-md shadow-fuchsia-500/20 w-full sm:w-auto mt-1">
+            <Plus className="w-4 h-4 mr-1" /> ₹51,000 (VIP)
           </Button>
         </div>
         <span className="text-[10px] text-muted-foreground/70 font-medium">Powered by Google Play Billing / App Store</span>

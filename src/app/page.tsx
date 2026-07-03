@@ -78,7 +78,7 @@ export default function DemoHomePage() {
               {/* Slide 1, Item 1: Users (Unlock Secrets) */}
               <div className="h-full w-full flex-shrink-0 snap-center flex items-center justify-center p-4 relative">
 
-                <div className="bg-[#FDFBF7] dark:bg-slate-900 border border-amber-900/10 dark:border-white/10 rounded-[32px] p-5 shadow-2xl w-full h-full max-h-[600px] flex flex-col justify-center gap-3 relative overflow-hidden">
+                <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-white/10 rounded-[32px] p-5 shadow-2xl w-full h-full max-h-[600px] flex flex-col justify-center gap-3 relative overflow-hidden">
                   <div className="absolute -top-16 -right-10 text-[160px] text-amber-500/5 select-none pointer-events-none font-serif leading-none">ॐ</div>
                   <div className="absolute -bottom-16 -left-10 text-[160px] text-amber-500/5 select-none pointer-events-none font-serif leading-none">卐</div>
                   
@@ -111,7 +111,7 @@ export default function DemoHomePage() {
               {/* Slide 1, Item 2: Astrologers */}
               <div className="h-full w-full flex-shrink-0 snap-center flex items-center justify-center p-4 relative">
 
-                <div className="bg-[#FDFBF7] dark:bg-slate-900 border border-amber-900/10 dark:border-white/10 rounded-[32px] p-5 shadow-2xl w-full h-full max-h-[600px] flex flex-col justify-center gap-2 relative overflow-hidden">
+                <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-white/10 rounded-[32px] p-5 shadow-2xl w-full h-full max-h-[600px] flex flex-col justify-center gap-2 relative overflow-hidden">
                   <div className="absolute -top-16 -left-10 text-[160px] text-amber-500/5 select-none pointer-events-none font-serif leading-none">🔱</div>
                   <div className="absolute -bottom-16 -right-10 text-[160px] text-amber-500/5 select-none pointer-events-none font-serif leading-none">ॐ</div>
                   
@@ -167,7 +167,7 @@ export default function DemoHomePage() {
               
               {/* Feature 1: Live Chat */}
               <div className="h-full w-full flex-shrink-0 snap-center flex items-center justify-center p-4 relative">
-                <div className="bg-[#FDFBF7] dark:bg-slate-900 border border-amber-900/10 dark:border-white/10 rounded-[32px] p-6 shadow-2xl w-full h-full max-h-[600px] flex flex-col items-center justify-center gap-4 text-center relative overflow-hidden">
+                <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-white/10 rounded-[32px] p-6 shadow-2xl w-full h-full max-h-[600px] flex flex-col items-center justify-center gap-4 text-center relative overflow-hidden">
                   <div className="absolute -top-16 -right-10 text-[160px] text-amber-500/5 select-none pointer-events-none font-serif leading-none">ॐ</div>
                   <div className="w-14 h-14 bg-amber-500 rounded-2xl flex items-center justify-center text-black shadow-lg">
                     <Sparkles className="w-7 h-7" />
@@ -184,7 +184,7 @@ export default function DemoHomePage() {
 
               {/* Feature 2: Gemstones */}
               <div className="h-full w-full flex-shrink-0 snap-center flex items-center justify-center p-4 relative">
-                <div className="bg-[#FDFBF7] dark:bg-slate-900 border border-amber-900/10 dark:border-white/10 rounded-[32px] p-6 shadow-2xl w-full h-full max-h-[600px] flex flex-col items-center justify-center gap-4 text-center relative overflow-hidden">
+                <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-white/10 rounded-[32px] p-6 shadow-2xl w-full h-full max-h-[600px] flex flex-col items-center justify-center gap-4 text-center relative overflow-hidden">
                   <div className="absolute -bottom-16 -left-10 text-[160px] text-amber-500/5 select-none pointer-events-none font-serif leading-none">卐</div>
                   <div className="w-14 h-14 bg-amber-500 rounded-2xl flex items-center justify-center text-black shadow-lg">
                     <Star className="w-7 h-7" />
@@ -201,7 +201,7 @@ export default function DemoHomePage() {
 
               {/* Feature 3: Pujas */}
               <div className="h-full w-full flex-shrink-0 snap-center flex items-center justify-center p-4 relative">
-                <div className="bg-[#FDFBF7] dark:bg-slate-900 border border-amber-900/10 dark:border-white/10 rounded-[32px] p-6 shadow-2xl w-full h-full max-h-[600px] flex flex-col items-center justify-center gap-4 text-center relative overflow-hidden">
+                <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-white/10 rounded-[32px] p-6 shadow-2xl w-full h-full max-h-[600px] flex flex-col items-center justify-center gap-4 text-center relative overflow-hidden">
                   <div className="absolute -top-16 -right-10 text-[160px] text-amber-500/5 select-none pointer-events-none font-serif leading-none">🔱</div>
                   <div className="w-14 h-14 bg-amber-500 rounded-2xl flex items-center justify-center text-black shadow-lg">
                     <UserPlus className="w-7 h-7" />

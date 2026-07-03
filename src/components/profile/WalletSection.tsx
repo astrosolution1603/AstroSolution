@@ -88,6 +88,9 @@ export function WalletSection() {
           <Button onClick={() => handleTopUp(1000)} disabled={isToppingUp} className="bg-amber-500 hover:bg-amber-600 text-black font-bold">
             <Plus className="w-4 h-4 mr-1" /> ₹1000
           </Button>
+          <Button onClick={() => handleTopUp(5100)} disabled={isToppingUp} className="bg-gradient-to-r from-amber-600 to-orange-600 hover:from-amber-500 hover:to-orange-500 text-white font-bold shadow-lg shadow-orange-500/20">
+            <Plus className="w-4 h-4 mr-1" /> ₹5100
+          </Button>
         </div>
         <span className="text-[10px] text-muted-foreground/70 font-medium">Powered by Google Play Billing / App Store</span>
       </div>

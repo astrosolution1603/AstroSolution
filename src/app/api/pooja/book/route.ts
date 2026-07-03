@@ -27,16 +27,28 @@ export async function POST(req: Request) {
       return new NextResponse("Invalid poojaId", { status: 400 });
     }
 
-    const booking = await prisma.poojaBooking.create({
-      data: {
-        userId: session.user.id,
-        poojaId,
-        poojaTitle,
-        price, // Always use server-side price
-      },
-    });
+    const user = await prisma.user.findUnique({ where: { id: session.user.id } });
+    if (!user || user.walletBalance < price) {
+      return new NextResponse("Insufficient Astro Wallet balance. Please top up.", { status: 402 });
+    }
 
-    return NextResponse.json({ success: true, booking });
+    // Deduct balance and create booking in a transaction
+    const [booking, updatedUser] = await prisma.$transaction([
+      prisma.poojaBooking.create({
+        data: {
+          userId: session.user.id,
+          poojaId,
+          poojaTitle,
+          price, // Always use server-side price
+        },
+      }),
+      prisma.user.update({
+        where: { id: session.user.id },
+        data: { walletBalance: { decrement: price } }
+      })
+    ]);
+
+    return NextResponse.json({ success: true, booking, newBalance: updatedUser.walletBalance });
   } catch {
     return new NextResponse("Internal Server Error", { status: 500 });
   }

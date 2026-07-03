@@ -81,17 +81,19 @@ export default function PoojaPage() {
 
       if (res.ok) {
         setBookingStatus(prev => ({ ...prev, [pooja.id]: "success" }));
-        alert(`Successfully requested booking for ${pooja.title}. Our temple coordinator will contact you shortly to finalize the dates.`);
+        alert(`Successfully requested booking for ${pooja.title}. ₹${pooja.price} has been deducted from your Astro Wallet. Our temple coordinator will contact you shortly to finalize the dates.`);
+      } else if (res.status === 402) {
+        throw new Error("Insufficient Astro Wallet balance. Please go to your Profile to top up.");
       } else {
         throw new Error("Booking failed");
       }
-    } catch (error) {
+    } catch (error: any) {
       setBookingStatus(prev => {
         const next = { ...prev };
         delete next[pooja.id];
         return next;
       });
-      alert("Something went wrong. Please try again.");
+      alert(error.message || "Something went wrong. Please try again.");
     }
   };
 
@@ -153,7 +155,7 @@ export default function PoojaPage() {
                 {bookingStatus[pooja.id] === "processing" ? "Processing..." : 
                  bookingStatus[pooja.id] === "success" ? "✓ Booking Requested" : "Book Now"}
               </Button>
-              <span className="text-[10px] text-slate-400 mt-2 font-medium text-center">Payment processing for digital streaming is securely handled via Google Play Billing</span>
+              <span className="text-[10px] text-slate-400 mt-2 font-medium text-center">Payment will be deducted securely from your Astro Wallet.</span>
             </div>
           </div>
         ))}

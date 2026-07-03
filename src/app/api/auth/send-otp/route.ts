@@ -89,6 +89,8 @@ export async function POST(req: NextRequest) {
         console.error("Fast2SMS Error:", smsData);
         if (process.env.NODE_ENV === "development") {
           console.warn("Fast2SMS failed to send. Proceeding anyway. Use 9999 to login.");
+        } else {
+          return NextResponse.json({ error: "Failed to send SMS OTP. Please try again later." }, { status: 500 });
         }
       }
     }

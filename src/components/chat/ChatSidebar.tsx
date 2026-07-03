@@ -110,26 +110,7 @@ export default function ChatSidebar({ sessions, activeSessionId, onSelectAstro, 
         })}
       </div>
 
-      {/* Sticky Bottom Banner (Mobile Only) */}
-      <div className="md:hidden absolute bottom-4 left-4 right-4 bg-[#FFE8DF] rounded-2xl p-4 flex items-center justify-between shadow-lg shadow-orange-500/10 border border-orange-200 z-20">
-        <div>
-          <h4 className="font-bold text-slate-900 text-sm">Not sure whom to connect?</h4>
-          <p className="text-xs text-slate-600 mt-0.5">We will find the best astrologer instantly</p>
-        </div>
-        <div className="flex items-center gap-2">
-          <button 
-            onClick={() => {
-              if (allAstrologers.length > 0) {
-                const randomAstro = allAstrologers[Math.floor(Math.random() * allAstrologers.length)];
-                onSelectAstro(randomAstro.id);
-              }
-            }}
-            className="w-10 h-10 rounded-full bg-orange-500 hover:bg-orange-600 transition-colors flex items-center justify-center text-white shadow-md shadow-orange-500/30 active:scale-95"
-          >
-            <MessageSquare className="w-4 h-4 fill-current" />
-          </button>
-        </div>
-      </div>
+
 
     </div>
   );

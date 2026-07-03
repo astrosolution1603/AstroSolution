@@ -110,7 +110,21 @@ export default function ChatSidebar({ sessions, activeSessionId, onSelectAstro, 
         })}
       </div>
 
-
+      {/* Random Astrologer Floating Action Button */}
+      <div className="md:hidden absolute bottom-4 right-4 z-20">
+        <button 
+          onClick={() => {
+            if (allAstrologers.length > 0) {
+              const randomAstro = allAstrologers[Math.floor(Math.random() * allAstrologers.length)];
+              onSelectAstro(randomAstro.id);
+            }
+          }}
+          className="w-14 h-14 rounded-full bg-orange-500 hover:bg-orange-600 transition-all flex items-center justify-center text-white shadow-[0_8px_30px_rgb(249,115,22,0.3)] active:scale-95"
+          aria-label="Chat with random astrologer"
+        >
+          <MessageSquare className="w-6 h-6 fill-current" />
+        </button>
+      </div>
 
     </div>
   );

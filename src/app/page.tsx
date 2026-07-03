@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useRef } from "react";
+import { useState, useRef, useEffect } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { Star, Sparkles, UserPlus, LogIn, ArrowRight, Menu, X } from "lucide-react";
@@ -22,10 +22,10 @@ export default function DemoHomePage() {
 
   return (
     <div data-theme="cosmic" className="dark bg-black text-white">
-      <div className="min-h-screen overflow-x-hidden selection:bg-amber-500/30 pb-safe relative text-white">
+      <div className="h-[100dvh] overflow-hidden selection:bg-amber-500/30 relative text-white flex flex-col">
         
         {/* Global Background Layer */}
-        <div className="fixed top-0 left-0 w-full h-[120vh] overflow-hidden pointer-events-none z-0 bg-black">
+        <div className="absolute top-0 left-0 w-full h-[120vh] overflow-hidden pointer-events-none z-0 bg-black">
           <div className="absolute inset-0 z-10 opacity-50 mix-blend-screen">
             <Image 
               src="/lord_ganesha_bg.png" 
@@ -38,18 +38,13 @@ export default function DemoHomePage() {
         </div>
 
         {/* Minimalist Navbar with Hamburger */}
-        <nav className="absolute top-0 left-0 right-0 z-50 w-full pt-6 md:pt-10 px-6 md:px-12">
+        <nav className="relative z-50 w-full pt-6 md:pt-10 px-6 md:px-12 shrink-0 h-24">
           <div className="max-w-7xl mx-auto flex items-center justify-between">
             <Logo />
             
-            {/* Desktop Nav */}
-            <div className="hidden md:flex gap-10 items-center text-sm font-bold tracking-widest uppercase text-white/80">
-              <Link href="#features" className="hover:text-white transition-colors drop-shadow-md">Features</Link>
-            </div>
-            
             {/* Mobile Hamburger Menu Toggle */}
             <button 
-              className="md:hidden p-2 text-white relative z-[60]"
+              className="p-2 text-white relative z-[60]"
               onClick={() => setIsMenuOpen(!isMenuOpen)}
             >
               {isMenuOpen ? <X className="w-8 h-8 text-amber-500" /> : <Menu className="w-8 h-8 text-amber-500" />}
@@ -59,7 +54,7 @@ export default function DemoHomePage() {
 
         {/* Mobile Fullscreen Menu Overlay */}
         {isMenuOpen && (
-          <div className="fixed inset-0 z-50 bg-black/95 backdrop-blur-xl flex flex-col items-center justify-center gap-8 animate-in fade-in duration-300">
+          <div className="absolute inset-0 z-50 bg-black/95 backdrop-blur-xl flex flex-col items-center justify-center gap-8 animate-in fade-in duration-300">
             <button onClick={() => setIsMenuOpen(false)} className="absolute top-6 right-6 p-2 text-amber-500">
               <X className="w-8 h-8" />
             </button>
@@ -69,178 +64,177 @@ export default function DemoHomePage() {
           </div>
         )}
 
-        {/* Swipeable Hero Section */}
-        <section className="relative min-h-[100dvh] pt-28 pb-12 overflow-hidden z-10 flex flex-col justify-center">
-          
-          <div className="container relative z-10 mx-auto text-center flex flex-col items-center mb-6">
-            <div className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-white border border-white/20 text-black shadow-lg animate-fade-in">
-              <span className="text-amber-500 font-serif text-xl leading-none">ॐ</span>
-              <span className="text-xs md:text-sm font-bold tracking-wide">Your Cosmic Journey Begins</span>
-            </div>
-          </div>
-
-          {/* Snap Scrolling Slider Container */}
-          <div 
-            ref={scrollRef}
-            onScroll={handleScroll}
-            className="flex overflow-x-auto snap-x snap-mandatory w-full relative z-10 px-4 md:px-0 scroll-smooth [&::-webkit-scrollbar]:hidden"
-            style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}
-          >
-            {/* Slide 1: Users */}
-            <div className="w-full flex-shrink-0 snap-center flex justify-center px-4 md:px-6 h-[70vh] md:h-auto min-h-[450px]">
-              <div className="bg-white rounded-[32px] md:rounded-[40px] p-6 md:p-14 shadow-2xl shadow-black/40 w-full max-w-4xl relative overflow-hidden flex flex-col justify-center gap-4 md:gap-8">
-                <div className="absolute -top-16 -right-10 text-[200px] text-amber-500/5 select-none pointer-events-none font-serif leading-none">ॐ</div>
-                <div className="absolute -bottom-16 -left-10 text-[200px] text-amber-500/5 select-none pointer-events-none font-serif leading-none">ॐ</div>
-                
-                <h1 className="relative z-10 text-3xl md:text-7xl font-black tracking-tight leading-tight text-center">
-                  <span className="text-black block mb-1 md:mb-2">Unlock the Secrets of</span>
-                  <span className="bg-gradient-to-r from-amber-500 via-amber-600 to-amber-800 text-transparent bg-clip-text drop-shadow-sm">
-                    Your Destiny
-                  </span>
-                </h1>
-                
-                <p className="relative z-10 text-xs md:text-xl text-slate-700 leading-relaxed max-w-2xl mx-auto font-medium text-center">
-                  Connect with premium AI Vedic Astrologers. Ask about your career, love life, and true life path instantly.
-                </p>
-
-                <div className="flex flex-col gap-3 relative z-10 mt-2 md:mt-4">
-                  <Link 
-                    href="/register" 
-                    className="w-full flex items-center justify-center gap-2 px-8 py-3 md:py-4 bg-amber-500 hover:bg-amber-400 text-black font-bold rounded-[20px] transition-all shadow-xl active:scale-95"
-                  >
-                    <UserPlus className="w-5 h-5" />
-                    Create Free Account
-                  </Link>
-                  <Link 
-                    href="/login" 
-                    className="w-full flex items-center justify-center gap-2 px-8 py-3 md:py-4 bg-white border border-slate-200 hover:bg-slate-50 text-black font-bold rounded-[20px] transition-all shadow-xl active:scale-95"
-                  >
-                    <LogIn className="w-5 h-5" />
-                    Sign In
-                  </Link>
-                </div>
+        {/* Swipeable Horizontal Hero Section */}
+        <div 
+          ref={scrollRef}
+          onScroll={handleScroll}
+          className="flex-1 w-full flex overflow-x-auto snap-x snap-mandatory scroll-smooth relative z-10 [&::-webkit-scrollbar]:hidden"
+          style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}
+        >
+          {/* SLIDE 1: Users (Unlock Secrets) */}
+          <div className="w-full h-full flex-shrink-0 snap-center flex items-center justify-center px-4 md:px-6">
+            <div className="bg-white rounded-[32px] md:rounded-[40px] p-6 md:p-14 shadow-2xl shadow-black/40 w-full max-w-4xl relative overflow-hidden flex flex-col justify-center gap-4 md:gap-8">
+              <div className="absolute -top-16 -right-10 text-[200px] text-amber-500/5 select-none pointer-events-none font-serif leading-none">ॐ</div>
+              <div className="absolute -bottom-16 -left-10 text-[200px] text-amber-500/5 select-none pointer-events-none font-serif leading-none">ॐ</div>
+              
+              <div className="inline-flex self-center items-center gap-2 px-4 py-1.5 rounded-full bg-amber-100 text-amber-800 text-[10px] font-bold uppercase tracking-widest shadow-sm z-10">
+                Your Cosmic Journey Begins
               </div>
-            </div>
 
-            {/* Slide 2: Astrologers */}
-            <div className="w-full flex-shrink-0 snap-center flex justify-center px-4 md:px-6 h-[70vh] md:h-auto min-h-[500px]">
-              <div className="bg-white rounded-[32px] md:rounded-[40px] p-5 md:p-14 shadow-2xl shadow-black/40 w-full max-w-4xl relative overflow-hidden flex flex-col justify-center gap-2 md:gap-6">
-                <div className="absolute -top-16 -right-10 text-[200px] text-amber-500/5 select-none pointer-events-none font-serif leading-none">ॐ</div>
-                <div className="absolute -bottom-16 -left-10 text-[200px] text-amber-500/5 select-none pointer-events-none font-serif leading-none">ॐ</div>
-                
-                <div className="inline-flex self-center items-center gap-2 px-3 py-1 rounded-full bg-amber-100 text-amber-800 text-[10px] font-bold uppercase tracking-widest shadow-sm z-10">
-                  For Astrologers
-                </div>
+              <h1 className="relative z-10 text-3xl md:text-7xl font-black tracking-tight leading-tight text-center">
+                <span className="text-black block mb-1 md:mb-2">Unlock the Secrets of</span>
+                <span className="bg-gradient-to-r from-amber-500 via-amber-600 to-amber-800 text-transparent bg-clip-text drop-shadow-sm">
+                  Your Destiny
+                </span>
+              </h1>
+              
+              <p className="relative z-10 text-xs md:text-xl text-slate-700 leading-relaxed max-w-2xl mx-auto font-medium text-center">
+                Connect with premium AI Vedic Astrologers. Ask about your career, love life, and true life path instantly.
+              </p>
 
-                <h2 className="relative z-10 text-2xl md:text-5xl font-black text-black leading-tight text-center">
-                  Are you a Certified <br className="hidden md:block" />
-                  <span className="text-amber-500">Vedic Astrologer?</span>
-                </h2>
-                
-                <p className="relative z-10 text-xs md:text-lg text-slate-700 leading-relaxed max-w-lg mx-auto font-medium text-center">
-                  Join our platform as an official astrologer. Provide live guidance to thousands of users globally.
-                </p>
-
-                <div className="flex flex-col gap-2 relative z-10 mt-1 md:mt-2">
-                  <Link 
-                    href="/astrologer-register" 
-                    className="w-full flex items-center justify-center gap-2 px-8 py-3 bg-black text-white font-bold rounded-[20px] hover:bg-slate-900 transition-all shadow-xl active:scale-95 text-sm"
-                  >
-                    Apply as Astrologer
-                    <ArrowRight className="w-4 h-4" />
-                  </Link>
-                  <Link 
-                    href="/astrologer-login" 
-                    className="w-full flex items-center justify-center gap-2 px-8 py-3 bg-slate-100 hover:bg-slate-200 text-black font-bold rounded-[20px] transition-all active:scale-95 shadow-xl text-sm"
-                  >
-                    <LogIn className="w-4 h-4" />
-                    Astrologer Login
-                  </Link>
-                </div>
-                
-                {/* Stats */}
-                <div className="grid grid-cols-4 gap-1 mt-2 relative z-10">
-                  <div className="bg-slate-50 border border-slate-100 rounded-xl py-2 text-center">
-                    <div className="text-sm font-black text-amber-500">50k+</div>
-                    <div className="text-[9px] font-semibold text-slate-500 leading-tight">Users</div>
-                  </div>
-                  <div className="bg-slate-50 border border-slate-100 rounded-xl py-2 text-center">
-                    <div className="text-sm font-black text-amber-500">Fast</div>
-                    <div className="text-[9px] font-semibold text-slate-500 leading-tight">Payout</div>
-                  </div>
-                  <div className="bg-slate-50 border border-slate-100 rounded-xl py-2 text-center">
-                    <div className="text-sm font-black text-amber-500">Global</div>
-                    <div className="text-[9px] font-semibold text-slate-500 leading-tight">Reach</div>
-                  </div>
-                  <div className="bg-slate-50 border border-slate-100 rounded-xl py-2 text-center">
-                    <div className="text-sm font-black text-amber-500">Flex</div>
-                    <div className="text-[9px] font-semibold text-slate-500 leading-tight">Hours</div>
-                  </div>
-                </div>
-
+              <div className="flex flex-col gap-3 relative z-10 mt-2">
+                <Link 
+                  href="/register" 
+                  className="w-full flex items-center justify-center gap-2 px-8 py-3 bg-amber-500 hover:bg-amber-400 text-black font-bold rounded-[20px] transition-all shadow-xl active:scale-95"
+                >
+                  <UserPlus className="w-5 h-5" />
+                  Create Free Account
+                </Link>
+                <Link 
+                  href="/login" 
+                  className="w-full flex items-center justify-center gap-2 px-8 py-3 bg-white border border-slate-200 hover:bg-slate-50 text-black font-bold rounded-[20px] transition-all shadow-xl active:scale-95"
+                >
+                  <LogIn className="w-5 h-5" />
+                  Sign In
+                </Link>
               </div>
             </div>
           </div>
 
-          {/* Slider Dots */}
-          <div className="flex justify-center items-center gap-2 mt-8 relative z-10">
-            <div className={`h-2 rounded-full transition-all duration-300 ${activeSlide === 0 ? 'w-8 bg-amber-500' : 'w-2 bg-white/30'}`} />
-            <div className={`h-2 rounded-full transition-all duration-300 ${activeSlide === 1 ? 'w-8 bg-amber-500' : 'w-2 bg-white/30'}`} />
+          {/* SLIDE 2: Features (Vertical Swiper) */}
+          <div className="w-full h-full flex-shrink-0 snap-center relative">
+            <div className="h-full w-full overflow-y-auto snap-y snap-mandatory scroll-smooth [&::-webkit-scrollbar]:hidden" style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}>
+              
+              {/* Feature 1: Live Chat */}
+              <div className="h-full w-full flex-shrink-0 snap-center flex items-center justify-center px-4 md:px-6 relative">
+                <div className="absolute top-4 w-full flex justify-center pointer-events-none animate-bounce">
+                  <span className="text-white/50 text-[10px] tracking-widest uppercase font-bold bg-black/40 px-3 py-1 rounded-full">Swipe down for more</span>
+                </div>
+                <div className="bg-white rounded-[32px] md:rounded-[40px] p-8 shadow-2xl shadow-black/40 w-full max-w-4xl relative overflow-hidden flex flex-col items-center justify-center gap-6 text-center">
+                  <div className="w-16 h-16 bg-amber-500 rounded-2xl flex items-center justify-center text-black shadow-lg relative z-10">
+                    <Sparkles className="w-8 h-8" />
+                  </div>
+                  <h3 className="relative z-10 text-3xl font-black text-black">Live Astrology Chat</h3>
+                  <p className="relative z-10 text-sm text-slate-700 leading-relaxed max-w-sm mx-auto font-medium">
+                    Connect instantly with verified Vedic astrologers for personalized guidance on career, love, and life.
+                  </p>
+                  <Link href="/register" className="relative z-10 w-full max-w-xs flex items-center justify-center gap-2 px-8 py-3 bg-black text-white font-bold rounded-[20px] shadow-xl active:scale-95">
+                    Start Chatting
+                  </Link>
+                </div>
+              </div>
+
+              {/* Feature 2: Gemstones */}
+              <div className="h-full w-full flex-shrink-0 snap-center flex items-center justify-center px-4 md:px-6">
+                <div className="bg-white rounded-[32px] md:rounded-[40px] p-8 shadow-2xl shadow-black/40 w-full max-w-4xl relative overflow-hidden flex flex-col items-center justify-center gap-6 text-center">
+                  <div className="w-16 h-16 bg-amber-500 rounded-2xl flex items-center justify-center text-black shadow-lg relative z-10">
+                    <Star className="w-8 h-8" />
+                  </div>
+                  <h3 className="relative z-10 text-3xl font-black text-black">Authentic Gemstones</h3>
+                  <p className="relative z-10 text-sm text-slate-700 leading-relaxed max-w-sm mx-auto font-medium">
+                    Shop for certified, lab-tested precious gemstones to balance your planetary energies and doshas.
+                  </p>
+                  <Link href="/shop" className="relative z-10 w-full max-w-xs flex items-center justify-center gap-2 px-8 py-3 bg-black text-white font-bold rounded-[20px] shadow-xl active:scale-95">
+                    Visit Shop
+                  </Link>
+                </div>
+              </div>
+
+              {/* Feature 3: Pujas */}
+              <div className="h-full w-full flex-shrink-0 snap-center flex items-center justify-center px-4 md:px-6">
+                <div className="bg-white rounded-[32px] md:rounded-[40px] p-8 shadow-2xl shadow-black/40 w-full max-w-4xl relative overflow-hidden flex flex-col items-center justify-center gap-6 text-center">
+                  <div className="w-16 h-16 bg-amber-500 rounded-2xl flex items-center justify-center text-black shadow-lg relative z-10">
+                    <UserPlus className="w-8 h-8" />
+                  </div>
+                  <h3 className="relative z-10 text-3xl font-black text-black">Online Pujas</h3>
+                  <p className="relative z-10 text-sm text-slate-700 leading-relaxed max-w-sm mx-auto font-medium">
+                    Book authentic Vedic rituals and pujas performed by experienced pandits on your behalf.
+                  </p>
+                  <Link href="/pooja" className="relative z-10 w-full max-w-xs flex items-center justify-center gap-2 px-8 py-3 bg-black text-white font-bold rounded-[20px] shadow-xl active:scale-95">
+                    Book a Puja
+                  </Link>
+                </div>
+              </div>
+
+            </div>
           </div>
 
-        </section>
-        
-        {/* Features Section */}
-        <section id="features" className="px-6 py-24 relative z-10 mt-12">
-          <div className="container mx-auto max-w-6xl text-center">
-            <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white/10 text-white text-xs font-bold uppercase tracking-widest mb-6">
-              Cosmic Offerings
-            </div>
-            <h2 className="text-3xl md:text-5xl font-black mb-16">
-              Everything you need for your <br className="hidden md:block" />
-              <span className="bg-gradient-to-r from-amber-400 to-amber-600 text-transparent bg-clip-text">Spiritual Journey</span>
-            </h2>
-            
-            <div className="grid md:grid-cols-3 gap-8 text-left">
-              <div className="bg-white/5 border border-white/10 rounded-[32px] p-8 backdrop-blur-md hover:bg-white/10 transition-colors shadow-2xl">
-                <div className="w-14 h-14 bg-amber-500 rounded-2xl flex items-center justify-center text-black mb-6 shadow-lg">
-                  <Sparkles className="w-7 h-7" />
-                </div>
-                <h3 className="text-2xl font-bold mb-3">Live Astrology Chat</h3>
-                <p className="text-white/70 leading-relaxed font-medium">Connect instantly with verified Vedic astrologers for personalized guidance on career, love, and life.</p>
+          {/* SLIDE 3: Astrologers */}
+          <div className="w-full h-full flex-shrink-0 snap-center flex items-center justify-center px-4 md:px-6">
+            <div className="bg-white rounded-[32px] md:rounded-[40px] p-6 md:p-14 shadow-2xl shadow-black/40 w-full max-w-4xl relative overflow-hidden flex flex-col justify-center gap-2 md:gap-6">
+              <div className="absolute -top-16 -right-10 text-[200px] text-amber-500/5 select-none pointer-events-none font-serif leading-none">ॐ</div>
+              <div className="absolute -bottom-16 -left-10 text-[200px] text-amber-500/5 select-none pointer-events-none font-serif leading-none">ॐ</div>
+              
+              <div className="inline-flex self-center items-center gap-2 px-3 py-1 rounded-full bg-amber-100 text-amber-800 text-[10px] font-bold uppercase tracking-widest shadow-sm z-10">
+                For Astrologers
+              </div>
+
+              <h2 className="relative z-10 text-2xl md:text-5xl font-black text-black leading-tight text-center">
+                Are you a Certified <br className="hidden md:block" />
+                <span className="text-amber-500">Vedic Astrologer?</span>
+              </h2>
+              
+              <p className="relative z-10 text-xs md:text-lg text-slate-700 leading-relaxed max-w-lg mx-auto font-medium text-center">
+                Join our platform as an official astrologer. Provide live guidance to thousands of users globally.
+              </p>
+
+              <div className="flex flex-col gap-2 relative z-10 mt-1 md:mt-2">
+                <Link 
+                  href="/astrologer-register" 
+                  className="w-full flex items-center justify-center gap-2 px-8 py-3 bg-black text-white font-bold rounded-[20px] hover:bg-slate-900 transition-all shadow-xl active:scale-95 text-sm"
+                >
+                  Apply as Astrologer
+                  <ArrowRight className="w-4 h-4" />
+                </Link>
+                <Link 
+                  href="/astrologer-login" 
+                  className="w-full flex items-center justify-center gap-2 px-8 py-3 bg-slate-100 hover:bg-slate-200 text-black font-bold rounded-[20px] transition-all active:scale-95 shadow-xl text-sm"
+                >
+                  <LogIn className="w-4 h-4" />
+                  Astrologer Login
+                </Link>
               </div>
               
-              <div className="bg-white/5 border border-white/10 rounded-[32px] p-8 backdrop-blur-md hover:bg-white/10 transition-colors shadow-2xl">
-                <div className="w-14 h-14 bg-amber-500 rounded-2xl flex items-center justify-center text-black mb-6 shadow-lg">
-                  <Star className="w-7 h-7" />
+              {/* Stats */}
+              <div className="grid grid-cols-4 gap-1 mt-2 relative z-10">
+                <div className="bg-slate-50 border border-slate-100 rounded-xl py-2 text-center">
+                  <div className="text-sm font-black text-amber-500">50k+</div>
+                  <div className="text-[9px] font-semibold text-slate-500 leading-tight">Users</div>
                 </div>
-                <h3 className="text-2xl font-bold mb-3">Authentic Gemstones</h3>
-                <p className="text-white/70 leading-relaxed font-medium">Shop for certified, lab-tested precious gemstones to balance your planetary energies and doshas.</p>
-              </div>
-              
-              <div className="bg-white/5 border border-white/10 rounded-[32px] p-8 backdrop-blur-md hover:bg-white/10 transition-colors shadow-2xl">
-                <div className="w-14 h-14 bg-amber-500 rounded-2xl flex items-center justify-center text-black mb-6 shadow-lg">
-                  <UserPlus className="w-7 h-7" />
+                <div className="bg-slate-50 border border-slate-100 rounded-xl py-2 text-center">
+                  <div className="text-sm font-black text-amber-500">Fast</div>
+                  <div className="text-[9px] font-semibold text-slate-500 leading-tight">Payout</div>
                 </div>
-                <h3 className="text-2xl font-bold mb-3">Online Pujas</h3>
-                <p className="text-white/70 leading-relaxed font-medium">Book authentic Vedic rituals and pujas performed by experienced pandits on your behalf.</p>
+                <div className="bg-slate-50 border border-slate-100 rounded-xl py-2 text-center">
+                  <div className="text-sm font-black text-amber-500">Global</div>
+                  <div className="text-[9px] font-semibold text-slate-500 leading-tight">Reach</div>
+                </div>
+                <div className="bg-slate-50 border border-slate-100 rounded-xl py-2 text-center">
+                  <div className="text-sm font-black text-amber-500">Flex</div>
+                  <div className="text-[9px] font-semibold text-slate-500 leading-tight">Hours</div>
+                </div>
               </div>
             </div>
           </div>
-        </section>      
+        </div>
 
-        {/* Footer */}
-        <footer className="relative z-10 border-t border-white/10 bg-black py-8 md:py-12 mt-12">
-          <div className="container mx-auto px-6 text-center text-white/50 text-sm">
-            <div className="flex flex-col md:flex-row items-center justify-center gap-4 md:gap-8 mb-6">
-              <Link href="/privacy" className="hover:text-white transition-colors">Privacy Policy</Link>
-              <Link href="/terms" className="hover:text-white transition-colors">Terms of Service (EULA)</Link>
-              <a href="mailto:support@astrosolution.com" className="hover:text-white transition-colors">Contact Support</a>
-            </div>
-            <p>&copy; {new Date().getFullYear()} Astro Solution. All rights reserved.</p>
-            <p className="mt-2 text-xs text-white/30">Astrological guidance is for spiritual and entertainment purposes only.</p>
-          </div>
-        </footer>
+        {/* Horizontal Slider Dots */}
+        <div className="shrink-0 h-16 flex justify-center items-center gap-2 relative z-10">
+          <div className={`h-2 rounded-full transition-all duration-300 ${activeSlide === 0 ? 'w-8 bg-amber-500' : 'w-2 bg-white/30'}`} />
+          <div className={`h-2 rounded-full transition-all duration-300 ${activeSlide === 1 ? 'w-8 bg-amber-500' : 'w-2 bg-white/30'}`} />
+          <div className={`h-2 rounded-full transition-all duration-300 ${activeSlide === 2 ? 'w-8 bg-amber-500' : 'w-2 bg-white/30'}`} />
+        </div>
+
       </div>
     </div>
   );

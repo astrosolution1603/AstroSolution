@@ -2,6 +2,7 @@ import { auth } from "@/lib/auth";
 import { prisma } from "@/lib/prisma";
 import { DeleteAccountButton } from "@/components/profile/DeleteAccountButton";
 import { WalletSection } from "@/components/profile/WalletSection";
+import { Button } from "@/components/ui/button";
 
 export default async function ProfilePage() {
   const session = await auth();

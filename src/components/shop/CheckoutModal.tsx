@@ -5,7 +5,6 @@ import { useCart } from "@/context/CartContext";
 import { X, CheckCircle2, Loader2, ShieldCheck, QrCode } from "lucide-react";
 import { useSession } from "next-auth/react";
 import { QRCodeSVG } from "qrcode.react";
-import { Purchases } from "@revenuecat/purchases-capacitor";
 
 export const CheckoutModal = ({ onClose }: { onClose: () => void }) => {
   const { cart, cartTotal, clearCart, setIsCartOpen } = useCart();
@@ -59,22 +58,9 @@ export const CheckoutModal = ({ onClose }: { onClose: () => void }) => {
 
     try {
       if (typeof window !== "undefined" && (window as any).Capacitor && settings?.activeMethod !== "MANUAL_UPI_QR") {
-        // Fetch products from RevenueCat
-        const offerings = await Purchases.getOfferings();
-        const currentOffering = offerings.current;
-        
-        if (!currentOffering || currentOffering.availablePackages.length === 0) {
-            alert("Payments are not configured in Google Play Console yet.");
-            setStep("details");
-            return;
-        }
-
-        // We assume product identifiers for shop items exist, e.g. 'shop_item' or dynamic ones.
-        // For testing, just pick the first available package
-        const pkg = currentOffering.availablePackages[0];
-        
-        // Trigger Native Google Play Bottom Sheet
-        await Purchases.purchasePackage({ aPackage: pkg });
+        // Physical goods cannot use Google Play Billing / RevenueCat. 
+        // They must use an external gateway (like Razorpay) per Google Play Policy.
+        // We bypass RevenueCat here and let the backend handle the payment gateway integration.
       }
 
       // If purchase succeeds (or web mode/manual UPI), hit our backend
@@ -101,7 +87,7 @@ export const CheckoutModal = ({ onClose }: { onClose: () => void }) => {
         console.log("User cancelled the purchase");
       } else {
         console.error(e);
-        alert("Payment failed or was cancelled.");
+        alert("Payment Error: " + (e.message || "Failed to initialize Google Play. Have you configured products in RevenueCat?"));
       }
       setStep(settings?.activeMethod === "MANUAL_UPI_QR" ? "payment" : "details");
     }

@@ -15,16 +15,11 @@ export async function POST(req: Request) {
 
     // Server-side price lookup — never trust client-provided price
     const POOJA_PRICES: Record<string, number> = {
-      "ganesh-puja": 2100,
-      "navgrah-shanti": 5100,
-      "satyanarayan-puja": 3100,
-      "rudrabhishek": 4500,
-      "mahamrityunjaya": 3500,
-      "laxmi-puja": 2500,
-      "durga-saptashati": 5100,
-      "kaal-sarp-dosh": 4100,
-      "mangal-dosh": 3700,
-      "pitra-dosh": 3900,
+      "basic_sankalp": 501,
+      "navagraha": 2100,
+      "maha_mrityunjaya": 11000,
+      "kaal_sarp": 21000,
+      "ati_rudra": 51000,
     };
 
     const price = POOJA_PRICES[poojaId];

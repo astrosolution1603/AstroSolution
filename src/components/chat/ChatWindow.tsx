@@ -399,17 +399,20 @@ export default function ChatWindow({ sessionId, initialMessages = [], userName, 
                 <p className="text-sm text-amber-600 dark:text-amber-400 mb-3 text-center">
                   If you are satisfied with {aiName}'s guidance, you can voluntarily pay Gurudakshina.
                 </p>
-                <div className="grid grid-cols-2 md:grid-cols-4 gap-3 w-full max-w-sm">
-                  <button onClick={() => handleGurudakshina(101)} disabled={isLoading} className="px-4 py-2 bg-card hover:bg-amber-50 dark:hover:bg-amber-500/20 text-amber-700 dark:text-amber-300 font-bold rounded-xl border border-amber-200 dark:border-amber-500/30 transition-colors shadow-sm">
+                <div className="flex flex-wrap justify-center gap-2 w-full max-w-md">
+                  <button onClick={() => handleGurudakshina(51)} disabled={isLoading} className="px-3 py-2 text-sm bg-card hover:bg-amber-50 dark:hover:bg-amber-500/20 text-amber-700 dark:text-amber-300 font-bold rounded-xl border border-amber-200 dark:border-amber-500/30 transition-colors shadow-sm">
+                    ₹51
+                  </button>
+                  <button onClick={() => handleGurudakshina(101)} disabled={isLoading} className="px-3 py-2 text-sm bg-card hover:bg-amber-50 dark:hover:bg-amber-500/20 text-amber-700 dark:text-amber-300 font-bold rounded-xl border border-amber-200 dark:border-amber-500/30 transition-colors shadow-sm">
                     ₹101
                   </button>
-                  <button onClick={() => handleGurudakshina(501)} disabled={isLoading} className="px-4 py-2 bg-card hover:bg-amber-50 dark:hover:bg-amber-500/20 text-amber-700 dark:text-amber-300 font-bold rounded-xl border border-amber-200 dark:border-amber-500/30 transition-colors shadow-sm">
+                  <button onClick={() => handleGurudakshina(501)} disabled={isLoading} className="px-3 py-2 text-sm bg-card hover:bg-amber-50 dark:hover:bg-amber-500/20 text-amber-700 dark:text-amber-300 font-bold rounded-xl border border-amber-200 dark:border-amber-500/30 transition-colors shadow-sm">
                     ₹501
                   </button>
-                  <button onClick={() => handleGurudakshina(1100)} disabled={isLoading} className="px-4 py-2 bg-card hover:bg-amber-50 dark:hover:bg-amber-500/20 text-amber-700 dark:text-amber-300 font-bold rounded-xl border border-amber-200 dark:border-amber-500/30 transition-colors shadow-sm">
+                  <button onClick={() => handleGurudakshina(1100)} disabled={isLoading} className="px-3 py-2 text-sm bg-card hover:bg-amber-50 dark:hover:bg-amber-500/20 text-amber-700 dark:text-amber-300 font-bold rounded-xl border border-amber-200 dark:border-amber-500/30 transition-colors shadow-sm">
                     ₹1100
                   </button>
-                  <button onClick={() => handleGurudakshina(5100)} disabled={isLoading} className="px-4 py-2 bg-amber-500 hover:bg-amber-400 text-black font-bold rounded-xl transition-colors shadow-sm">
+                  <button onClick={() => handleGurudakshina(5100)} disabled={isLoading} className="px-3 py-2 text-sm bg-amber-500 hover:bg-amber-400 text-black font-bold rounded-xl transition-colors shadow-sm">
                     ₹5100
                   </button>
                 </div>

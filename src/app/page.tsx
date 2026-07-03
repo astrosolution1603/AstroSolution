@@ -90,9 +90,9 @@ export default function DemoHomePage() {
                   <ChevronDown className="w-6 h-6 text-white" />
                 </div>
 
-                <div className="bg-white rounded-[32px] p-5 shadow-2xl w-full h-full max-h-[600px] flex flex-col justify-center gap-3 relative overflow-hidden">
+                <div className="bg-[#FDFBF7] border border-amber-900/10 rounded-[32px] p-5 shadow-2xl w-full h-full max-h-[600px] flex flex-col justify-center gap-3 relative overflow-hidden">
                   <div className="absolute -top-16 -right-10 text-[160px] text-amber-500/5 select-none pointer-events-none font-serif leading-none">ॐ</div>
-                  <div className="absolute -bottom-16 -left-10 text-[160px] text-amber-500/5 select-none pointer-events-none font-serif leading-none">ॐ</div>
+                  <div className="absolute -bottom-16 -left-10 text-[160px] text-amber-500/5 select-none pointer-events-none font-serif leading-none">卐</div>
                   
                   <div className="inline-flex self-center items-center gap-1 px-3 py-1 rounded-full bg-amber-100 text-amber-800 text-[10px] font-bold uppercase tracking-widest shadow-sm z-10">
                     Your Cosmic Journey Begins
@@ -129,8 +129,9 @@ export default function DemoHomePage() {
                   <span className="text-white text-[10px] tracking-widest uppercase font-bold">Users</span>
                 </div>
 
-                <div className="bg-white rounded-[32px] p-5 shadow-2xl w-full h-full max-h-[600px] flex flex-col justify-center gap-2 relative overflow-hidden">
-                  <div className="absolute -top-16 -right-10 text-[160px] text-amber-500/5 select-none pointer-events-none font-serif leading-none">ॐ</div>
+                <div className="bg-[#FDFBF7] border border-amber-900/10 rounded-[32px] p-5 shadow-2xl w-full h-full max-h-[600px] flex flex-col justify-center gap-2 relative overflow-hidden">
+                  <div className="absolute -top-16 -left-10 text-[160px] text-amber-500/5 select-none pointer-events-none font-serif leading-none">🔱</div>
+                  <div className="absolute -bottom-16 -right-10 text-[160px] text-amber-500/5 select-none pointer-events-none font-serif leading-none">ॐ</div>
                   
                   <div className="inline-flex self-center items-center gap-1 px-3 py-1 rounded-full bg-amber-100 text-amber-800 text-[10px] font-bold uppercase tracking-widest shadow-sm z-10">
                     For Astrologers
@@ -194,7 +195,8 @@ export default function DemoHomePage() {
                   <span className="text-white text-[10px] tracking-widest uppercase font-bold">More</span>
                   <ChevronDown className="w-6 h-6 text-white" />
                 </div>
-                <div className="bg-white rounded-[32px] p-6 shadow-2xl w-full h-full max-h-[600px] flex flex-col items-center justify-center gap-4 text-center">
+                <div className="bg-[#FDFBF7] border border-amber-900/10 rounded-[32px] p-6 shadow-2xl w-full h-full max-h-[600px] flex flex-col items-center justify-center gap-4 text-center relative overflow-hidden">
+                  <div className="absolute -top-16 -right-10 text-[160px] text-amber-500/5 select-none pointer-events-none font-serif leading-none">ॐ</div>
                   <div className="w-14 h-14 bg-amber-500 rounded-2xl flex items-center justify-center text-black shadow-lg">
                     <Sparkles className="w-7 h-7" />
                   </div>
@@ -216,7 +218,8 @@ export default function DemoHomePage() {
                 <div className="absolute bottom-1 w-full flex flex-col items-center pointer-events-none animate-bounce z-20 opacity-80">
                   <ChevronDown className="w-6 h-6 text-white" />
                 </div>
-                <div className="bg-white rounded-[32px] p-6 shadow-2xl w-full h-full max-h-[600px] flex flex-col items-center justify-center gap-4 text-center">
+                <div className="bg-[#FDFBF7] border border-amber-900/10 rounded-[32px] p-6 shadow-2xl w-full h-full max-h-[600px] flex flex-col items-center justify-center gap-4 text-center relative overflow-hidden">
+                  <div className="absolute -bottom-16 -left-10 text-[160px] text-amber-500/5 select-none pointer-events-none font-serif leading-none">卐</div>
                   <div className="w-14 h-14 bg-amber-500 rounded-2xl flex items-center justify-center text-black shadow-lg">
                     <Star className="w-7 h-7" />
                   </div>
@@ -236,7 +239,8 @@ export default function DemoHomePage() {
                   <ChevronUp className="w-6 h-6 text-white" />
                   <span className="text-white text-[10px] tracking-widest uppercase font-bold">More</span>
                 </div>
-                <div className="bg-white rounded-[32px] p-6 shadow-2xl w-full h-full max-h-[600px] flex flex-col items-center justify-center gap-4 text-center">
+                <div className="bg-[#FDFBF7] border border-amber-900/10 rounded-[32px] p-6 shadow-2xl w-full h-full max-h-[600px] flex flex-col items-center justify-center gap-4 text-center relative overflow-hidden">
+                  <div className="absolute -top-16 -right-10 text-[160px] text-amber-500/5 select-none pointer-events-none font-serif leading-none">🔱</div>
                   <div className="w-14 h-14 bg-amber-500 rounded-2xl flex items-center justify-center text-black shadow-lg">
                     <UserPlus className="w-7 h-7" />
                   </div>

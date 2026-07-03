@@ -60,11 +60,12 @@ export default function DemoHomePage() {
         {/* Mobile Fullscreen Menu Overlay */}
         {isMenuOpen && (
           <div className="fixed inset-0 z-50 bg-black/95 backdrop-blur-xl flex flex-col items-center justify-center gap-8 animate-in fade-in duration-300">
-            <Link onClick={() => setIsMenuOpen(false)} href="/register" className="text-2xl font-bold text-amber-500 hover:text-amber-400">Sign Up as User</Link>
-            <Link onClick={() => setIsMenuOpen(false)} href="/login" className="text-2xl font-bold text-white hover:text-gray-300">Log In as User</Link>
-            <div className="w-24 h-px bg-white/20 my-4"></div>
-            <Link onClick={() => setIsMenuOpen(false)} href="/astrologer-register" className="text-2xl font-bold text-amber-500 hover:text-amber-400">Apply as Astrologer</Link>
-            <Link onClick={() => setIsMenuOpen(false)} href="/astrologer-login" className="text-2xl font-bold text-white hover:text-gray-300">Astrologer Log In</Link>
+            <button onClick={() => setIsMenuOpen(false)} className="absolute top-6 right-6 p-2 text-amber-500">
+              <X className="w-8 h-8" />
+            </button>
+            <Link onClick={() => setIsMenuOpen(false)} href="/privacy" className="text-2xl font-bold text-white hover:text-amber-500 transition-colors">Privacy Policy</Link>
+            <Link onClick={() => setIsMenuOpen(false)} href="/terms" className="text-2xl font-bold text-white hover:text-amber-500 transition-colors">Terms of Service (EULA)</Link>
+            <a onClick={() => setIsMenuOpen(false)} href="mailto:support@astrosolution.com" className="text-2xl font-bold text-white hover:text-amber-500 transition-colors">Contact Support</a>
           </div>
         )}
 

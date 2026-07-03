@@ -14,7 +14,7 @@ export function ThemeToggle() {
   }, []);
 
   if (!mounted) {
-    return <Button variant="outline" size="icon" className="w-9 h-9 bg-transparent border-white/20" />;
+    return <Button variant="outline" size="icon" className="w-9 h-9 bg-slate-100 dark:bg-slate-800 border-slate-200 dark:border-slate-700" />;
   }
 
   return (
@@ -22,7 +22,7 @@ export function ThemeToggle() {
       variant="outline"
       size="icon"
       onClick={() => setTheme(resolvedTheme === "light" ? "dark" : "light")}
-      className="w-9 h-9 bg-transparent border-white/20 text-foreground hover:bg-white/10 relative overflow-hidden"
+      className="w-9 h-9 bg-slate-100 dark:bg-slate-800 border-slate-200 dark:border-slate-700 text-foreground hover:bg-slate-200 dark:hover:bg-slate-700 relative overflow-hidden transition-colors"
     >
       <Sun className="h-[1.2rem] w-[1.2rem] rotate-0 scale-100 transition-all dark:-rotate-90 dark:scale-0 text-amber-500" />
       <Moon className="absolute h-[1.2rem] w-[1.2rem] rotate-90 scale-0 transition-all dark:rotate-0 dark:scale-100 text-white" />

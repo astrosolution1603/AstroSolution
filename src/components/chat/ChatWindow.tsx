@@ -300,7 +300,7 @@ export default function ChatWindow({ sessionId, initialMessages = [], userName, 
       {/* Universal Header (Mobile & Desktop) */}
       <div className="flex items-center justify-between p-4 border-b border-border bg-card/50 backdrop-blur-md sticky top-0 z-20">
         <div className="flex items-center gap-3">
-          <button onClick={() => router.push('/chat')} className="md:hidden text-foreground p-1 hover:bg-muted/50 rounded-full transition-colors">
+          <button onClick={() => window.location.href = '/chat'} className="md:hidden text-foreground p-1 hover:bg-muted/50 rounded-full transition-colors">
             <ArrowLeft className="w-5 h-5" />
           </button>
           <div className="flex items-center gap-2">

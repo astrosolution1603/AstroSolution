@@ -226,7 +226,7 @@ export default function AstrologerRegistrationPage() {
             /* AUTHENTICATION STEP */
             authStep === 1 ? (
               <>
-                <h2 className="text-2xl font-bold text-slate-900 dark:text-white mb-2">Step 1: Create Account</h2>
+                <h2 className="text-2xl font-bold text-slate-900 dark:text-white mb-2">Sign Up as Astrologer</h2>
                 <p className="text-slate-600 dark:text-white/60 mb-8">Register with your phone number to begin your application.</p>
                 {error && <div className="mb-6 p-4 bg-red-100 dark:bg-red-500/20 text-red-700 dark:text-red-400 rounded-xl text-sm">{error}</div>}
                 

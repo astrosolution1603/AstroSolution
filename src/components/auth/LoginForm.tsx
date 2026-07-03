@@ -175,8 +175,8 @@ export default function LoginForm({ expectedRole = "USER" }: { expectedRole?: "U
 
       <div className="mt-6 text-center text-sm text-muted-foreground">
         Don't have an account?{" "}
-        <a href="/register" className="text-amber-400 hover:text-amber-300 font-medium">
-          Create Account
+        <a href={expectedRole === "ASTROLOGER" ? "/astrologer-register" : "/register"} className="text-amber-400 hover:text-amber-300 font-medium">
+          {expectedRole === "ASTROLOGER" ? "Sign Up as Astrologer" : "Create Account"}
         </a>
       </div>
     </div>

@@ -19,27 +19,46 @@ export default function ChatClient({ sessions, activeSessionId, initialMessages,
     }
   }, [prompt, activeSessionId, router]);
 
+  useEffect(() => {
+    // Clear the navigating state once the active session updates
+    setIsNavigating(null);
+  }, [activeSessionId]);
+
   const handleSelectAstro = async (astroId: string) => {
+    if (isNavigating) return;
     setIsNavigating(astroId);
+    
     // Check if a session already exists for this astrologer
     const existingSession = sessions.find((s: any) => s.astrologerId === astroId);
     
     if (existingSession) {
-      router.push(`/chat?session=${existingSession.id}`);
+      if (existingSession.id !== activeSessionId) {
+        router.push(`/chat?session=${existingSession.id}`);
+      } else {
+        setIsNavigating(null);
+      }
       return;
     }
 
-    // Otherwise create a new one
-    const res = await fetch("/api/chat/sessions", { 
-      method: "POST",
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ astrologerId: astroId })
-    });
-    
-    if (res.ok) {
-      const data = await res.json();
-      router.push(`/chat?session=${data.id}`);
-      router.refresh();
+    try {
+      // Otherwise create a new one
+      const res = await fetch("/api/chat/sessions", { 
+        method: "POST",
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ astrologerId: astroId })
+      });
+      
+      if (res.ok) {
+        const data = await res.json();
+        router.push(`/chat?session=${data.id}`);
+        router.refresh();
+      } else {
+        setIsNavigating(null);
+        alert("Failed to connect to astrologer. Please try again.");
+      }
+    } catch (e) {
+      setIsNavigating(null);
+      alert("Network error. Please check your connection.");
     }
   };
 

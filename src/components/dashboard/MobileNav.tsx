@@ -37,13 +37,12 @@ export default function MobileNav() {
   return (
     <>
       <div className="md:hidden flex items-center justify-between p-4 bg-white/80 dark:bg-slate-950/80 backdrop-blur-xl border-b border-slate-200 dark:border-white/10 sticky top-0 z-40">
-        <div className="flex items-center gap-3">
+        <div className="flex items-center gap-2">
           <button aria-label="Open navigation menu" onClick={() => setIsOpen(true)} className="text-foreground p-1">
             <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" /></svg>
           </button>
-          <div className="scale-75 sm:scale-100 origin-left -ml-2 sm:ml-0">
-            <Logo />
-          </div>
+          <div className="sm:hidden"><Logo size="sm" /></div>
+          <div className="hidden sm:block"><Logo size="md" /></div>
         </div>
         <div className="flex items-center gap-2">
           <NotificationBell />
@@ -57,14 +56,14 @@ export default function MobileNav() {
       {isOpen && (
         <div className="fixed inset-0 z-50 flex">
           <div className="fixed inset-0 bg-black/60 backdrop-blur-sm" onClick={() => setIsOpen(false)} />
-          <div className="relative w-[300px] bg-white dark:bg-slate-950 h-full border-r border-slate-200 dark:border-white/10 flex flex-col transform transition-transform">
+          <div className="relative w-64 bg-white dark:bg-slate-950 h-full border-r border-slate-200 dark:border-white/10 flex flex-col transform transition-transform">
             <div className="p-4 flex justify-end">
               <button aria-label="Close navigation menu" onClick={() => setIsOpen(false)} className="text-slate-500 dark:text-white/60 hover:text-slate-800 dark:hover:text-white">
                 <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" /></svg>
               </button>
             </div>
             <div className="px-4 pb-4">
-              <Logo />
+              <Logo size="sm" />
             </div>
             <div className="flex-1 overflow-y-auto px-4 py-2 space-y-2">
               {ALL_ITEMS.map((item) => {

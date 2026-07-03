@@ -10,6 +10,7 @@ export default function ChatClient({ sessions, activeSessionId, initialMessages,
   const searchParams = useSearchParams();
   const prompt = searchParams.get("prompt");
   const [injectedPrompt, setInjectedPrompt] = useState<string | null>(null);
+  const [isNavigating, setIsNavigating] = useState<string | null>(null);
 
   useEffect(() => {
     if (prompt) {
@@ -19,12 +20,12 @@ export default function ChatClient({ sessions, activeSessionId, initialMessages,
   }, [prompt, activeSessionId, router]);
 
   const handleSelectAstro = async (astroId: string) => {
+    setIsNavigating(astroId);
     // Check if a session already exists for this astrologer
     const existingSession = sessions.find((s: any) => s.astrologerId === astroId);
     
     if (existingSession) {
       router.push(`/chat?session=${existingSession.id}`);
-      router.refresh();
       return;
     }
 
@@ -50,6 +51,7 @@ export default function ChatClient({ sessions, activeSessionId, initialMessages,
           activeSessionId={activeSessionId} 
           onSelectAstro={handleSelectAstro} 
           humanAstrologers={humanAstrologers}
+          isNavigating={isNavigating}
         />
       </div>
       <div className={`flex-1 overflow-hidden relative ${!activeSessionId ? 'hidden md:block' : 'block'}`}>

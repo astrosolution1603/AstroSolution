@@ -15,9 +15,10 @@ interface ChatSidebarProps {
   activeSessionId?: string;
   onSelectAstro: (astrologerId: string) => void;
   humanAstrologers?: { id: string; name: string }[];
+  isNavigating?: string | null;
 }
 
-export default function ChatSidebar({ sessions, activeSessionId, onSelectAstro, humanAstrologers = [] }: ChatSidebarProps) {
+export default function ChatSidebar({ sessions, activeSessionId, onSelectAstro, humanAstrologers = [], isNavigating = null }: ChatSidebarProps) {
   // Merge Human Astrologers (from DB) with AI Astrologers
   const allAstrologers = [
     ...humanAstrologers.map((h: any) => ({
@@ -99,11 +100,16 @@ export default function ChatSidebar({ sessions, activeSessionId, onSelectAstro, 
 
               {/* Bottom Row: Chat Action */}
               <button
+                disabled={isNavigating !== null}
                 onClick={() => onSelectAstro(astro.id)}
-                className="w-full py-3 rounded-xl border-2 border-slate-200 text-slate-700 font-bold flex items-center justify-center gap-2 hover:bg-slate-50 transition-colors"
+                className="w-full py-3 rounded-xl border-2 border-slate-200 text-slate-700 font-bold flex items-center justify-center gap-2 hover:bg-slate-50 transition-colors disabled:opacity-70"
               >
-                <MessageSquare className="w-4 h-4" />
-                Chat
+                {isNavigating === astro.id ? (
+                  <div className="w-4 h-4 rounded-full border-2 border-orange-500 border-t-transparent animate-spin" />
+                ) : (
+                  <MessageSquare className="w-4 h-4" />
+                )}
+                {isNavigating === astro.id ? "Connecting..." : "Chat"}
               </button>
             </div>
           );
@@ -113,16 +119,21 @@ export default function ChatSidebar({ sessions, activeSessionId, onSelectAstro, 
       {/* Random Astrologer Floating Action Button */}
       <div className="md:hidden absolute bottom-4 right-4 z-20">
         <button 
+          disabled={isNavigating !== null}
           onClick={() => {
             if (allAstrologers.length > 0) {
               const randomAstro = allAstrologers[Math.floor(Math.random() * allAstrologers.length)];
               onSelectAstro(randomAstro.id);
             }
           }}
-          className="w-14 h-14 rounded-full bg-orange-500 hover:bg-orange-600 transition-all flex items-center justify-center text-white shadow-[0_8px_30px_rgb(249,115,22,0.3)] active:scale-95"
+          className="w-14 h-14 rounded-full bg-orange-500 hover:bg-orange-600 transition-all flex items-center justify-center text-white shadow-[0_8px_30px_rgb(249,115,22,0.3)] active:scale-95 disabled:opacity-70"
           aria-label="Chat with random astrologer"
         >
-          <MessageSquare className="w-6 h-6 fill-current" />
+          {isNavigating ? (
+            <div className="w-6 h-6 rounded-full border-2 border-white border-t-transparent animate-spin" />
+          ) : (
+            <MessageSquare className="w-6 h-6 fill-current" />
+          )}
         </button>
       </div>
 

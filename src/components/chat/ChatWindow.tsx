@@ -97,14 +97,24 @@ export default function ChatWindow({ sessionId, initialMessages = [], userName, 
         body: JSON.stringify({ sessionId, amount }),
       });
       if (res.ok) {
-        // Message will be picked up by the polling
+        // Optimistic UI update
+        const tmpId = "tmp-" + Date.now();
+        setMessages(prev => [...prev, {
+          id: tmpId,
+          role: "assistant",
+          content: `🙏 User has paid ₹${amount} as Gurudakshina! Thank you!`,
+          senderRole: "AI",
+          createdAt: new Date().toISOString()
+        }]);
       } else if (res.status === 402) {
         alert("Insufficient balance in your Astro Wallet. Please go to your Profile to top up.");
       } else {
-        alert("Payment failed");
+        const errorText = await res.text();
+        alert(`Payment failed: ${errorText}`);
       }
-    } catch (e) {
+    } catch (e: any) {
       console.error(e);
+      alert(`Error: ${e.message}`);
     } finally {
       setIsLoading(false);
     }

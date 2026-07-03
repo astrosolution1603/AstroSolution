@@ -3,8 +3,6 @@
 import { useState } from "react";
 import { signIn } from "next-auth/react";
 import { useRouter } from "next/navigation";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
 
 export default function LoginForm({ expectedRole = "USER" }: { expectedRole?: "USER" | "ASTROLOGER" }) {
   const router = useRouter();
@@ -65,7 +63,6 @@ export default function LoginForm({ expectedRole = "USER" }: { expectedRole?: "U
         return;
       }
 
-      // Check role and redirect accordingly
       const sessionRes = await fetch("/api/auth/session");
       const sessionData = await sessionRes.json();
       const role = sessionData?.user?.role;
@@ -89,80 +86,76 @@ export default function LoginForm({ expectedRole = "USER" }: { expectedRole?: "U
   };
 
   return (
-    <div className="bg-background/40 backdrop-blur-3xl border border-foreground/10 rounded-[32px] p-8 md:p-10 shadow-2xl relative overflow-hidden">
-      {/* Decorative cosmic blur inside the card */}
-      <div className="absolute top-0 right-0 w-32 h-32 bg-amber-500/20 blur-[50px] rounded-full pointer-events-none"></div>
-
-      <h2 className="text-2xl font-black text-foreground mb-6 relative z-10">
+    <div className="bg-white rounded-[32px] p-6 md:p-8 shadow-[0_8px_30px_rgb(0,0,0,0.04)] border border-slate-100/50">
+      <h2 className="text-[28px] font-bold text-slate-900 mb-6">
         {expectedRole === "ASTROLOGER" ? "Astrologer Sign In" : "Sign In"}
       </h2>
       
       {error && (
-        <div className="bg-red-500/10 border border-red-500/20 text-red-400 p-4 rounded-[16px] text-sm mb-6 relative z-10 font-medium">
+        <div className="bg-red-50 text-red-600 p-4 rounded-xl text-sm mb-6 font-medium border border-red-100">
           {error}
         </div>
       )}
 
-      <form onSubmit={handleSubmit} className="space-y-5 relative z-10">
+      <form onSubmit={handleSubmit} className="space-y-5">
         <div>
-          <label className="block text-sm font-semibold text-muted-foreground mb-2">Mobile Number</label>
-          <Input 
+          <label className="block text-[13px] font-semibold text-slate-500 mb-2">Mobile Number</label>
+          <input 
             type="tel" 
             value={phone} 
             onChange={(e) => setPhone(e.target.value)} 
             required
             disabled={otpSent}
-            className="bg-foreground/5 border-foreground/10 text-foreground placeholder:text-muted-foreground/50 rounded-[16px] py-6 h-14 shadow-inner disabled:opacity-50" 
+            className="w-full bg-slate-100/50 border border-transparent focus:border-amber-500 focus:bg-white focus:ring-4 focus:ring-amber-500/10 text-slate-900 placeholder:text-slate-400 rounded-[16px] py-4 px-5 h-14 font-medium outline-none transition-all disabled:opacity-60" 
             placeholder="9876543210"
           />
         </div>
         
         {otpSent && (
           <div className="animate-in fade-in slide-in-from-top-2 duration-300">
-            <label className="block text-sm font-semibold text-muted-foreground mb-2">Enter OTP</label>
-            <Input 
+            <label className="block text-[13px] font-semibold text-slate-500 mb-2">Enter OTP</label>
+            <input 
               type="text" 
               value={otp} 
               onChange={(e) => setOtp(e.target.value)} 
               required
-              className="bg-foreground/5 border-foreground/10 text-foreground placeholder:text-muted-foreground/50 rounded-[16px] py-6 h-14 shadow-inner" 
-              placeholder="4-digit OTP"
+              className="w-full bg-slate-100/50 border border-transparent focus:border-amber-500 focus:bg-white focus:ring-4 focus:ring-amber-500/10 text-slate-900 placeholder:text-slate-400 rounded-[16px] py-4 px-5 h-14 font-bold tracking-[0.2em] outline-none transition-all text-lg" 
+              placeholder="1234"
               maxLength={4}
             />
           </div>
         )}
 
         {!otpSent ? (
-          <Button 
+          <button 
             type="button" 
             onClick={handleSendOtp}
             disabled={isLoading || !phone} 
-            className="w-full bg-amber-500 hover:bg-amber-400 text-black font-bold rounded-[20px] h-14 mt-4 shadow-lg shadow-amber-500/20 active:scale-95 transition-all"
+            className="w-full bg-[#f59e0b] hover:bg-[#d97706] text-white font-bold rounded-[20px] h-14 mt-2 shadow-lg shadow-amber-500/20 active:scale-95 transition-all disabled:opacity-60"
           >
             {isLoading ? "Sending..." : "Send OTP"}
-          </Button>
+          </button>
         ) : (
-          <Button 
+          <button 
             type="submit" 
             disabled={isLoading || !otp} 
-            className="w-full bg-amber-500 hover:bg-amber-400 text-black font-bold rounded-[20px] h-14 mt-4 shadow-lg shadow-amber-500/20 active:scale-95 transition-all"
+            className="w-full bg-[#f59e0b] hover:bg-[#d97706] text-white font-bold rounded-[20px] h-14 mt-2 shadow-lg shadow-amber-500/20 active:scale-95 transition-all disabled:opacity-60"
           >
             {isLoading ? "Signing in..." : "Sign In"}
-          </Button>
+          </button>
         )}
       </form>
 
-      <div className="mt-8 flex items-center relative z-10">
-        <div className="flex-grow border-t border-foreground/10"></div>
-        <span className="flex-shrink-0 mx-4 text-muted-foreground text-xs font-semibold uppercase tracking-widest">Or continue with</span>
-        <div className="flex-grow border-t border-foreground/10"></div>
+      <div className="mt-8 flex items-center">
+        <div className="flex-grow border-t border-slate-100"></div>
+        <span className="flex-shrink-0 mx-4 text-slate-400 text-[10px] font-bold uppercase tracking-widest">Or continue with</span>
+        <div className="flex-grow border-t border-slate-100"></div>
       </div>
 
-      <Button 
+      <button 
         type="button" 
         onClick={handleGoogleSignIn}
-        variant="outline" 
-        className="w-full mt-6 bg-foreground/5 hover:bg-foreground/10 text-foreground font-semibold border-foreground/10 rounded-[20px] h-14 backdrop-blur-md active:scale-95 transition-all"
+        className="w-full mt-6 bg-slate-50 hover:bg-slate-100 text-slate-700 font-semibold border border-slate-200 rounded-[20px] h-14 flex items-center justify-center active:scale-95 transition-all"
       >
         <svg className="w-5 h-5 mr-3" viewBox="0 0 24 24">
           <path fill="currentColor" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" />
@@ -171,15 +164,14 @@ export default function LoginForm({ expectedRole = "USER" }: { expectedRole?: "U
           <path fill="#EA4335" d="M12 4.75c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 1.36 14.97 0 12 0 7.7 0 3.99 2.47 2.18 6.06l3.66 2.84c.87-2.6 3.3-4.15 6.16-4.15z" />
         </svg>
         Sign in with Google
-      </Button>
+      </button>
 
-      <div className="mt-6 text-center text-sm text-muted-foreground">
+      <div className="mt-8 text-center text-[14px] text-slate-500 font-medium">
         Don't have an account?{" "}
-        <a href={expectedRole === "ASTROLOGER" ? "/astrologer-register" : "/register"} className="text-amber-400 hover:text-amber-300 font-medium">
+        <a href={expectedRole === "ASTROLOGER" ? "/astrologer-register" : "/register"} className="text-[#f59e0b] hover:text-[#d97706] font-bold">
           {expectedRole === "ASTROLOGER" ? "Sign Up as Astrologer" : "Create Account"}
         </a>
       </div>
     </div>
   );
 }
-

@@ -1,378 +1,186 @@
 "use client";
 
 import { useState } from "react";
-import { useRouter } from "next/navigation";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
 import { signIn } from "next-auth/react";
+import { useRouter } from "next/navigation";
 
 export default function RegisterForm() {
   const router = useRouter();
-  const [step, setStep] = useState(1);
+  const [step, setStep] = useState<1 | 2>(1);
+  const [name, setName] = useState("");
+  const [phone, setPhone] = useState("");
+  const [otp, setOtp] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState("");
-  const [otpSent, setOtpSent] = useState(false);
-  const [otp, setOtp] = useState("");
-  
-  const [formData, setFormData] = useState({
-    name: "",
-    phone: "",
-    dateOfBirth: "",
-    timeOfBirth: "",
-    placeOfBirth: "",
-    gender: "",
-    maritalStatus: "",
-    occupation: "",
-    languagePreference: "english",
-    reasonForJoining: "",
-    acceptTerms: false
-  });
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
-    setFormData({ ...formData, [e.target.name]: e.target.value });
-  };
-
-
-
-  const handleSendOtp = async () => {
-    if (!formData.name || !formData.phone) {
-      return setError("Please fill all required fields first");
-    }
-    if (formData.phone.length < 10) {
-      return setError("Please enter a valid mobile number");
+  const handleRegister = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!name || !phone) {
+      setError("Please fill all fields.");
+      return;
     }
 
     setIsLoading(true);
     setError("");
+
     try {
       const res = await fetch("/api/auth/send-otp", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ phone: formData.phone, isRegistering: true })
+        body: JSON.stringify({ phone, isRegistering: true })
       });
       const data = await res.json();
       
       if (res.ok) {
-        setOtpSent(true);
+        setStep(2);
         alert(data.message || "OTP Sent!");
       } else {
-        setError(data.error || "Failed to send OTP");
+        setError(data.error || "Failed to register");
       }
     } catch (e) {
-      setError("An error occurred while sending OTP.");
+      setError("An error occurred during registration.");
     } finally {
       setIsLoading(false);
     }
   };
 
-  const handleNext = () => {
-    setError("");
-    if (step === 1) {
-      if (!otpSent) {
-        return handleSendOtp();
-      }
-      if (!otp || otp.length !== 4) {
-        return setError("Please enter the 4-digit OTP sent to your phone");
-      }
-      // OTP is theoretically verified in the final step by NextAuth, but we proceed for now
-    }
-    if (step === 2) {
-      if (!formData.dateOfBirth || !formData.placeOfBirth) {
-        return setError("Date of Birth and Place of Birth are required");
-      }
-    }
-    setStep(step + 1);
-  };
-
-  const handlePrev = () => {
-    setStep(step - 1);
-    setError("");
-  };
-
-  const handleSubmit = async (e: React.FormEvent) => {
+  const handleVerify = async (e: React.FormEvent) => {
     e.preventDefault();
-    setError("");
-    
-    if (!formData.acceptTerms) {
-      return setError("Please accept the terms to continue");
-    }
+    if (!otp) return;
 
     setIsLoading(true);
+    setError("");
 
     try {
-      const res = await fetch("/api/user", {
+      // Create user first
+      const registerRes = await fetch("/api/auth/register", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(formData),
+        body: JSON.stringify({ name, phone, otp })
       });
-
-      const data = await res.json();
-
-      if (!res.ok) {
-        throw new Error(data.error || "Registration failed");
+      
+      if (!registerRes.ok) {
+        const errorData = await registerRes.json();
+        setError(errorData.error || "Registration failed");
+        setIsLoading(false);
+        return;
       }
 
-      // Auto sign-in
-      const signInRes = await signIn("credentials", {
-        phone: formData.phone,
-        otp: otp,
+      // Then sign in automatically
+      const res = await signIn("credentials", {
+        phone,
+        otp,
         redirect: false,
       });
 
-      if (signInRes?.error) {
-        throw new Error("Failed to sign in after registration");
+      if (res?.error) {
+        setError("Invalid OTP or login failed");
+        setIsLoading(false);
+        return;
       }
 
       router.push("/chat");
       router.refresh();
-    } catch (err: any) {
-      setError(err.message);
+    } catch (err) {
+      setError("An error occurred. Please try again.");
       setIsLoading(false);
     }
   };
 
   return (
-    <div className="bg-background/40 backdrop-blur-3xl border border-foreground/10 rounded-[32px] p-8 md:p-10 shadow-2xl relative overflow-hidden">
-      {/* Decorative cosmic blur inside the card */}
-      <div className="absolute top-0 right-0 w-32 h-32 bg-amber-500/20 blur-[50px] rounded-full pointer-events-none"></div>
+    <div className="bg-white rounded-[32px] p-6 md:p-8 shadow-[0_8px_30px_rgb(0,0,0,0.04)] border border-slate-100/50">
       
-      <div className="mb-8 relative z-10">
-        <div className="flex justify-between text-xs text-amber-400 font-medium mb-2">
-          <span>Step {step} of 3</span>
-          <span>{step === 1 ? "Account" : step === 2 ? "Birth Details" : "Preferences"}</span>
-        </div>
-        <div className="w-full bg-foreground/20 h-2 rounded-full overflow-hidden">
-          <div 
-            className="bg-amber-400 h-full transition-all duration-300"
-            style={{ width: `${(step / 3) * 100}%` }}
-          />
-        </div>
+      {/* Progress Header */}
+      <div className="flex justify-between items-end mb-3">
+        <span className="text-[#f59e0b] font-bold text-sm">Step {step} of 2</span>
+        <span className="text-[#f59e0b] font-bold text-sm">Account</span>
       </div>
-
+      
+      {/* Progress Bar */}
+      <div className="w-full bg-slate-200 h-2.5 rounded-full mb-8 overflow-hidden">
+        <div 
+          className="bg-[#f59e0b] h-full rounded-full transition-all duration-500 ease-out" 
+          style={{ width: step === 1 ? '50%' : '100%' }}
+        ></div>
+      </div>
+      
       {error && (
-        <div className="bg-red-500/10 border border-red-500/20 text-red-400 p-4 rounded-[16px] text-sm mb-6 relative z-10 font-medium">
+        <div className="bg-red-50 text-red-600 p-4 rounded-xl text-sm mb-6 font-medium border border-red-100">
           {error}
         </div>
       )}
 
-
-
-      <form onSubmit={handleSubmit} className="space-y-5 relative z-10">
-        {step === 1 && (
-          <div className="space-y-4 animate-in fade-in slide-in-from-right-4">
-            <div>
-              <label className="block text-sm font-semibold text-muted-foreground mb-2">Full Name *</label>
-              <Input 
-                name="name" 
-                value={formData.name} 
-                onChange={handleChange} 
-                className="bg-foreground/5 border-foreground/10 text-foreground placeholder:text-muted-foreground/50 rounded-[16px] py-6 h-14 shadow-inner" 
-                placeholder="John Doe"
-              />
-            </div>
-            <div>
-              <label className="block text-sm font-semibold text-muted-foreground mb-2">Mobile Number *</label>
-              <Input 
-                name="phone" 
-                type="tel" 
-                value={formData.phone} 
-                onChange={handleChange} 
-                disabled={otpSent}
-                className="bg-foreground/5 border-foreground/10 text-foreground placeholder:text-muted-foreground/50 rounded-[16px] py-6 h-14 shadow-inner disabled:opacity-50" 
-                placeholder="9876543210"
-              />
-            </div>
-            
-            {otpSent && (
-              <div className="animate-in fade-in slide-in-from-top-2 duration-300">
-                <label className="block text-sm font-semibold text-muted-foreground mb-2">Enter OTP *</label>
-                <Input 
-                  type="text" 
-                  value={otp} 
-                  onChange={(e) => setOtp(e.target.value)} 
-                  required
-                  className="bg-foreground/5 border-foreground/10 text-foreground placeholder:text-muted-foreground/50 rounded-[16px] py-6 h-14 shadow-inner" 
-                  placeholder="4-digit OTP"
-                  maxLength={4}
-                />
-              </div>
-            )}
-
-            {!otpSent ? (
-              <Button type="button" onClick={handleNext} disabled={isLoading} className="w-full bg-amber-500 hover:bg-amber-400 text-black font-bold rounded-[20px] h-14 mt-4 shadow-lg shadow-amber-500/20 active:scale-95 transition-all">
-                {isLoading ? "Sending..." : "Send OTP"}
-              </Button>
-            ) : (
-              <Button type="button" onClick={handleNext} className="w-full bg-amber-500 hover:bg-amber-400 text-black font-bold rounded-[20px] h-14 mt-4 shadow-lg shadow-amber-500/20 active:scale-95 transition-all">
-                Verify & Continue
-              </Button>
-            )}
+      {step === 1 ? (
+        <form onSubmit={handleRegister} className="space-y-5">
+          <div>
+            <label className="block text-[13px] font-semibold text-slate-500 mb-2">Full Name *</label>
+            <input 
+              type="text" 
+              value={name} 
+              onChange={(e) => setName(e.target.value)} 
+              required
+              className="w-full bg-slate-100/50 border border-transparent focus:border-amber-500 focus:bg-white focus:ring-4 focus:ring-amber-500/10 text-slate-900 placeholder:text-slate-400 rounded-[16px] py-4 px-5 h-14 font-medium outline-none transition-all" 
+              placeholder="John Doe"
+            />
           </div>
-        )}
-
-        {step === 2 && (
-          <div className="space-y-5 animate-in fade-in slide-in-from-right-4">
-            <p className="text-sm text-muted-foreground mb-2 font-medium">Required for personalized readings</p>
-            <div>
-              <label className="block text-sm font-semibold text-muted-foreground mb-2">Date of Birth *</label>
-              <Input 
-                name="dateOfBirth" 
-                type="date" 
-                value={formData.dateOfBirth} 
-                onChange={handleChange} 
-                className="bg-foreground/5 border-foreground/10 text-foreground placeholder:text-muted-foreground/50 rounded-[16px] py-6 h-14 shadow-inner" 
-              />
-            </div>
-            <div>
-              <label className="block text-sm font-semibold text-muted-foreground mb-2">Time of Birth</label>
-              <Input 
-                name="timeOfBirth" 
-                type="time" 
-                value={formData.timeOfBirth} 
-                onChange={handleChange} 
-                className="bg-foreground/5 border-foreground/10 text-foreground placeholder:text-muted-foreground/50 rounded-[16px] py-6 h-14 shadow-inner" 
-              />
-            </div>
-            <div>
-              <label className="block text-sm font-semibold text-muted-foreground mb-2">Place of Birth *</label>
-              <Input 
-                name="placeOfBirth" 
-                value={formData.placeOfBirth} 
-                onChange={handleChange} 
-                className="bg-foreground/5 border-foreground/10 text-foreground placeholder:text-muted-foreground/50 rounded-[16px] py-6 h-14 shadow-inner" 
-                placeholder="City, Country"
-              />
-            </div>
-            <div className="grid grid-cols-2 gap-4">
-              <div>
-                <label className="block text-sm font-semibold text-muted-foreground mb-2">Gender</label>
-                <select 
-                  name="gender" 
-                  value={formData.gender} 
-                  onChange={handleChange}
-                  className="w-full h-14 rounded-[16px] border border-foreground/10 bg-foreground/5 px-4 text-sm text-foreground shadow-inner focus:outline-none focus:ring-2 focus:ring-amber-500"
-                >
-                  <option value="" className="bg-background">Select...</option>
-                  <option value="Male" className="bg-background">Male</option>
-                  <option value="Female" className="bg-background">Female</option>
-                  <option value="Other" className="bg-background">Other</option>
-                </select>
-              </div>
-              <div>
-                <label className="block text-sm font-semibold text-muted-foreground mb-2">Marital Status</label>
-                <select 
-                  name="maritalStatus" 
-                  value={formData.maritalStatus} 
-                  onChange={handleChange}
-                  className="w-full h-14 rounded-[16px] border border-foreground/10 bg-foreground/5 px-4 text-sm text-foreground shadow-inner focus:outline-none focus:ring-2 focus:ring-amber-500"
-                >
-                  <option value="" className="bg-background">Select...</option>
-                  <option value="Single" className="bg-background">Single</option>
-                  <option value="Married" className="bg-background">Married</option>
-                  <option value="Divorced" className="bg-background">Divorced</option>
-                  <option value="Widowed" className="bg-background">Widowed</option>
-                </select>
-              </div>
-            </div>
-            <div>
-              <label className="block text-sm font-semibold text-muted-foreground mb-2">Occupation</label>
-              <Input 
-                name="occupation" 
-                value={formData.occupation} 
-                onChange={handleChange} 
-                className="bg-foreground/5 border-foreground/10 text-foreground placeholder:text-muted-foreground/50 rounded-[16px] py-6 h-14 shadow-inner" 
-                placeholder="Software Engineer"
-              />
-            </div>
-            <div className="flex gap-3 mt-6">
-              <Button type="button" onClick={handlePrev} variant="outline" className="w-1/3 bg-foreground/5 border-foreground/10 text-foreground hover:bg-foreground/10 rounded-[20px] h-14 backdrop-blur-md active:scale-95 transition-all">
-                Back
-              </Button>
-              <Button type="button" onClick={handleNext} className="w-2/3 bg-amber-500 hover:bg-amber-400 text-black font-bold rounded-[20px] h-14 shadow-lg shadow-amber-500/20 active:scale-95 transition-all">
-                Next Step
-              </Button>
-            </div>
+          
+          <div>
+            <label className="block text-[13px] font-semibold text-slate-500 mb-2">Mobile Number *</label>
+            <input 
+              type="tel" 
+              value={phone} 
+              onChange={(e) => setPhone(e.target.value)} 
+              required
+              className="w-full bg-slate-100/50 border border-transparent focus:border-amber-500 focus:bg-white focus:ring-4 focus:ring-amber-500/10 text-slate-900 placeholder:text-slate-400 rounded-[16px] py-4 px-5 h-14 font-medium outline-none transition-all" 
+              placeholder="9876543210"
+            />
           </div>
-        )}
 
-        {step === 3 && (
-          <div className="space-y-6 animate-in fade-in slide-in-from-right-4">
-            <div>
-              <label className="block text-sm font-medium text-muted-foreground mb-3">Preferred Language</label>
-              <div className="flex gap-4">
-                <label className="flex-1 cursor-pointer">
-                  <input 
-                    type="radio" 
-                    name="languagePreference" 
-                    value="english" 
-                    checked={formData.languagePreference === "english"}
-                    onChange={handleChange}
-                    className="peer sr-only"
-                  />
-                  <div className="p-3 text-center border rounded-lg transition-all peer-checked:bg-amber-500/20 peer-checked:border-amber-500 peer-checked:text-amber-400 border-foreground/20 text-muted-foreground hover:bg-foreground/5">
-                    English
-                  </div>
-                </label>
-                <label className="flex-1 cursor-pointer">
-                  <input 
-                    type="radio" 
-                    name="languagePreference" 
-                    value="hindi" 
-                    checked={formData.languagePreference === "hindi"}
-                    onChange={handleChange}
-                    className="peer sr-only"
-                  />
-                  <div className="p-3 text-center border rounded-lg transition-all peer-checked:bg-amber-500/20 peer-checked:border-amber-500 peer-checked:text-amber-400 border-foreground/20 text-muted-foreground hover:bg-foreground/5">
-                    हिंदी
-                  </div>
-                </label>
-              </div>
-            </div>
-
-            <div>
-              <label className="block text-sm font-semibold text-muted-foreground mb-3">Primary Focus for Consultation</label>
-              <textarea 
-                name="reasonForJoining" 
-                value={formData.reasonForJoining} 
-                onChange={(e) => setFormData({...formData, reasonForJoining: e.target.value})}
-                className="w-full bg-foreground/5 border border-foreground/10 text-foreground placeholder:text-muted-foreground/50 rounded-[16px] p-4 min-h-[100px] shadow-inner focus:outline-none focus:ring-2 focus:ring-amber-500 transition-all resize-y" 
-                placeholder="I am seeking guidance for my career and personal growth..."
-              />
-            </div>
-
-            <label className="flex items-start gap-3 cursor-pointer group mt-4">
-              <div className="mt-1">
-                <input 
-                  type="checkbox" 
-                  checked={formData.acceptTerms}
-                  onChange={(e) => setFormData({...formData, acceptTerms: e.target.checked})}
-                  className="w-5 h-5 rounded border-foreground/20 bg-foreground/5 text-amber-500 focus:ring-amber-500 transition-all"
-                />
-              </div>
-              <span className="text-sm text-muted-foreground group-hover:text-foreground/90 leading-tight">
-                I agree to the <a href="/terms" target="_blank" className="text-amber-500 hover:underline">Terms of Service (EULA)</a> and <a href="/privacy" target="_blank" className="text-amber-500 hover:underline">Privacy Policy</a>, and I acknowledge that astrology is for guidance purposes only.
-              </span>
-            </label>
-
-            <div className="flex gap-3 pt-6">
-              <Button type="button" onClick={handlePrev} variant="outline" className="w-1/3 bg-foreground/5 border-foreground/10 text-foreground hover:bg-foreground/10 rounded-[20px] h-14 backdrop-blur-md active:scale-95 transition-all" disabled={isLoading}>
-                Back
-              </Button>
-              <Button type="submit" disabled={isLoading} className="w-2/3 bg-amber-500 hover:bg-amber-400 text-black font-bold rounded-[20px] h-14 shadow-lg shadow-amber-500/20 active:scale-95 transition-all">
-                {isLoading ? "Creating Profile..." : "Complete Registration"}
-              </Button>
-            </div>
+          <button 
+            type="submit" 
+            disabled={isLoading || !name || !phone} 
+            className="w-full bg-[#f59e0b] hover:bg-[#d97706] text-white font-bold rounded-[20px] h-14 mt-4 shadow-lg shadow-amber-500/20 active:scale-95 transition-all disabled:opacity-60"
+          >
+            {isLoading ? "Sending OTP..." : "Send OTP"}
+          </button>
+        </form>
+      ) : (
+        <form onSubmit={handleVerify} className="space-y-5 animate-in fade-in slide-in-from-right-4 duration-300">
+          <div>
+            <label className="block text-[13px] font-semibold text-slate-500 mb-2">Verify Mobile Number *</label>
+            <input 
+              type="text" 
+              value={otp} 
+              onChange={(e) => setOtp(e.target.value)} 
+              required
+              className="w-full bg-slate-100/50 border border-transparent focus:border-amber-500 focus:bg-white focus:ring-4 focus:ring-amber-500/10 text-slate-900 placeholder:text-slate-400 rounded-[16px] py-4 px-5 h-14 font-bold tracking-[0.2em] outline-none transition-all text-lg" 
+              placeholder="4-digit OTP"
+              maxLength={4}
+            />
           </div>
-        )}
-      </form>
-      
-      <div className="mt-6 text-center text-sm text-muted-foreground">
+          <button 
+            type="submit" 
+            disabled={isLoading || !otp} 
+            className="w-full bg-[#f59e0b] hover:bg-[#d97706] text-white font-bold rounded-[20px] h-14 mt-4 shadow-lg shadow-amber-500/20 active:scale-95 transition-all disabled:opacity-60"
+          >
+            {isLoading ? "Verifying..." : "Verify & Create Account"}
+          </button>
+          <button
+            type="button"
+            onClick={() => setStep(1)}
+            className="w-full text-slate-500 hover:text-slate-700 text-sm font-semibold mt-2"
+          >
+            Go Back
+          </button>
+        </form>
+      )}
+
+      <div className="mt-8 text-center text-[14px] text-slate-500 font-medium">
         Already have an account?{" "}
-        <a href="/login" className="text-amber-400 hover:text-amber-300 font-medium">
+        <a href="/login" className="text-[#f59e0b] hover:text-[#d97706] font-bold">
           Sign In
         </a>
       </div>
     </div>
   );
 }
-

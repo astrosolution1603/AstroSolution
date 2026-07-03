@@ -3,10 +3,14 @@ import { NextResponse } from "next/server";
 
 export async function POST(req: Request) {
   try {
-    const { name, phone, otp } = await req.json();
+    const { 
+      name, phone, otp, 
+      dateOfBirth, timeOfBirth, placeOfBirth, 
+      gender, maritalStatus, occupation, languagePreference, reasonForJoining 
+    } = await req.json();
 
     if (!name || !phone || !otp) {
-      return new NextResponse(JSON.stringify({ error: "Missing fields" }), { status: 400 });
+      return new NextResponse(JSON.stringify({ error: "Missing required fields" }), { status: 400 });
     }
 
     // Normalize phone
@@ -41,19 +45,31 @@ export async function POST(req: Request) {
       }
     });
 
+    const profileData = {
+      name,
+      ...(dateOfBirth ? { dateOfBirth: new Date(dateOfBirth) } : {}),
+      ...(timeOfBirth ? { timeOfBirth } : {}),
+      ...(placeOfBirth ? { placeOfBirth } : {}),
+      ...(gender ? { gender } : {}),
+      ...(maritalStatus ? { maritalStatus } : {}),
+      ...(occupation ? { occupation } : {}),
+      ...(languagePreference ? { languagePreference } : {}),
+      ...(reasonForJoining ? { reasonForJoining } : {}),
+      profileComplete: true
+    };
+
     if (user) {
       // If user exists, update their name and profile status
       user = await prisma.user.update({
         where: { id: user.id },
-        data: { name, profileComplete: true }
+        data: profileData
       });
     } else {
       // Create new user
       user = await prisma.user.create({
         data: {
-          name,
+          ...profileData,
           phone: normalizedPhone,
-          profileComplete: true,
           role: "USER"
         }
       });

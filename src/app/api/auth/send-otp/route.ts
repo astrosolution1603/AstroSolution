@@ -27,7 +27,7 @@ export async function POST(req: NextRequest) {
       }
     });
 
-    if (isRegistering && existingUser) {
+    if (isRegistering && existingUser && existingUser.profileComplete) {
       return NextResponse.json({ error: "Phone number already registered. Please login instead." }, { status: 400 });
     }
 

@@ -47,9 +47,6 @@ export default function MobileNav() {
         <div className="flex items-center gap-2">
           <NotificationBell />
           <ThemeToggle />
-          <div className="w-8 h-8 bg-gradient-to-br from-indigo-500 to-purple-500 rounded-full flex items-center justify-center text-white font-bold text-sm">
-            {session?.user?.name?.charAt(0) || "U"}
-          </div>
         </div>
       </div>
 

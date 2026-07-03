@@ -59,7 +59,7 @@ export function WalletSection() {
         console.log("User cancelled the purchase");
       } else {
         console.error(e);
-        alert("Payment failed or was cancelled.");
+        alert("Payment Error: " + (e.message || "Failed to initialize Google Play. Have you configured products in RevenueCat?"));
       }
     } finally {
       setIsToppingUp(false);

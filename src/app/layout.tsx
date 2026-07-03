@@ -55,7 +55,6 @@ export default async function RootLayout({
           attribute="class" 
           defaultTheme="dark" 
           enableSystem 
-          forcedTheme={forceTheme}
         >
           <SessionProvider>
             <CartProvider>

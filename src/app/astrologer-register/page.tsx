@@ -262,7 +262,7 @@ export default function AstrologerRegistrationPage() {
                       value={phone}
                       onChange={(e) => setPhone(e.target.value)}
                       className="w-full px-4 py-3 bg-slate-50 dark:bg-white/5 border border-slate-200 dark:border-white/10 rounded-xl text-slate-900 dark:text-white focus:outline-none focus:border-amber-500"
-                      placeholder="9991896001"
+                      placeholder="981234567"
                     />
                   </div>
                   <label className="flex items-start gap-3 cursor-pointer group mt-4 mb-2">

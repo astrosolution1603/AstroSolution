@@ -7,7 +7,6 @@ import ChatMessage from "./ChatMessage";
 import ChatInput from "./ChatInput";
 import { getAstrologer } from "@/lib/astrologers";
 import { cn } from "@/lib/utils";
-import { ThemeToggle } from "@/components/ThemeToggle";
 
 const LANGUAGES = [
   { code: "english", label: "English", flag: "🇬🇧", desc: "English" },
@@ -310,8 +309,7 @@ export default function ChatWindow({ sessionId, initialMessages = [], userName, 
           </div>
         </div>
 
-        <div className="flex items-center gap-2 relative">
-          <ThemeToggle />
+        <div className="relative">
           <button 
             onClick={() => setShowMenu(!showMenu)} 
             className="p-2 text-muted-foreground hover:text-foreground rounded-full hover:bg-muted/50 transition-colors"

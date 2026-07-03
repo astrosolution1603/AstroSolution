@@ -3,6 +3,7 @@ import { prisma } from "@/lib/prisma";
 import { DeleteAccountButton } from "@/components/profile/DeleteAccountButton";
 import { WalletSection } from "@/components/profile/WalletSection";
 import { Button } from "@/components/ui/button";
+import { ThemeToggle } from "@/components/ThemeToggle";
 
 export default async function ProfilePage() {
   const session = await auth();
@@ -71,6 +72,17 @@ export default async function ProfilePage() {
               <div className="text-xs text-slate-500 dark:text-white/40 mb-1">Language</div>
               <div className="text-slate-900 dark:text-white capitalize">{user?.languagePreference || "English"}</div>
             </div>
+          </div>
+        </div>
+
+        <div className="mt-8 pt-6 border-t border-slate-200 dark:border-white/10">
+          <h3 className="text-slate-900 dark:text-white font-semibold mb-4">App Preferences</h3>
+          <div className="flex items-center justify-between p-4 bg-slate-50 dark:bg-white/5 border border-slate-200 dark:border-white/10 rounded-xl">
+            <div>
+              <div className="font-semibold text-slate-900 dark:text-white text-sm">Theme</div>
+              <div className="text-xs text-slate-500 dark:text-white/50">Switch between light and dark mode</div>
+            </div>
+            <ThemeToggle />
           </div>
         </div>
 

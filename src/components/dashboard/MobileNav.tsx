@@ -5,7 +5,6 @@ import { usePathname } from "next/navigation";
 import { useState } from "react";
 import { cn } from "@/lib/utils";
 import { signOut, useSession } from "next-auth/react";
-import { ThemeToggle } from "@/components/ThemeToggle";
 import { Logo } from "@/components/ui/Logo";
 import { NotificationBell } from "@/components/ui/NotificationBell";
 import { WalletMini } from "@/components/ui/WalletMini";
@@ -48,7 +47,6 @@ export default function MobileNav() {
         <div className="flex items-center gap-2">
           <WalletMini />
           <NotificationBell />
-          <ThemeToggle />
         </div>
       </div>
 

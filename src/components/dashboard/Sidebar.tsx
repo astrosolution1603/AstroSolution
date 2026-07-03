@@ -4,7 +4,6 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { signOut, useSession } from "next-auth/react";
 import { cn } from "@/lib/utils";
-import { ThemeToggle } from "@/components/ThemeToggle";
 import { Logo } from "@/components/ui/Logo";
 import { NotificationBell } from "@/components/ui/NotificationBell";
 import { WalletMini } from "@/components/ui/WalletMini";
@@ -64,7 +63,6 @@ export default function Sidebar() {
         <div className="bg-muted border border-border rounded-xl p-4 flex flex-col items-center relative">
           <div className="absolute right-2 top-2 flex items-center gap-1">
             <NotificationBell />
-            <ThemeToggle />
           </div>
           <div className="w-10 h-10 bg-gradient-to-br from-indigo-500 to-purple-500 rounded-full flex items-center justify-center text-white font-bold mb-3">
             {session?.user?.name?.charAt(0) || "U"}

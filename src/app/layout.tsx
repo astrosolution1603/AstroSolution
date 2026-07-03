@@ -53,8 +53,7 @@ export default async function RootLayout({
       <body className={`${inter.className} min-h-screen antialiased bg-background text-foreground overflow-x-hidden`}>
         <ThemeProvider 
           attribute="class" 
-          defaultTheme="dark" 
-          enableSystem 
+          defaultTheme="light" 
         >
           <SessionProvider>
             <CartProvider>

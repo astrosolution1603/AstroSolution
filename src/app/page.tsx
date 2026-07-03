@@ -3,7 +3,7 @@
 import { useState, useRef } from "react";
 import Link from "next/link";
 import Image from "next/image";
-import { Star, Sparkles, UserPlus, LogIn, ArrowRight, Menu, X, ChevronDown, ChevronUp, ChevronRight, ChevronLeft } from "lucide-react";
+import { Star, Sparkles, UserPlus, LogIn, ArrowRight, Menu, X } from "lucide-react";
 import { Logo } from "@/components/ui/Logo";
 
 export default function DemoHomePage() {
@@ -21,12 +21,12 @@ export default function DemoHomePage() {
   };
 
   return (
-    <div data-theme="cosmic" className="dark bg-black text-white">
-      <div className="h-[100dvh] w-screen overflow-hidden selection:bg-amber-500/30 relative text-white flex flex-col">
+    <div data-theme="cosmic" className="bg-slate-50 text-slate-900">
+      <div className="h-[100dvh] w-screen overflow-hidden selection:bg-amber-500/30 relative flex flex-col">
         
         {/* Global Background Layer */}
-        <div className="absolute top-0 left-0 w-full h-[120vh] overflow-hidden pointer-events-none z-0 bg-black">
-          <div className="absolute inset-0 z-10 opacity-50 mix-blend-screen">
+        <div className="absolute top-0 left-0 w-full h-[120vh] overflow-hidden pointer-events-none z-0 bg-slate-50">
+          <div className="absolute inset-0 z-10 opacity-[0.03] mix-blend-multiply">
             <Image 
               src="/lord_ganesha_bg.png" 
               alt="Lord Ganesha Background" 
@@ -43,10 +43,10 @@ export default function DemoHomePage() {
             <Logo />
             
             <button 
-              className="p-2 text-white relative z-[60]"
+              className="p-2 text-slate-900 relative z-[60]"
               onClick={() => setIsMenuOpen(!isMenuOpen)}
             >
-              {isMenuOpen ? <X className="w-8 h-8 text-amber-500" /> : <Menu className="w-8 h-8 text-amber-500" />}
+              {isMenuOpen ? <X className="w-8 h-8 text-amber-600" /> : <Menu className="w-8 h-8 text-amber-600" />}
             </button>
           </div>
         </nav>
@@ -72,23 +72,11 @@ export default function DemoHomePage() {
         >
           {/* SLIDE 1: Authentication (Vertical Swiper) */}
           <div className="w-full h-full flex-shrink-0 snap-center relative">
-            
-            {/* Horizontal Swipe Indicator (Right) */}
-            <div className="absolute right-0 top-1/2 -translate-y-1/2 pointer-events-none animate-pulse z-30 opacity-60 flex flex-col items-center">
-              <ChevronRight className="w-8 h-8 text-white" />
-              <span className="text-[8px] font-bold tracking-widest -mt-2">SWIPE</span>
-            </div>
 
             <div className="h-full w-full overflow-y-auto snap-y snap-mandatory scroll-smooth [&::-webkit-scrollbar]:hidden" style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}>
               
               {/* Slide 1, Item 1: Users (Unlock Secrets) */}
               <div className="h-full w-full flex-shrink-0 snap-center flex items-center justify-center p-4 relative">
-                
-                {/* Vertical Swipe Indicator (Down) */}
-                <div className="absolute bottom-1 w-full flex flex-col items-center pointer-events-none animate-bounce z-20 opacity-80">
-                  <span className="text-white text-[10px] tracking-widest uppercase font-bold">Astrologers</span>
-                  <ChevronDown className="w-6 h-6 text-white" />
-                </div>
 
                 <div className="bg-[#FDFBF7] dark:bg-slate-900 border border-amber-900/10 dark:border-white/10 rounded-[32px] p-5 shadow-2xl w-full h-full max-h-[600px] flex flex-col justify-center gap-3 relative overflow-hidden">
                   <div className="absolute -top-16 -right-10 text-[160px] text-amber-500/5 select-none pointer-events-none font-serif leading-none">ॐ</div>
@@ -122,12 +110,6 @@ export default function DemoHomePage() {
 
               {/* Slide 1, Item 2: Astrologers */}
               <div className="h-full w-full flex-shrink-0 snap-center flex items-center justify-center p-4 relative">
-                
-                {/* Vertical Swipe Indicator (Up) */}
-                <div className="absolute top-1 w-full flex flex-col items-center pointer-events-none animate-bounce z-20 opacity-80">
-                  <ChevronUp className="w-6 h-6 text-white" />
-                  <span className="text-white text-[10px] tracking-widest uppercase font-bold">Users</span>
-                </div>
 
                 <div className="bg-[#FDFBF7] dark:bg-slate-900 border border-amber-900/10 dark:border-white/10 rounded-[32px] p-5 shadow-2xl w-full h-full max-h-[600px] flex flex-col justify-center gap-2 relative overflow-hidden">
                   <div className="absolute -top-16 -left-10 text-[160px] text-amber-500/5 select-none pointer-events-none font-serif leading-none">🔱</div>
@@ -180,21 +162,11 @@ export default function DemoHomePage() {
 
           {/* SLIDE 2: Features (Vertical Swiper) */}
           <div className="w-full h-full flex-shrink-0 snap-center relative">
-            
-            {/* Horizontal Swipe Indicator (Left) */}
-            <div className="absolute left-0 top-1/2 -translate-y-1/2 pointer-events-none animate-pulse z-30 opacity-60 flex flex-col items-center">
-              <ChevronLeft className="w-8 h-8 text-white" />
-              <span className="text-[8px] font-bold tracking-widest -mt-2">BACK</span>
-            </div>
 
             <div className="h-full w-full overflow-y-auto snap-y snap-mandatory scroll-smooth [&::-webkit-scrollbar]:hidden" style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}>
               
               {/* Feature 1: Live Chat */}
               <div className="h-full w-full flex-shrink-0 snap-center flex items-center justify-center p-4 relative">
-                <div className="absolute bottom-1 w-full flex flex-col items-center pointer-events-none animate-bounce z-20 opacity-80">
-                  <span className="text-white text-[10px] tracking-widest uppercase font-bold">More</span>
-                  <ChevronDown className="w-6 h-6 text-white" />
-                </div>
                 <div className="bg-[#FDFBF7] dark:bg-slate-900 border border-amber-900/10 dark:border-white/10 rounded-[32px] p-6 shadow-2xl w-full h-full max-h-[600px] flex flex-col items-center justify-center gap-4 text-center relative overflow-hidden">
                   <div className="absolute -top-16 -right-10 text-[160px] text-amber-500/5 select-none pointer-events-none font-serif leading-none">ॐ</div>
                   <div className="w-14 h-14 bg-amber-500 rounded-2xl flex items-center justify-center text-black shadow-lg">
@@ -212,12 +184,6 @@ export default function DemoHomePage() {
 
               {/* Feature 2: Gemstones */}
               <div className="h-full w-full flex-shrink-0 snap-center flex items-center justify-center p-4 relative">
-                <div className="absolute top-1 w-full flex flex-col items-center pointer-events-none animate-bounce z-20 opacity-80">
-                  <ChevronUp className="w-6 h-6 text-white" />
-                </div>
-                <div className="absolute bottom-1 w-full flex flex-col items-center pointer-events-none animate-bounce z-20 opacity-80">
-                  <ChevronDown className="w-6 h-6 text-white" />
-                </div>
                 <div className="bg-[#FDFBF7] dark:bg-slate-900 border border-amber-900/10 dark:border-white/10 rounded-[32px] p-6 shadow-2xl w-full h-full max-h-[600px] flex flex-col items-center justify-center gap-4 text-center relative overflow-hidden">
                   <div className="absolute -bottom-16 -left-10 text-[160px] text-amber-500/5 select-none pointer-events-none font-serif leading-none">卐</div>
                   <div className="w-14 h-14 bg-amber-500 rounded-2xl flex items-center justify-center text-black shadow-lg">
@@ -235,10 +201,6 @@ export default function DemoHomePage() {
 
               {/* Feature 3: Pujas */}
               <div className="h-full w-full flex-shrink-0 snap-center flex items-center justify-center p-4 relative">
-                <div className="absolute top-1 w-full flex flex-col items-center pointer-events-none animate-bounce z-20 opacity-80">
-                  <ChevronUp className="w-6 h-6 text-white" />
-                  <span className="text-white text-[10px] tracking-widest uppercase font-bold">More</span>
-                </div>
                 <div className="bg-[#FDFBF7] dark:bg-slate-900 border border-amber-900/10 dark:border-white/10 rounded-[32px] p-6 shadow-2xl w-full h-full max-h-[600px] flex flex-col items-center justify-center gap-4 text-center relative overflow-hidden">
                   <div className="absolute -top-16 -right-10 text-[160px] text-amber-500/5 select-none pointer-events-none font-serif leading-none">🔱</div>
                   <div className="w-14 h-14 bg-amber-500 rounded-2xl flex items-center justify-center text-black shadow-lg">
@@ -260,8 +222,8 @@ export default function DemoHomePage() {
 
         {/* Horizontal Slider Dots */}
         <div className="shrink-0 h-10 md:h-12 flex justify-center items-center gap-2 relative z-10 pb-4">
-          <div className={`h-2 rounded-full transition-all duration-300 ${activeSlide === 0 ? 'w-8 bg-amber-500' : 'w-2 bg-white/30'}`} />
-          <div className={`h-2 rounded-full transition-all duration-300 ${activeSlide === 1 ? 'w-8 bg-amber-500' : 'w-2 bg-white/30'}`} />
+          <div className={`h-2 rounded-full transition-all duration-300 ${activeSlide === 0 ? 'w-8 bg-amber-500' : 'w-2 bg-slate-300'}`} />
+          <div className={`h-2 rounded-full transition-all duration-300 ${activeSlide === 1 ? 'w-8 bg-amber-500' : 'w-2 bg-slate-300'}`} />
         </div>
 
       </div>

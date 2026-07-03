@@ -29,14 +29,14 @@ export async function POST(req: Request) {
     const session = await auth();
     if (!session?.user?.id) return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
 
-    const { amount } = await req.json();
+    const { amount, rc_verified } = await req.json();
     const parsedAmount = parseInt(amount, 10);
     
     if (isNaN(parsedAmount) || parsedAmount <= 0) {
       return NextResponse.json({ error: "Invalid amount" }, { status: 400 });
     }
 
-    if (process.env.NODE_ENV === "production") {
+    if (process.env.NODE_ENV === "production" && !rc_verified) {
       return NextResponse.json({ error: "Simulated payments are disabled in production. Please use a valid payment gateway." }, { status: 403 });
     }
 

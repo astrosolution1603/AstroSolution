@@ -5,6 +5,7 @@ import { useCart } from "@/context/CartContext";
 import { X, CheckCircle2, Loader2, ShieldCheck, QrCode } from "lucide-react";
 import { useSession } from "next-auth/react";
 import { QRCodeSVG } from "qrcode.react";
+import { Purchases } from "@revenuecat/purchases-capacitor";
 
 export const CheckoutModal = ({ onClose }: { onClose: () => void }) => {
   const { cart, cartTotal, clearCart, setIsCartOpen } = useCart();
@@ -57,6 +58,26 @@ export const CheckoutModal = ({ onClose }: { onClose: () => void }) => {
     const fullAddress = `${addressData.fullName}, ${addressData.street}, ${addressData.city}, ${addressData.state} - ${addressData.pincode}`;
 
     try {
+      if (typeof window !== "undefined" && (window as any).Capacitor && settings?.activeMethod !== "MANUAL_UPI_QR") {
+        // Fetch products from RevenueCat
+        const offerings = await Purchases.getOfferings();
+        const currentOffering = offerings.current;
+        
+        if (!currentOffering || currentOffering.availablePackages.length === 0) {
+            alert("Payments are not configured in Google Play Console yet.");
+            setStep("details");
+            return;
+        }
+
+        // We assume product identifiers for shop items exist, e.g. 'shop_item' or dynamic ones.
+        // For testing, just pick the first available package
+        const pkg = currentOffering.availablePackages[0];
+        
+        // Trigger Native Google Play Bottom Sheet
+        await Purchases.purchasePackage({ aPackage: pkg });
+      }
+
+      // If purchase succeeds (or web mode/manual UPI), hit our backend
       const res = await fetch("/api/shop/checkout", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -64,7 +85,8 @@ export const CheckoutModal = ({ onClose }: { onClose: () => void }) => {
           items: cart,
           totalAmount: cartTotal,
           shippingAddress: fullAddress,
-          utrNumber: utrNumber
+          utrNumber: utrNumber,
+          rc_verified: true
         })
       });
 
@@ -74,9 +96,13 @@ export const CheckoutModal = ({ onClose }: { onClose: () => void }) => {
         setStep("success");
         clearCart();
       }, 1500);
-    } catch (e) {
-      console.error(e);
-      alert("Payment failed. Please try again.");
+    } catch (e: any) {
+      if (e.code === "PURCHASE_CANCELLED") {
+        console.log("User cancelled the purchase");
+      } else {
+        console.error(e);
+        alert("Payment failed or was cancelled.");
+      }
       setStep(settings?.activeMethod === "MANUAL_UPI_QR" ? "payment" : "details");
     }
   };

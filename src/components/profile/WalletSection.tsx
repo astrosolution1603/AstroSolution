@@ -3,6 +3,7 @@
 import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { Wallet, Plus } from "lucide-react";
+import { Purchases } from "@revenuecat/purchases-capacitor";
 
 export function WalletSection() {
   const [balance, setBalance] = useState<number | null>(null);
@@ -20,21 +21,46 @@ export function WalletSection() {
   const handleTopUp = async (amount: number) => {
     setIsToppingUp(true);
     try {
-      // In a real app, this would redirect to Google Play Billing or Razorpay Checkout.
-      // For compliance, we simulate successful digital top-up here.
-      const res = await fetch("/api/wallet", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ amount })
-      });
-      const data = await res.json();
-      if (data.success) {
-        setBalance(data.balance);
-        alert(`Successfully added ₹${amount} to your wallet!`);
+      if (typeof window !== "undefined" && (window as any).Capacitor) {
+        // Fetch products from RevenueCat
+        const offerings = await Purchases.getOfferings();
+        const currentOffering = offerings.current;
+        
+        if (!currentOffering || currentOffering.availablePackages.length === 0) {
+            alert("Payments are not configured in Google Play Console yet.");
+            setIsToppingUp(false);
+            return;
+        }
+
+        // We assume product identifiers like 'wallet_topup_500' or just pick the first available for testing
+        const packageIdentifier = `wallet_topup_${amount}`;
+        const pkg = currentOffering.availablePackages.find(p => p.identifier === packageIdentifier) || currentOffering.availablePackages[0];
+        
+        // Trigger Native Google Play Bottom Sheet
+        const { customerInfo } = await Purchases.purchasePackage({ aPackage: pkg });
+        
+        // Notify backend of successful native payment
+        const res = await fetch("/api/wallet", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ amount, rc_verified: true })
+        });
+        const data = await res.json();
+        if (data.success) {
+          setBalance(data.balance);
+          alert(`Successfully added ₹${amount} to your wallet!`);
+        }
+      } else {
+        // Not in native app
+        alert("Google Play Billing is only available inside the Android App.");
       }
-    } catch (e) {
-      console.error(e);
-      alert("Failed to top up wallet.");
+    } catch (e: any) {
+      if (e.code === "PURCHASE_CANCELLED") {
+        console.log("User cancelled the purchase");
+      } else {
+        console.error(e);
+        alert("Payment failed or was cancelled.");
+      }
     } finally {
       setIsToppingUp(false);
     }

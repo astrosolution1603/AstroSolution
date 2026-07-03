@@ -24,26 +24,27 @@ export default async function ChatPage({ searchParams }: { searchParams: Promise
     redirect("/astrologer-register");
   }
 
-  const chatSessions = await prisma.chatSession.findMany({
-    where: { userId: authSession.user.id },
-    orderBy: { updatedAt: "desc" },
-  });
-
-  const humanAstrologers = await prisma.user.findMany({
-    where: { role: "ASTROLOGER" },
-    select: { 
-      id: true, 
-      name: true,
-      astrologerRating: true,
-      astrologerExperience: true,
-      astrologerPrice: true,
-      astrologerSpecialties: true,
-      astrologerLanguages: true
-    },
-    orderBy: {
-      astrologerRating: 'desc'
-    }
-  });
+  const [chatSessions, humanAstrologers] = await Promise.all([
+    prisma.chatSession.findMany({
+      where: { userId: authSession.user.id },
+      orderBy: { updatedAt: "desc" },
+    }),
+    prisma.user.findMany({
+      where: { role: "ASTROLOGER" },
+      select: { 
+        id: true, 
+        name: true,
+        astrologerRating: true,
+        astrologerExperience: true,
+        astrologerPrice: true,
+        astrologerSpecialties: true,
+        astrologerLanguages: true
+      },
+      orderBy: {
+        astrologerRating: 'desc'
+      }
+    })
+  ]);
 
   const resolvedParams = await searchParams;
   let activeSessionId = resolvedParams?.session || null;

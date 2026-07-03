@@ -51,7 +51,6 @@ export default function ChatClient({ sessions, activeSessionId, initialMessages,
       if (res.ok) {
         const data = await res.json();
         router.push(`/chat?session=${data.id}`);
-        router.refresh();
       } else {
         setIsNavigating(null);
         alert("Failed to connect to astrologer. Please try again.");

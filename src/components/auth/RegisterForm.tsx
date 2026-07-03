@@ -88,7 +88,7 @@ export default function RegisterForm() {
   };
 
   return (
-    <div className="bg-white dark:bg-slate-900 rounded-[32px] p-6 md:p-8 shadow-[0_8px_30px_rgb(0,0,0,0.04)] border border-slate-100/50 dark:border-slate-800">
+    <div className="bg-white rounded-[32px] p-6 md:p-8 shadow-[0_8px_30px_rgb(0,0,0,0.04)] border border-slate-100/50">
       
       {/* Progress Header */}
       <div className="flex justify-between items-end mb-3">
@@ -113,25 +113,25 @@ export default function RegisterForm() {
       {step === 1 ? (
         <form onSubmit={handleRegister} className="space-y-5">
           <div>
-            <label className="block text-[13px] font-semibold text-slate-500 dark:text-slate-400 mb-2">Full Name *</label>
+            <label className="block text-[13px] font-semibold text-slate-500 mb-2">Full Name *</label>
             <input 
               type="text" 
               value={name} 
               onChange={(e) => setName(e.target.value)} 
               required
-              className="w-full bg-slate-100/50 dark:bg-slate-800 border border-transparent focus:border-amber-500 focus:bg-white dark:focus:bg-slate-900 focus:ring-4 focus:ring-amber-500/10 text-slate-900 dark:text-white placeholder:text-slate-400 rounded-[16px] py-4 px-5 h-14 font-medium outline-none transition-all" 
+              className="w-full bg-slate-100/50 border border-transparent focus:border-amber-500 focus:bg-white focus:ring-4 focus:ring-amber-500/10 text-slate-900 placeholder:text-slate-400 rounded-[16px] py-4 px-5 h-14 font-medium outline-none transition-all" 
               placeholder="John Doe"
             />
           </div>
           
           <div>
-            <label className="block text-[13px] font-semibold text-slate-500 dark:text-slate-400 mb-2">Mobile Number *</label>
+            <label className="block text-[13px] font-semibold text-slate-500 mb-2">Mobile Number *</label>
             <input 
               type="tel" 
               value={phone} 
               onChange={(e) => setPhone(e.target.value)} 
               required
-              className="w-full bg-slate-100/50 dark:bg-slate-800 border border-transparent focus:border-amber-500 focus:bg-white dark:focus:bg-slate-900 focus:ring-4 focus:ring-amber-500/10 text-slate-900 dark:text-white placeholder:text-slate-400 rounded-[16px] py-4 px-5 h-14 font-medium outline-none transition-all" 
+              className="w-full bg-slate-100/50 border border-transparent focus:border-amber-500 focus:bg-white focus:ring-4 focus:ring-amber-500/10 text-slate-900 placeholder:text-slate-400 rounded-[16px] py-4 px-5 h-14 font-medium outline-none transition-all" 
               placeholder="9876543210"
             />
           </div>
@@ -147,13 +147,13 @@ export default function RegisterForm() {
       ) : (
         <form onSubmit={handleVerify} className="space-y-5 animate-in fade-in slide-in-from-right-4 duration-300">
           <div>
-            <label className="block text-[13px] font-semibold text-slate-500 dark:text-slate-400 mb-2">Verify Mobile Number *</label>
+            <label className="block text-[13px] font-semibold text-slate-500 mb-2">Verify Mobile Number *</label>
             <input 
               type="text" 
               value={otp} 
               onChange={(e) => setOtp(e.target.value)} 
               required
-              className="w-full bg-slate-100/50 dark:bg-slate-800 border border-transparent focus:border-amber-500 focus:bg-white dark:focus:bg-slate-900 focus:ring-4 focus:ring-amber-500/10 text-slate-900 dark:text-white placeholder:text-slate-400 rounded-[16px] py-4 px-5 h-14 font-bold tracking-[0.2em] outline-none transition-all text-lg" 
+              className="w-full bg-slate-100/50 border border-transparent focus:border-amber-500 focus:bg-white focus:ring-4 focus:ring-amber-500/10 text-slate-900 placeholder:text-slate-400 rounded-[16px] py-4 px-5 h-14 font-bold tracking-[0.2em] outline-none transition-all text-lg" 
               placeholder="4-digit OTP"
               maxLength={4}
             />

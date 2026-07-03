@@ -86,8 +86,8 @@ export default function LoginForm({ expectedRole = "USER" }: { expectedRole?: "U
   };
 
   return (
-    <div className="bg-white dark:bg-slate-900 rounded-[32px] p-6 md:p-8 shadow-[0_8px_30px_rgb(0,0,0,0.04)] border border-slate-100/50 dark:border-slate-800">
-      <h2 className="text-[28px] font-bold text-slate-900 dark:text-white mb-6">
+    <div className="bg-white rounded-[32px] p-6 md:p-8 shadow-[0_8px_30px_rgb(0,0,0,0.04)] border border-slate-100/50">
+      <h2 className="text-[28px] font-bold text-slate-900 mb-6">
         {expectedRole === "ASTROLOGER" ? "Astrologer Sign In" : "Sign In"}
       </h2>
       
@@ -99,27 +99,27 @@ export default function LoginForm({ expectedRole = "USER" }: { expectedRole?: "U
 
       <form onSubmit={handleSubmit} className="space-y-5">
         <div>
-          <label className="block text-[13px] font-semibold text-slate-500 dark:text-slate-400 mb-2">Mobile Number</label>
+          <label className="block text-[13px] font-semibold text-slate-500 mb-2">Mobile Number</label>
           <input 
             type="tel" 
             value={phone} 
             onChange={(e) => setPhone(e.target.value)} 
             required
             disabled={otpSent}
-            className="w-full bg-slate-100/50 dark:bg-slate-800 border border-transparent focus:border-amber-500 focus:bg-white dark:focus:bg-slate-900 focus:ring-4 focus:ring-amber-500/10 text-slate-900 dark:text-white placeholder:text-slate-400 rounded-[16px] py-4 px-5 h-14 font-medium outline-none transition-all disabled:opacity-60" 
+            className="w-full bg-slate-100/50 border border-transparent focus:border-amber-500 focus:bg-white focus:ring-4 focus:ring-amber-500/10 text-slate-900 placeholder:text-slate-400 rounded-[16px] py-4 px-5 h-14 font-medium outline-none transition-all disabled:opacity-60" 
             placeholder="9876543210"
           />
         </div>
         
         {otpSent && (
           <div className="animate-in fade-in slide-in-from-top-2 duration-300">
-            <label className="block text-[13px] font-semibold text-slate-500 dark:text-slate-400 mb-2">Enter OTP</label>
+            <label className="block text-[13px] font-semibold text-slate-500 mb-2">Enter OTP</label>
             <input 
               type="text" 
               value={otp} 
               onChange={(e) => setOtp(e.target.value)} 
               required
-              className="w-full bg-slate-100/50 dark:bg-slate-800 border border-transparent focus:border-amber-500 focus:bg-white dark:focus:bg-slate-900 focus:ring-4 focus:ring-amber-500/10 text-slate-900 dark:text-white placeholder:text-slate-400 rounded-[16px] py-4 px-5 h-14 font-bold tracking-[0.2em] outline-none transition-all text-lg" 
+              className="w-full bg-slate-100/50 border border-transparent focus:border-amber-500 focus:bg-white focus:ring-4 focus:ring-amber-500/10 text-slate-900 placeholder:text-slate-400 rounded-[16px] py-4 px-5 h-14 font-bold tracking-[0.2em] outline-none transition-all text-lg" 
               placeholder="1234"
               maxLength={4}
             />
@@ -147,15 +147,15 @@ export default function LoginForm({ expectedRole = "USER" }: { expectedRole?: "U
       </form>
 
       <div className="mt-8 flex items-center">
-        <div className="flex-grow border-t border-slate-100 dark:border-slate-800"></div>
+        <div className="flex-grow border-t border-slate-100"></div>
         <span className="flex-shrink-0 mx-4 text-slate-400 text-[10px] font-bold uppercase tracking-widest">Or continue with</span>
-        <div className="flex-grow border-t border-slate-100 dark:border-slate-800"></div>
+        <div className="flex-grow border-t border-slate-100"></div>
       </div>
 
       <button 
         type="button" 
         onClick={handleGoogleSignIn}
-        className="w-full mt-6 bg-slate-50 dark:bg-slate-800 hover:bg-slate-100 dark:hover:bg-slate-700 text-slate-700 dark:text-white font-semibold border border-slate-200 dark:border-slate-700 rounded-[20px] h-14 flex items-center justify-center active:scale-95 transition-all"
+        className="w-full mt-6 bg-slate-50 hover:bg-slate-100 text-slate-700 font-semibold border border-slate-200 rounded-[20px] h-14 flex items-center justify-center active:scale-95 transition-all"
       >
         <svg className="w-5 h-5 mr-3" viewBox="0 0 24 24">
           <path fill="currentColor" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" />

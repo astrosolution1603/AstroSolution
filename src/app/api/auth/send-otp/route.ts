@@ -3,10 +3,36 @@ import { prisma } from "@/lib/prisma";
 
 export async function POST(req: NextRequest) {
   try {
-    const { phone } = await req.json();
+    const { phone, isRegistering, isLogin } = await req.json();
 
     if (!phone) {
       return NextResponse.json({ error: "Phone number is required" }, { status: 400 });
+    }
+
+    // Normalize phone number for DB check
+    let normalizedPhone = phone.replace(/[\s\-().]/g, "");
+    normalizedPhone = normalizedPhone.replace(/^\+91/, "").replace(/^0091/, "").replace(/^\+/, "");
+    if (normalizedPhone.length > 10) {
+      normalizedPhone = normalizedPhone.slice(-10);
+    }
+
+    // Pre-flight check: see if user already exists
+    const existingUser = await prisma.user.findFirst({
+      where: {
+        OR: [
+          { phone },
+          { phone: normalizedPhone },
+          { phone: `+91${normalizedPhone}` }
+        ]
+      }
+    });
+
+    if (isRegistering && existingUser) {
+      return NextResponse.json({ error: "Phone number already registered. Please login instead." }, { status: 400 });
+    }
+
+    if (isLogin && !existingUser) {
+      return NextResponse.json({ error: "Phone number not found. Please register first." }, { status: 400 });
     }
 
     // Rate Limiting (Simple IP based would be best, but we'll limit by phone in DB)

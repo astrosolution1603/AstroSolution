@@ -317,6 +317,18 @@ export default function RegisterForm() {
             </div>
 
             <div>
+              <label className="block text-[13px] font-semibold text-slate-500 mb-2">Profession / Occupation</label>
+              <input 
+                name="occupation" 
+                type="text"
+                value={formData.occupation} 
+                onChange={handleChange}
+                className="w-full bg-slate-100/50 border border-transparent focus:border-amber-500 focus:bg-white focus:ring-4 focus:ring-amber-500/10 text-slate-900 placeholder:text-slate-400 rounded-[16px] py-4 px-5 h-14 font-medium outline-none transition-all"
+                placeholder="Software Engineer, Business, Student..."
+              />
+            </div>
+
+            <div>
               <label className="block text-[13px] font-semibold text-slate-500 mb-2">Preferred Language</label>
               <div className="flex gap-4">
                 <label className="flex-1 cursor-pointer group">

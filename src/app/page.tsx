@@ -26,7 +26,7 @@ export default function DemoHomePage() {
         
         {/* Global Background Layer */}
         <div className="absolute top-0 left-0 w-full h-[120vh] overflow-hidden pointer-events-none z-0 bg-slate-50">
-          <div className="absolute inset-0 z-10 opacity-[0.03] mix-blend-multiply">
+          <div className="absolute inset-0 z-10 opacity-15 mix-blend-multiply filter invert">
             <Image 
               src="/lord_ganesha_bg.png" 
               alt="Lord Ganesha Background" 

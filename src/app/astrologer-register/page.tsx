@@ -238,8 +238,8 @@ export default function AstrologerRegistrationPage() {
             /* AUTHENTICATION STEP */
             authStep === 1 ? (
               <>
-                <h2 className="text-2xl font-bold text-slate-900 dark:text-white mb-2">Sign Up as Astrologer</h2>
-                <p className="text-slate-600 dark:text-white/60 mb-8">Register with your phone number to begin your application.</p>
+                <h2 className="text-2xl font-bold text-slate-900 dark:text-white mb-2">Astrologer Application</h2>
+                <p className="text-slate-600 dark:text-white/60 mb-8">Step 1: Verify your identity to begin the application process.</p>
                 {error && <div className="mb-6 p-4 bg-red-100 dark:bg-red-500/20 text-red-700 dark:text-red-400 rounded-xl text-sm">{error}</div>}
                 
                 <form onSubmit={handleRegister} className="space-y-5">
@@ -283,14 +283,14 @@ export default function AstrologerRegistrationPage() {
                     disabled={loading}
                     className="w-full py-3.5 bg-amber-500 hover:bg-amber-600 text-white font-bold rounded-xl transition-colors disabled:opacity-50"
                   >
-                    {loading ? "Sending OTP..." : "Continue"}
+                    {loading ? "Sending OTP..." : "Continue to Step 2"}
                   </button>
                 </form>
               </>
             ) : (
               <>
-                <h2 className="text-2xl font-bold text-slate-900 dark:text-white mb-2">Verify Phone</h2>
-                <p className="text-slate-600 dark:text-white/60 mb-8">Enter the OTP sent to {phone}</p>
+                <h2 className="text-2xl font-bold text-slate-900 dark:text-white mb-2">Verify Mobile Number</h2>
+                <p className="text-slate-600 dark:text-white/60 mb-8">Enter the OTP sent to {phone} to proceed.</p>
                 {error && <div className="mb-6 p-4 bg-red-100 dark:bg-red-500/20 text-red-700 dark:text-red-400 rounded-xl text-sm">{error}</div>}
                 
                 <form onSubmit={handleLogin} className="space-y-5">
@@ -309,7 +309,7 @@ export default function AstrologerRegistrationPage() {
                     disabled={loading}
                     className="w-full py-3.5 bg-amber-500 hover:bg-amber-600 text-white font-bold rounded-xl transition-colors disabled:opacity-50"
                   >
-                    {loading ? "Verifying..." : "Verify & Continue"}
+                    {loading ? "Verifying..." : "Verify & Continue to Application"}
                   </button>
                 </form>
               </>

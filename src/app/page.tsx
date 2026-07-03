@@ -90,7 +90,7 @@ export default function DemoHomePage() {
                   <ChevronDown className="w-6 h-6 text-white" />
                 </div>
 
-                <div className="bg-[#FDFBF7] border border-amber-900/10 rounded-[32px] p-5 shadow-2xl w-full h-full max-h-[600px] flex flex-col justify-center gap-3 relative overflow-hidden">
+                <div className="bg-[#FDFBF7] dark:bg-slate-900 border border-amber-900/10 dark:border-white/10 rounded-[32px] p-5 shadow-2xl w-full h-full max-h-[600px] flex flex-col justify-center gap-3 relative overflow-hidden">
                   <div className="absolute -top-16 -right-10 text-[160px] text-amber-500/5 select-none pointer-events-none font-serif leading-none">ॐ</div>
                   <div className="absolute -bottom-16 -left-10 text-[160px] text-amber-500/5 select-none pointer-events-none font-serif leading-none">卐</div>
                   
@@ -99,13 +99,13 @@ export default function DemoHomePage() {
                   </div>
 
                   <h1 className="relative z-10 text-2xl md:text-5xl font-black tracking-tight leading-tight text-center">
-                    <span className="text-black block">Unlock the Secrets of</span>
+                    <span className="text-black dark:text-white block">Unlock the Secrets of</span>
                     <span className="bg-gradient-to-r from-amber-500 via-amber-600 to-amber-800 text-transparent bg-clip-text">
                       Your Destiny
                     </span>
                   </h1>
                   
-                  <p className="relative z-10 text-[11px] md:text-sm text-slate-700 leading-relaxed max-w-2xl mx-auto font-medium text-center">
+                  <p className="relative z-10 text-[11px] md:text-sm text-slate-700 dark:text-slate-300 leading-relaxed max-w-2xl mx-auto font-medium text-center">
                     Connect with premium AI Vedic Astrologers. Ask about your career, love life, and true life path instantly.
                   </p>
 
@@ -113,7 +113,7 @@ export default function DemoHomePage() {
                     <Link href="/register" className="w-full flex items-center justify-center gap-2 px-6 py-3 bg-amber-500 text-black font-bold rounded-[20px] active:scale-95 text-sm shadow-xl">
                       <UserPlus className="w-4 h-4" /> Create Free Account
                     </Link>
-                    <Link href="/login" className="w-full flex items-center justify-center gap-2 px-6 py-3 bg-white border border-slate-200 text-black font-bold rounded-[20px] active:scale-95 text-sm shadow-xl">
+                    <Link href="/login" className="w-full flex items-center justify-center gap-2 px-6 py-3 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-black dark:text-white font-bold rounded-[20px] active:scale-95 text-sm shadow-xl">
                       <LogIn className="w-4 h-4" /> Sign In
                     </Link>
                   </div>
@@ -129,7 +129,7 @@ export default function DemoHomePage() {
                   <span className="text-white text-[10px] tracking-widest uppercase font-bold">Users</span>
                 </div>
 
-                <div className="bg-[#FDFBF7] border border-amber-900/10 rounded-[32px] p-5 shadow-2xl w-full h-full max-h-[600px] flex flex-col justify-center gap-2 relative overflow-hidden">
+                <div className="bg-[#FDFBF7] dark:bg-slate-900 border border-amber-900/10 dark:border-white/10 rounded-[32px] p-5 shadow-2xl w-full h-full max-h-[600px] flex flex-col justify-center gap-2 relative overflow-hidden">
                   <div className="absolute -top-16 -left-10 text-[160px] text-amber-500/5 select-none pointer-events-none font-serif leading-none">🔱</div>
                   <div className="absolute -bottom-16 -right-10 text-[160px] text-amber-500/5 select-none pointer-events-none font-serif leading-none">ॐ</div>
                   
@@ -137,11 +137,11 @@ export default function DemoHomePage() {
                     For Astrologers
                   </div>
 
-                  <h2 className="relative z-10 text-2xl font-black text-black leading-tight text-center">
+                  <h2 className="relative z-10 text-2xl font-black text-black dark:text-white leading-tight text-center">
                     Are you a Certified <br/> <span className="text-amber-500">Vedic Astrologer?</span>
                   </h2>
                   
-                  <p className="relative z-10 text-[11px] text-slate-700 leading-relaxed font-medium text-center">
+                  <p className="relative z-10 text-[11px] text-slate-700 dark:text-slate-300 leading-relaxed font-medium text-center">
                     Join our platform as an official astrologer. Provide live guidance to thousands of users globally.
                   </p>
 
@@ -149,28 +149,28 @@ export default function DemoHomePage() {
                     <Link href="/astrologer-register" className="w-full flex items-center justify-center gap-2 px-6 py-3 bg-black text-white font-bold rounded-[20px] active:scale-95 text-sm shadow-xl">
                       Apply as Astrologer <ArrowRight className="w-4 h-4" />
                     </Link>
-                    <Link href="/astrologer-login" className="w-full flex items-center justify-center gap-2 px-6 py-3 bg-slate-100 text-black font-bold rounded-[20px] active:scale-95 text-sm shadow-xl">
+                    <Link href="/astrologer-login" className="w-full flex items-center justify-center gap-2 px-6 py-3 bg-slate-100 dark:bg-slate-800 text-black dark:text-white font-bold rounded-[20px] active:scale-95 text-sm shadow-xl">
                       <LogIn className="w-4 h-4" /> Astrologer Login
                     </Link>
                   </div>
                   
                   {/* Stats */}
                   <div className="grid grid-cols-4 gap-1 mt-1 relative z-10">
-                    <div className="bg-slate-50 border border-slate-100 rounded-xl py-1.5 text-center">
+                    <div className="bg-slate-50 dark:bg-slate-800 border border-slate-100 dark:border-slate-700 rounded-xl py-1.5 text-center">
                       <div className="text-xs font-black text-amber-500">50k+</div>
-                      <div className="text-[8px] font-semibold text-slate-500">Users</div>
+                      <div className="text-[8px] font-semibold text-slate-500 dark:text-slate-400">Users</div>
                     </div>
-                    <div className="bg-slate-50 border border-slate-100 rounded-xl py-1.5 text-center">
+                    <div className="bg-slate-50 dark:bg-slate-800 border border-slate-100 dark:border-slate-700 rounded-xl py-1.5 text-center">
                       <div className="text-xs font-black text-amber-500">Fast</div>
-                      <div className="text-[8px] font-semibold text-slate-500">Payout</div>
+                      <div className="text-[8px] font-semibold text-slate-500 dark:text-slate-400">Payout</div>
                     </div>
-                    <div className="bg-slate-50 border border-slate-100 rounded-xl py-1.5 text-center">
+                    <div className="bg-slate-50 dark:bg-slate-800 border border-slate-100 dark:border-slate-700 rounded-xl py-1.5 text-center">
                       <div className="text-xs font-black text-amber-500">Global</div>
-                      <div className="text-[8px] font-semibold text-slate-500">Reach</div>
+                      <div className="text-[8px] font-semibold text-slate-500 dark:text-slate-400">Reach</div>
                     </div>
-                    <div className="bg-slate-50 border border-slate-100 rounded-xl py-1.5 text-center">
+                    <div className="bg-slate-50 dark:bg-slate-800 border border-slate-100 dark:border-slate-700 rounded-xl py-1.5 text-center">
                       <div className="text-xs font-black text-amber-500">Flex</div>
-                      <div className="text-[8px] font-semibold text-slate-500">Hours</div>
+                      <div className="text-[8px] font-semibold text-slate-500 dark:text-slate-400">Hours</div>
                     </div>
                   </div>
                 </div>
@@ -195,13 +195,13 @@ export default function DemoHomePage() {
                   <span className="text-white text-[10px] tracking-widest uppercase font-bold">More</span>
                   <ChevronDown className="w-6 h-6 text-white" />
                 </div>
-                <div className="bg-[#FDFBF7] border border-amber-900/10 rounded-[32px] p-6 shadow-2xl w-full h-full max-h-[600px] flex flex-col items-center justify-center gap-4 text-center relative overflow-hidden">
+                <div className="bg-[#FDFBF7] dark:bg-slate-900 border border-amber-900/10 dark:border-white/10 rounded-[32px] p-6 shadow-2xl w-full h-full max-h-[600px] flex flex-col items-center justify-center gap-4 text-center relative overflow-hidden">
                   <div className="absolute -top-16 -right-10 text-[160px] text-amber-500/5 select-none pointer-events-none font-serif leading-none">ॐ</div>
                   <div className="w-14 h-14 bg-amber-500 rounded-2xl flex items-center justify-center text-black shadow-lg">
                     <Sparkles className="w-7 h-7" />
                   </div>
-                  <h3 className="text-2xl font-black text-black">Live Astrology Chat</h3>
-                  <p className="text-xs text-slate-700 leading-relaxed font-medium">
+                  <h3 className="text-2xl font-black text-black dark:text-white">Live Astrology Chat</h3>
+                  <p className="text-xs text-slate-700 dark:text-slate-300 leading-relaxed font-medium">
                     Connect instantly with verified Vedic astrologers for personalized guidance on career, love, and life.
                   </p>
                   <Link href="/register" className="w-full flex items-center justify-center gap-2 px-6 py-3 bg-black text-white font-bold rounded-[20px] active:scale-95 text-sm shadow-xl">
@@ -218,13 +218,13 @@ export default function DemoHomePage() {
                 <div className="absolute bottom-1 w-full flex flex-col items-center pointer-events-none animate-bounce z-20 opacity-80">
                   <ChevronDown className="w-6 h-6 text-white" />
                 </div>
-                <div className="bg-[#FDFBF7] border border-amber-900/10 rounded-[32px] p-6 shadow-2xl w-full h-full max-h-[600px] flex flex-col items-center justify-center gap-4 text-center relative overflow-hidden">
+                <div className="bg-[#FDFBF7] dark:bg-slate-900 border border-amber-900/10 dark:border-white/10 rounded-[32px] p-6 shadow-2xl w-full h-full max-h-[600px] flex flex-col items-center justify-center gap-4 text-center relative overflow-hidden">
                   <div className="absolute -bottom-16 -left-10 text-[160px] text-amber-500/5 select-none pointer-events-none font-serif leading-none">卐</div>
                   <div className="w-14 h-14 bg-amber-500 rounded-2xl flex items-center justify-center text-black shadow-lg">
                     <Star className="w-7 h-7" />
                   </div>
-                  <h3 className="text-2xl font-black text-black">Authentic Gemstones</h3>
-                  <p className="text-xs text-slate-700 leading-relaxed font-medium">
+                  <h3 className="text-2xl font-black text-black dark:text-white">Authentic Gemstones</h3>
+                  <p className="text-xs text-slate-700 dark:text-slate-300 leading-relaxed font-medium">
                     Shop for certified, lab-tested precious gemstones to balance your planetary energies and doshas.
                   </p>
                   <Link href="/shop" className="w-full flex items-center justify-center gap-2 px-6 py-3 bg-black text-white font-bold rounded-[20px] active:scale-95 text-sm shadow-xl">
@@ -239,13 +239,13 @@ export default function DemoHomePage() {
                   <ChevronUp className="w-6 h-6 text-white" />
                   <span className="text-white text-[10px] tracking-widest uppercase font-bold">More</span>
                 </div>
-                <div className="bg-[#FDFBF7] border border-amber-900/10 rounded-[32px] p-6 shadow-2xl w-full h-full max-h-[600px] flex flex-col items-center justify-center gap-4 text-center relative overflow-hidden">
+                <div className="bg-[#FDFBF7] dark:bg-slate-900 border border-amber-900/10 dark:border-white/10 rounded-[32px] p-6 shadow-2xl w-full h-full max-h-[600px] flex flex-col items-center justify-center gap-4 text-center relative overflow-hidden">
                   <div className="absolute -top-16 -right-10 text-[160px] text-amber-500/5 select-none pointer-events-none font-serif leading-none">🔱</div>
                   <div className="w-14 h-14 bg-amber-500 rounded-2xl flex items-center justify-center text-black shadow-lg">
                     <UserPlus className="w-7 h-7" />
                   </div>
-                  <h3 className="text-2xl font-black text-black">Online Pujas</h3>
-                  <p className="text-xs text-slate-700 leading-relaxed font-medium">
+                  <h3 className="text-2xl font-black text-black dark:text-white">Online Pujas</h3>
+                  <p className="text-xs text-slate-700 dark:text-slate-300 leading-relaxed font-medium">
                     Book authentic Vedic rituals and pujas performed by experienced pandits on your behalf.
                   </p>
                   <Link href="/pooja" className="w-full flex items-center justify-center gap-2 px-6 py-3 bg-black text-white font-bold rounded-[20px] active:scale-95 text-sm shadow-xl">

@@ -45,11 +45,11 @@ export default function ChatSidebar({ sessions, activeSessionId, onSelectAstro, 
   ];
 
   return (
-    <div className="w-full md:w-80 lg:w-96 flex flex-col h-[calc(100vh-4rem)] md:h-full bg-slate-50 overflow-hidden relative font-sans">
+    <div className="w-full md:w-80 lg:w-96 flex flex-col h-[calc(100vh-4rem)] md:h-full bg-slate-50 dark:bg-slate-950 overflow-hidden relative font-sans">
       
       {/* Mobile Top Header (Gradient) */}
       <div className="md:hidden w-full bg-gradient-to-b from-[#FFA785] to-[#FFDBCC]/40 pt-4 pb-20 px-4 flex justify-between items-center shrink-0">
-        <h1 className="text-xl font-black text-slate-900">Astrologers</h1>
+        <h1 className="text-xl font-black text-slate-900 dark:text-white">Astrologers</h1>
       </div>
 
 
@@ -63,38 +63,38 @@ export default function ChatSidebar({ sessions, activeSessionId, onSelectAstro, 
             <div
               key={astro.id}
               className={cn(
-                "w-full bg-white rounded-2xl shadow-sm border p-4 flex flex-col gap-4",
-                isActive ? "border-orange-500/50 shadow-orange-500/10" : "border-slate-100"
+                "w-full bg-white dark:bg-slate-900 rounded-2xl shadow-sm border p-4 flex flex-col gap-4",
+                isActive ? "border-orange-500/50 shadow-orange-500/10" : "border-slate-100 dark:border-slate-800"
               )}
             >
               {/* Top Row: Avatar & Info */}
               <div className="flex gap-4">
-                <div className="w-16 h-16 rounded-full bg-slate-100 flex items-center justify-center text-3xl shrink-0 border border-slate-200">
+                <div className="w-16 h-16 rounded-full bg-slate-100 dark:bg-slate-800 flex items-center justify-center text-3xl shrink-0 border border-slate-200 dark:border-slate-700">
                   {astro.avatar}
                 </div>
                 <div className="flex-1 min-w-0 flex flex-col justify-center">
-                  <h3 className="font-bold text-slate-900 text-lg truncate flex items-center gap-2">
+                  <h3 className="font-bold text-slate-900 dark:text-white text-lg truncate flex items-center gap-2">
                     {astro.name}
                     {astro.isHuman && <span className="w-2 h-2 bg-green-500 rounded-full animate-pulse" title="Live"></span>}
                   </h3>
-                  <p className="text-sm text-slate-500 truncate">{astro.category}</p>
-                  <p className="text-sm text-slate-400 truncate capitalize">{astro.languages}</p>
+                  <p className="text-sm text-slate-500 dark:text-slate-400 truncate">{astro.category}</p>
+                  <p className="text-sm text-slate-400 dark:text-slate-500 truncate capitalize">{astro.languages}</p>
                 </div>
               </div>
 
               {/* Middle Row: Stats */}
               <div className="flex items-center justify-between px-2 pt-2 pb-2">
                 <div className="flex flex-col items-center">
-                  <div className="flex items-center gap-1 font-bold text-slate-800">
-                    <Star className="w-3.5 h-3.5 fill-slate-800 text-slate-800" />
+                  <div className="flex items-center gap-1 font-bold text-slate-800 dark:text-slate-200">
+                    <Star className="w-3.5 h-3.5 fill-slate-800 dark:fill-slate-200 text-slate-800 dark:text-slate-200" />
                     {astro.rating.toFixed(1)}
                   </div>
-                  <span className="text-xs text-slate-500">Rating</span>
+                  <span className="text-xs text-slate-500 dark:text-slate-400">Rating</span>
                 </div>
                 
                 <div className="flex flex-col items-center">
-                  <div className="font-bold text-slate-800">{astro.experience}</div>
-                  <span className="text-xs text-slate-500">Experience</span>
+                  <div className="font-bold text-slate-800 dark:text-slate-200">{astro.experience}</div>
+                  <span className="text-xs text-slate-500 dark:text-slate-400">Experience</span>
                 </div>
               </div>
 
@@ -102,7 +102,7 @@ export default function ChatSidebar({ sessions, activeSessionId, onSelectAstro, 
               <button
                 disabled={isNavigating !== null}
                 onClick={() => onSelectAstro(astro.id)}
-                className="w-full py-3 rounded-xl border-2 border-slate-200 text-slate-700 font-bold flex items-center justify-center gap-2 hover:bg-slate-50 transition-colors disabled:opacity-70"
+                className="w-full py-3 rounded-xl border-2 border-slate-200 dark:border-slate-700 text-slate-700 dark:text-slate-200 font-bold flex items-center justify-center gap-2 hover:bg-slate-50 dark:hover:bg-slate-800 transition-colors disabled:opacity-70"
               >
                 {isNavigating === astro.id ? (
                   <div className="w-4 h-4 rounded-full border-2 border-orange-500 border-t-transparent animate-spin" />

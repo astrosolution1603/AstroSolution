@@ -4,7 +4,7 @@ import { useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { App } from "@capacitor/app";
 import { useSession } from "next-auth/react";
-import { Purchases, LogLevel } from "@revenuecat/purchases-capacitor";
+import { Purchases, LOG_LEVEL } from "@revenuecat/purchases-capacitor";
 
 export function CapacitorAppListener() {
   const router = useRouter();
@@ -25,7 +25,7 @@ export function CapacitorAppListener() {
       // Initialize RevenueCat (Google Play Billing)
       const initRC = async () => {
         try {
-          await Purchases.setLogLevel({ level: LogLevel.DEBUG });
+          await Purchases.setLogLevel({ level: LOG_LEVEL.DEBUG });
           await Purchases.configure({ apiKey: "test_hxNSTMjekkOJSatoqfajyXsZTkl" });
           
           if (status === "authenticated" && session?.user?.id) {

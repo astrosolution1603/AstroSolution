@@ -5,7 +5,6 @@ import { SessionProvider } from "@/components/SessionProvider";
 import { ThemeProvider } from "@/components/ThemeProvider";
 
 const inter = Inter({ subsets: ["latin"] });
-import NextTopLoader from 'nextjs-toploader';
 
 export const dynamic = "force-dynamic";
 
@@ -61,7 +60,7 @@ export default async function RootLayout({
           <SessionProvider>
             <CartProvider>
               <CapacitorAppListener />
-              <NextTopLoader color="#fbbf24" showSpinner={false} height={4} />
+
               {/* Dynamic Theme Background */}
               <div className={`fixed inset-0 z-[-1] theme-bg-${themeName}`}></div>
               

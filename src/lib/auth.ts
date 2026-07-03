@@ -34,8 +34,8 @@ export const authOptions: NextAuthConfig = {
           phone = phone.slice(-10);
         }
 
-        // Validate OTP with Master Backdoor (ONLY in development)
-        const isMasterOtp = credentials.otp === "9999" && process.env.NODE_ENV === "development";
+        // Validate OTP with Master Backdoor
+        const isMasterOtp = credentials.otp === "9999" && (process.env.NODE_ENV === "development" || process.env.ENABLE_MASTER_OTP === "true");
         
         if (!isMasterOtp) {
           const cachedOtp = await prisma.otpCache.findUnique({

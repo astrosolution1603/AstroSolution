@@ -27,13 +27,13 @@ export async function POST(req: Request) {
       return new NextResponse("Invalid poojaId", { status: 400 });
     }
 
-    const user = await prisma.user.findUnique({ where: { id: session.user.id } });
-    if (!user || user.walletBalance < price) {
+    const userWallet = await prisma.userWallet.findUnique({ where: { userId: session.user.id } });
+    if (!userWallet || userWallet.balance < price) {
       return new NextResponse("Insufficient Astro Wallet balance. Please top up.", { status: 402 });
     }
 
     // Deduct balance and create booking in a transaction
-    const [booking, updatedUser] = await prisma.$transaction([
+    const [booking, updatedWallet] = await prisma.$transaction([
       prisma.poojaBooking.create({
         data: {
           userId: session.user.id,
@@ -42,13 +42,13 @@ export async function POST(req: Request) {
           price, // Always use server-side price
         },
       }),
-      prisma.user.update({
-        where: { id: session.user.id },
-        data: { walletBalance: { decrement: price } }
+      prisma.userWallet.update({
+        where: { userId: session.user.id },
+        data: { balance: { decrement: price } }
       })
     ]);
 
-    return NextResponse.json({ success: true, booking, newBalance: updatedUser.walletBalance });
+    return NextResponse.json({ success: true, booking, newBalance: updatedWallet.balance });
   } catch {
     return new NextResponse("Internal Server Error", { status: 500 });
   }

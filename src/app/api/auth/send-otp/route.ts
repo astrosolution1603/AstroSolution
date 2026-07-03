@@ -35,11 +35,10 @@ export async function POST(req: NextRequest) {
       return NextResponse.json({ error: "Phone number not found. Please register first." }, { status: 400 });
     }
 
-    // Rate Limiting (Simple IP based would be best, but we'll limit by phone in DB)
     // Prevent sending more than 3 OTPs in 5 minutes
     const recentOtps = await prisma.otpCache.count({
       where: {
-        phone,
+        phone: normalizedPhone,
         createdAt: {
           gte: new Date(Date.now() - 5 * 60 * 1000)
         }
@@ -98,14 +97,14 @@ export async function POST(req: NextRequest) {
     const expiresAt = new Date(Date.now() + 5 * 60 * 1000); // 5 mins expiration
     
     await prisma.otpCache.upsert({
-      where: { phone },
+      where: { phone: normalizedPhone },
       update: {
         otp,
         expiresAt,
         createdAt: new Date()
       },
       create: {
-        phone,
+        phone: normalizedPhone,
         otp,
         expiresAt
       }

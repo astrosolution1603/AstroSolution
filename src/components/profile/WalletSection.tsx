@@ -88,6 +88,9 @@ export function WalletSection() {
           <Button onClick={() => handleTopUp(101)} disabled={isToppingUp} variant="outline" className="border-amber-500/30 hover:bg-amber-500/10 text-amber-600 dark:text-amber-400 font-bold px-3">
             <Plus className="w-3 h-3 mr-1" /> ₹101
           </Button>
+          <Button onClick={() => handleTopUp(251)} disabled={isToppingUp} variant="outline" className="border-amber-500/30 hover:bg-amber-500/10 text-amber-600 dark:text-amber-400 font-bold px-3">
+            <Plus className="w-3 h-3 mr-1" /> ₹251
+          </Button>
           <Button onClick={() => handleTopUp(500)} disabled={isToppingUp} variant="outline" className="border-amber-500/30 hover:bg-amber-500/10 text-amber-600 dark:text-amber-400 font-bold">
             <Plus className="w-3 h-3 mr-1" /> ₹500
           </Button>

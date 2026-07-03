@@ -87,33 +87,33 @@ export default function DemoHomePage() {
             style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}
           >
             {/* Slide 1: Users */}
-            <div className="w-full flex-shrink-0 snap-center flex justify-center px-2 md:px-6">
-              <div className="bg-white rounded-[40px] p-8 md:p-14 shadow-2xl shadow-black/40 w-full max-w-4xl relative overflow-hidden flex flex-col justify-between">
+            <div className="w-full flex-shrink-0 snap-center flex justify-center px-4 md:px-6 h-[70vh] md:h-auto min-h-[450px]">
+              <div className="bg-white rounded-[32px] md:rounded-[40px] p-6 md:p-14 shadow-2xl shadow-black/40 w-full max-w-4xl relative overflow-hidden flex flex-col justify-center gap-4 md:gap-8">
                 <div className="absolute -top-16 -right-10 text-[200px] text-amber-500/5 select-none pointer-events-none font-serif leading-none">ॐ</div>
                 <div className="absolute -bottom-16 -left-10 text-[200px] text-amber-500/5 select-none pointer-events-none font-serif leading-none">ॐ</div>
                 
-                <h1 className="relative z-10 text-3xl md:text-7xl font-black tracking-tight mb-6 leading-tight text-center">
-                  <span className="text-black block mb-2">Unlock the Secrets of</span>
+                <h1 className="relative z-10 text-3xl md:text-7xl font-black tracking-tight leading-tight text-center">
+                  <span className="text-black block mb-1 md:mb-2">Unlock the Secrets of</span>
                   <span className="bg-gradient-to-r from-amber-500 via-amber-600 to-amber-800 text-transparent bg-clip-text drop-shadow-sm">
                     Your Destiny
                   </span>
                 </h1>
                 
-                <p className="relative z-10 text-sm md:text-xl text-slate-700 leading-relaxed max-w-2xl mx-auto font-medium text-center mb-8">
+                <p className="relative z-10 text-xs md:text-xl text-slate-700 leading-relaxed max-w-2xl mx-auto font-medium text-center">
                   Connect with premium AI Vedic Astrologers. Ask about your career, love life, and true life path instantly.
                 </p>
 
-                <div className="flex flex-col gap-4 relative z-10 mt-auto">
+                <div className="flex flex-col gap-3 relative z-10 mt-2 md:mt-4">
                   <Link 
                     href="/register" 
-                    className="w-full flex items-center justify-center gap-2 px-8 py-4 bg-amber-500 hover:bg-amber-400 text-black font-bold rounded-[24px] transition-all shadow-xl active:scale-95"
+                    className="w-full flex items-center justify-center gap-2 px-8 py-3 md:py-4 bg-amber-500 hover:bg-amber-400 text-black font-bold rounded-[20px] transition-all shadow-xl active:scale-95"
                   >
                     <UserPlus className="w-5 h-5" />
                     Create Free Account
                   </Link>
                   <Link 
                     href="/login" 
-                    className="w-full flex items-center justify-center gap-2 px-8 py-4 bg-white border border-slate-200 hover:bg-slate-50 text-black font-bold rounded-[24px] transition-all shadow-xl active:scale-95"
+                    className="w-full flex items-center justify-center gap-2 px-8 py-3 md:py-4 bg-white border border-slate-200 hover:bg-slate-50 text-black font-bold rounded-[20px] transition-all shadow-xl active:scale-95"
                   >
                     <LogIn className="w-5 h-5" />
                     Sign In
@@ -123,58 +123,58 @@ export default function DemoHomePage() {
             </div>
 
             {/* Slide 2: Astrologers */}
-            <div className="w-full flex-shrink-0 snap-center flex justify-center px-2 md:px-6">
-              <div className="bg-white rounded-[40px] p-8 md:p-14 shadow-2xl shadow-black/40 w-full max-w-4xl relative overflow-hidden flex flex-col justify-between">
+            <div className="w-full flex-shrink-0 snap-center flex justify-center px-4 md:px-6 h-[70vh] md:h-auto min-h-[500px]">
+              <div className="bg-white rounded-[32px] md:rounded-[40px] p-5 md:p-14 shadow-2xl shadow-black/40 w-full max-w-4xl relative overflow-hidden flex flex-col justify-center gap-2 md:gap-6">
                 <div className="absolute -top-16 -right-10 text-[200px] text-amber-500/5 select-none pointer-events-none font-serif leading-none">ॐ</div>
                 <div className="absolute -bottom-16 -left-10 text-[200px] text-amber-500/5 select-none pointer-events-none font-serif leading-none">ॐ</div>
                 
-                <div className="inline-flex self-center items-center gap-2 px-4 py-1.5 rounded-full bg-amber-100 text-amber-800 text-[10px] font-bold uppercase tracking-widest mb-4 shadow-sm z-10">
+                <div className="inline-flex self-center items-center gap-2 px-3 py-1 rounded-full bg-amber-100 text-amber-800 text-[10px] font-bold uppercase tracking-widest shadow-sm z-10">
                   For Astrologers
                 </div>
 
-                <h2 className="relative z-10 text-3xl md:text-5xl font-black text-black mb-4 leading-tight text-center">
+                <h2 className="relative z-10 text-2xl md:text-5xl font-black text-black leading-tight text-center">
                   Are you a Certified <br className="hidden md:block" />
                   <span className="text-amber-500">Vedic Astrologer?</span>
                 </h2>
                 
-                <p className="relative z-10 text-sm md:text-lg text-slate-700 leading-relaxed max-w-lg mx-auto font-medium text-center mb-8">
-                  Join our platform as an official astrologer. Provide live guidance to thousands of users globally and monetize your cosmic expertise.
+                <p className="relative z-10 text-xs md:text-lg text-slate-700 leading-relaxed max-w-lg mx-auto font-medium text-center">
+                  Join our platform as an official astrologer. Provide live guidance to thousands of users globally.
                 </p>
 
-                <div className="flex flex-col gap-4 relative z-10 mt-auto">
+                <div className="flex flex-col gap-2 relative z-10 mt-1 md:mt-2">
                   <Link 
                     href="/astrologer-register" 
-                    className="w-full flex items-center justify-center gap-2 px-8 py-4 bg-black text-white font-bold rounded-[24px] hover:bg-slate-900 transition-all shadow-xl active:scale-95"
+                    className="w-full flex items-center justify-center gap-2 px-8 py-3 bg-black text-white font-bold rounded-[20px] hover:bg-slate-900 transition-all shadow-xl active:scale-95 text-sm"
                   >
                     Apply as Astrologer
-                    <ArrowRight className="w-5 h-5" />
+                    <ArrowRight className="w-4 h-4" />
                   </Link>
                   <Link 
                     href="/astrologer-login" 
-                    className="w-full flex items-center justify-center gap-2 px-8 py-4 bg-slate-100 hover:bg-slate-200 text-black font-bold rounded-[24px] transition-all active:scale-95 shadow-xl"
+                    className="w-full flex items-center justify-center gap-2 px-8 py-3 bg-slate-100 hover:bg-slate-200 text-black font-bold rounded-[20px] transition-all active:scale-95 shadow-xl text-sm"
                   >
-                    <LogIn className="w-5 h-5" />
+                    <LogIn className="w-4 h-4" />
                     Astrologer Login
                   </Link>
                 </div>
                 
                 {/* Stats */}
-                <div className="grid grid-cols-2 gap-2 mt-6 relative z-10">
-                  <div className="bg-slate-50 border border-slate-100 rounded-2xl py-3 text-center">
-                    <div className="text-xl font-black text-amber-500">50k+</div>
-                    <div className="text-[10px] font-semibold text-slate-500">Active Users</div>
+                <div className="grid grid-cols-4 gap-1 mt-2 relative z-10">
+                  <div className="bg-slate-50 border border-slate-100 rounded-xl py-2 text-center">
+                    <div className="text-sm font-black text-amber-500">50k+</div>
+                    <div className="text-[9px] font-semibold text-slate-500 leading-tight">Users</div>
                   </div>
-                  <div className="bg-slate-50 border border-slate-100 rounded-2xl py-3 text-center">
-                    <div className="text-xl font-black text-amber-500">Instant</div>
-                    <div className="text-[10px] font-semibold text-slate-500">Payouts</div>
+                  <div className="bg-slate-50 border border-slate-100 rounded-xl py-2 text-center">
+                    <div className="text-sm font-black text-amber-500">Fast</div>
+                    <div className="text-[9px] font-semibold text-slate-500 leading-tight">Payout</div>
                   </div>
-                  <div className="bg-slate-50 border border-slate-100 rounded-2xl py-3 text-center">
-                    <div className="text-xl font-black text-amber-500">Global</div>
-                    <div className="text-[10px] font-semibold text-slate-500">Reach</div>
+                  <div className="bg-slate-50 border border-slate-100 rounded-xl py-2 text-center">
+                    <div className="text-sm font-black text-amber-500">Global</div>
+                    <div className="text-[9px] font-semibold text-slate-500 leading-tight">Reach</div>
                   </div>
-                  <div className="bg-slate-50 border border-slate-100 rounded-2xl py-3 text-center">
-                    <div className="text-xl font-black text-amber-500">Flexible</div>
-                    <div className="text-[10px] font-semibold text-slate-500">Hours</div>
+                  <div className="bg-slate-50 border border-slate-100 rounded-xl py-2 text-center">
+                    <div className="text-sm font-black text-amber-500">Flex</div>
+                    <div className="text-[9px] font-semibold text-slate-500 leading-tight">Hours</div>
                   </div>
                 </div>
 

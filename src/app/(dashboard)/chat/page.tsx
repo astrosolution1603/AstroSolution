@@ -27,11 +27,6 @@ export default async function ChatPage({ searchParams }: { searchParams: Promise
   const chatSessions = await prisma.chatSession.findMany({
     where: { userId: authSession.user.id },
     orderBy: { updatedAt: "desc" },
-    include: {
-      messages: {
-        orderBy: { createdAt: "asc" }
-      }
-    }
   });
 
   const humanAstrologers = await prisma.user.findMany({
@@ -54,11 +49,17 @@ export default async function ChatPage({ searchParams }: { searchParams: Promise
   let activeSessionId = resolvedParams?.session || null;
 
   const activeSession = chatSessions.find(s => s.id === activeSessionId) || chatSessions[0];
-  const initialMessages = activeSession?.messages.map(m => ({
-    id: m.id,
-    role: m.role,
-    content: m.content,
-  })) || [];
+  
+  // Fetch messages ONLY for the active session, dramatically improving load time
+  let initialMessages: any[] = [];
+  if (activeSession) {
+    const messages = await prisma.chatMessage.findMany({
+      where: { sessionId: activeSession.id },
+      orderBy: { createdAt: "asc" },
+      select: { id: true, role: true, content: true }
+    });
+    initialMessages = messages;
+  }
 
   return (
     <ChatClient 
@@ -66,7 +67,7 @@ export default async function ChatPage({ searchParams }: { searchParams: Promise
       activeSessionId={activeSessionId}
       initialMessages={initialMessages}
       userName={user?.name || "Seeker"}
-      astrologerId={activeSession?.astrologerId || null}
+      astrologerId={(activeSession as any)?.astrologerUserId || (activeSession as any)?.astrologerId || null}
       humanAstrologers={humanAstrologers}
     />
   );

@@ -44,7 +44,7 @@ export default function ChatClient({ sessions, activeSessionId, initialMessages,
   };
 
   return (
-    <div className="flex w-full h-[calc(100vh-4rem)] md:h-[calc(100vh)]">
+    <div className="flex w-full h-full">
       <div className={`w-full md:w-auto md:block ${activeSessionId ? 'hidden' : 'block'}`}>
         <ChatSidebar 
           sessions={sessions} 

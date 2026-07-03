@@ -454,7 +454,7 @@ export default function ChatWindow({ sessionId, initialMessages = [], userName, 
         )}
       </div>
 
-      <div className="p-4 pb-20 md:pb-4 bg-transparent border-t border-border">
+      <div className="p-4 pb-4 bg-transparent border-t border-border">
         <div className="max-w-3xl mx-auto">
           <ChatInput
             input={input}

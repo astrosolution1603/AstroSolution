@@ -35,18 +35,13 @@ export async function POST(req: NextRequest) {
       return NextResponse.json({ error: "Phone number not found. Please register first." }, { status: 400 });
     }
 
-    // Prevent sending more than 3 OTPs in 5 minutes
-    const recentOtps = await prisma.otpCache.count({
-      where: {
-        phone: normalizedPhone,
-        createdAt: {
-          gte: new Date(Date.now() - 5 * 60 * 1000)
-        }
-      }
+    // Prevent spam: enforce a 60-second cooldown between OTP requests
+    const existingCache = await prisma.otpCache.findUnique({
+      where: { phone: normalizedPhone }
     });
 
-    if (recentOtps >= 3) {
-      return NextResponse.json({ error: "Too many OTP requests. Please try again later." }, { status: 429 });
+    if (existingCache && existingCache.createdAt > new Date(Date.now() - 60 * 1000)) {
+      return NextResponse.json({ error: "Please wait 60 seconds before requesting another OTP." }, { status: 429 });
     }
 
     const settings = await prisma.platformSettings.findUnique({
@@ -62,6 +57,7 @@ export async function POST(req: NextRequest) {
         console.log(`Generated OTP for ${phone}: ${otp}`);
       } else {
         console.error("CRITICAL: Fast2SMS API Key is not configured in production. SMS dispatch failed.");
+        return NextResponse.json({ error: "SMS service is currently unavailable. Please try again later." }, { status: 500 });
       }
     } else {
       // Prepare message
